@@ -1,17 +1,17 @@
 middleman-html5-foundation
 ==========================
 
-A base for a [Middleman][mm] site starting with the [HTML5 boilerplate][html5bp], adding in the [middleman-blog extension][mmb] and [Zurb's Foundation 5][zf] all from a bash script that you can run in less than 5 minutes.
+A base for a [Middleman][mm] site starting with the [HTML5 boilerplate][html5bp], adding in the [middleman-blog][mmb] extension and the [Sass][zfsass] version of [Zurb's Foundation 5][zf] all from a bash script that you can run in less than 5 minutes.
 
 Based on [middleman-foundation][mmf] and [middleman-zurb-foundation][mzf] projects.
 
-Created with the [middleman.sh][mmsh] script from my [linux-deploy-scripts][lds].
+Created with the [middleman.sh][mmsh] script from my [linux-deploy-scripts][lds] project.
 
-I prefer doing things with bash scripts in Linux rather than creating a template that you just copy. It's much more clear what is happening from the start. Each step is clearly represented in the **setup.sh** script. Check out the code. I hope you like it!
+I prefer doing things with bash scripts in Linux rather than creating a template that you just copy. It's much more clear what is happening from the start. Each step is clearly represented in the **scripts/setup.sh** and **scripts/middleman.sh** scripts. Check out the code. I hope you like it!
 
 TODO:
 
-If someone could fork this project, create a new branch and create a script to convert it to [HAML][haml]...that would be awesome. I still have a lot to learn about converting HTML to HAML.
+Create a script to convert HTML to [HAML][haml]. I still have a bit to learn about that.
 
 ## table of contents
 
@@ -29,14 +29,32 @@ If someone could fork this project, create a new branch and create a script to c
 
 ## features
 
+- [Middleman][mm] built from the [HTML5 boilerplate][html5bp]. Written in Ruby.
+- [Blogging][mmb] with support for articles, categories and tags.
+- [Nokogiri][nkg] for HTML-aware article summaries.
+- [LiveReload][mmlr] to automatically refresh your page after changes.
+- [Pretty URLs][mmpurl] without .html at the end.
+- [kramdown][kd] handles [Markdown][md] with built-in support for [fenced code blocks][fcb], footnotes, tables and smart quotes. Written in Ruby.
+- [Rouge][rg] for [syntax highlighting][sh]. Also written in Ruby and enabled by the [middleman-syntax][mms] extension.
+
+Since [Middleman][mm] is written in [Ruby][ruby], it makes sense to try to stick with [Ruby][ruby] for [extensions][mme] whenever possible. That's why I like [kramdown][kd] with [Rouge][rg] for [Markdown][md] and [syntax highlighting][sh].
+
+To see all the available options and features, run Middleman with the preview web server:
+
+```bash
+cd my_project
+bundle exec middleman
+```
+
+Then go to `http://localhost:4567/__middleman/config/` in your browser.
 
 ## reasoning
 
-I made this project to gain a better understanding of [Middleman][mm], [HTML5][html5], [HAML][haml] and [Foundation with Sass][zfsass]. 
+I made this project to gain a better understanding of [Middleman][mm], [HTML5][html5], [HAML][haml] and [Sass][sass] using the [Sass version][zfsass] of [Foundation 5][zf].
 
 My goal has been to create a script that I can run whenever I need to start a new static website. I want it to quickly and accurately create the structure of the house so I can jump right into designing the interior.
 
-Using scripts with Middleman and Foundation also fits well with my workflow since I use [CentOS][centos] for my programming work. It's a pretty stable [Linux distribution][ld].
+Using scripts with [Middleman][mm] and [Foundation][zf] also fits well with my workflow since I use [CentOS][centos] for my programming work. It's a pretty stable [Linux distribution][ld].
 
 ## configuration
 
@@ -44,11 +62,12 @@ Using scripts with Middleman and Foundation also fits well with my workflow sinc
 
 ## usage
 
-Copy the **setup.sh** script to your computer and run with:
+Copy the **scripts/setup.sh** and **scripts/middleman.sh** files to your computer and run with:
 
 ```bash
+cd my_project/scripts
 chmod u+x setup.sh
-./setup
+./setup.sh
 ```
 
 ## contributing
@@ -124,17 +143,29 @@ MIT: http://kma.mit-license.org
 
 [lds]:      https://github.com/keegoid/linux-deploy-scripts
 [mmsh]:     https://github.com/keegoid/linux-deploy-scripts/blob/master/scripts/middleman.sh
-[mm]:       http://middlemanapp.com/
-[mmb]:      http://middlemanapp.com/basics/blogging/
+[mm]:       https://github.com/middleman/middleman
+[mmb]:      https://github.com/middleman/middleman-blog
+[mmlr]:     https://github.com/middleman/middleman-livereload
+[mms]:      https://github.com/middleman/middleman-syntax
+[zf]:       https://github.com/zurb/foundation
 [mmf]:      https://github.com/blachniet/middleman-foundation
 [mzf]:      https://github.com/axyz/middleman-zurb-foundation
+[html5bp]:  https://github.com/h5bp/html5-boilerplate
+[haml]:     https://github.com/haml/haml
+[sass]:     https://github.com/sass/sass
+[nkg]:      https://github.com/sparklemotion/nokogiri
+[kd]:       https://github.com/gettalong/kramdown
+[rg]:       https://github.com/jneen/rouge
+[md]:       http://daringfireball.net/projects/markdown/
+[fcb]:      http://kramdown.gettalong.org/syntax.html#fenced-code-blocks
+[mmpurl]:   http://middlemanapp.com/basics/pretty-urls/
+[mme]:      http://directory.middlemanapp.com/#/extensions/all
+[ruby]:     https://www.ruby-lang.org/
 [html5]:    http://en.wikipedia.org/wiki/Html5
-[html5bp]:  http://html5boilerplate.com/
-[zf]:       http://foundation.zurb.com/
 [zfsass]:   http://foundation.zurb.com/docs/sass.html
-[haml]:     http://haml.info/
 [centos]:   http://centos.org/
 [ld]:       http://en.wikipedia.org/wiki/Linux_distribution
+[sh]:       http://en.wikipedia.org/wiki/Syntax_highlighting
 [learngit]: https://www.atlassian.com/git/tutorial/git-basics#!overview
 [fork]:     https://help.github.com/articles/fork-a-repo
 [pull]:     https://help.github.com/articles/using-pull-requests
