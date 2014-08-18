@@ -3,10 +3,10 @@ middleman-html5-foundation
 
 A base for a [Middleman][mm] site starting with the [HTML5 boilerplate][html5bp], adding in the [middleman-blog][mmb] extension and the [Sass/Compass version][zfsass] of [Zurb's Foundation 5][zf] all from a bash script that you can run in less than 5 minutes.
 
-- Based on [middleman-foundation][mmf] and [middleman-zurb-foundation][mzf] projects.
+- Based on the [middleman-foundation][mmf] and [middleman-zurb-foundation][mzf] projects.
 - Created with the [middleman.sh][mmsh] script from my [linux-deploy-scripts][lds] project.
 
-I prefer doing things with bash scripts in Linux rather than creating a template that you just copy. It's much more clear what is happening from the start. Each step is clearly represented in the **scripts/setup.sh** and **scripts/middleman.sh** scripts. Check out the code. I hope you like it!
+I prefer doing things with [shell scripts][ss] in Linux rather than creating a template that you just copy. Each step is clearly represented in the [middleman.sh][mmsh] script. I hope you like it!
 
 TODO:
 
@@ -16,8 +16,8 @@ Create a script to convert HTML to [HAML][haml]. I still have a bit to learn abo
 
 - [features](#features)
 - [reasoning](#reasoning)
-- [configuration](#configuration)
 - [usage](#usage)
+- [configuration](#configuration)
 - [contributing](#contributing)
    - [getting started](#getting-started)
    - [steps](#steps)
@@ -51,23 +51,20 @@ Then go to `http://localhost:4567/__middleman/config/` in your browser.
 
 I made this project to gain a better understanding of [Middleman][mm], [HTML5][html5], [HAML][haml] and [Sass][sass] using the [Sass/Compass version][zfsass] of [Foundation 5][zf].
 
-My goal has been to create a script that I can run whenever I need to start a new static website. I want it to quickly and accurately create the structure of the house so I can jump right into designing the interior.
+Using [shell scripts][ss] with [Middleman][mm] and [Foundation][zf] fits well with my workflow since I use [CentOS][centos] for my programming work. It's a pretty stable [Linux distribution][ld]. I like it a lot and use it on my laptop and servers at [DigitalOcean][do].
 
-Using scripts with [Middleman][mm] and [Foundation][zf] also fits well with my workflow since I use [CentOS][centos] for my programming work. It's a pretty stable [Linux distribution][ld].
+## usage
+
+Clone this project using HTTPS or SSH (recommended)
+
+   - HTTPS: `git clone https://github.com/keegoid/middleman-html5-foundation.git`
+   -   SSH: `git clone git@github.com:keegoid/middleman-html5-foundation.git`
+
+Or you can get it by running the [linux-deploy-scripts][lds] project for setup of a fresh [CentOS 7.0 x64][centos] workstation or server. If you choose the workstation option, you'll get this Middleman project in your GitHub account. The server option installs WordPress at DigitalOcean instead.
 
 ## configuration
 
 
-
-## usage
-
-Copy the **scripts/setup.sh** and **scripts/middleman.sh** files to your computer and run with:
-
-```bash
-cd my_project/scripts
-chmod u+x setup.sh
-./setup.sh
-```
 
 ## contributing
 
@@ -82,20 +79,21 @@ A good [step-by-step guide][fork] about how to contribute to a GitHub project li
 
 1. Fork it http://github.com/keegoid/middleman-html5-foundation/fork
 1. Clone your own fork using HTTPS or SSH (recommended)
-    - HTTPS: `git clone https://github.com/yourusername/middleman-html5-foundation.git`
-    - SSH: `git clone git@github.com:yourusername/middleman-html5-foundation.git`
+   - HTTPS: `git clone https://github.com/yourusername/middleman-html5-foundation.git`
+   -   SSH: `git clone git@github.com:yourusername/middleman-html5-foundation.git`
 1. Optionally create your own feature branch `git checkout -b my-new-feature`
 1. Commit your changes `git commit -am 'made some changes'`
 1. Push your master or branch commits to GitHub
-    - `git push origin master`
-    - `git push origin my-new-feature`
+   - `git push origin master`
+   - `git push origin my-new-feature`
 1. Create a new [Pull request][pull]
 
 ## workflow
 
 If you didn't start by cloning an existing repository on GitHub, you'll need to add your remote origin URL:
 
-`git remote add origin git@github.com:yourusername/middleman-html5-foundation.git`
+   - HTTPS: `git remote add origin https://github.com/yourusername/middleman-html5-foundation.git`
+   -   SSH: `git remote add origin git@github.com:yourusername/middleman-html5-foundation.git`
 
 #### git push
 
@@ -163,6 +161,9 @@ MIT: http://kma.mit-license.org
 [html5]:    http://en.wikipedia.org/wiki/Html5
 [zfsass]:   http://foundation.zurb.com/docs/sass.html
 [centos]:   http://centos.org/
+[ss]:       http://en.wikipedia.org/wiki/Shell_script
+[do]:       https://www.digitalocean.com/?refcode=251afd960495 "clicking this affiliate link benefits me at no cost to you"
+[bb]:       https://www.bitballoon.com/
 [ld]:       http://en.wikipedia.org/wiki/Linux_distribution
 [sh]:       http://en.wikipedia.org/wiki/Syntax_highlighting
 [learngit]: https://www.atlassian.com/git/tutorial/git-basics#!overview
