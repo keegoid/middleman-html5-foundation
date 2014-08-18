@@ -1,7 +1,7 @@
 middleman-html5-foundation
 ==========================
 
-A base for a [Middleman][mm] site starting with the [HTML5 boilerplate][html5bp], adding in the [middleman-blog][mmb] extension and the [Sass/Compass version][zfsass] of [Zurb's Foundation 5][zf] all from a bash script that you can run in less than 5 minutes.
+A base for a [Middleman][mm] site starting with the [HTML5 boilerplate][html5bp], adding in the [middleman-blog][mmb] extension and the [Sass/Compass version][zfsass] of [Zurb's Foundation 5][zf].
 
 - Based on the [middleman-foundation][mmf] and [middleman-zurb-foundation][mzf] projects.
 - Created with the [middleman.sh][mmsh] script from my [linux-deploy-scripts][lds] project.
