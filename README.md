@@ -28,17 +28,17 @@ Create a script to convert HTML to [HAML][haml]. I still have a bit to learn abo
 
 ## features
 
-- [Middleman][mm] built from the [HTML5 boilerplate][html5bp]. Written in Ruby.
+- [Middleman][mm] built from the [HTML5 boilerplate][html5bp]. Written in [Ruby][ruby].
 - [Blogging][mmb] with support for articles, categories and tags.
 - [Nokogiri][nkg] for HTML-aware article summaries.
 - [LiveReload][mmlr] to automatically refresh your page after changes.
 - [Pretty URLs][mmpurl] without .html at the end.
-- [kramdown][kd] handles [Markdown][md] with built-in support for [fenced code blocks][fcb], footnotes, tables and smart quotes. Written in Ruby.
-- [Rouge][rg] for [syntax highlighting][sh]. Also written in Ruby and enabled by the [middleman-syntax][mms] extension.
+- [kramdown][kd] handles [Markdown][md] with built-in support for [fenced code blocks][fcb], footnotes, tables and smart quotes. Written in [Ruby][ruby].
+- [Rouge][rg] for [syntax highlighting][sh]. Also written in [Ruby][ruby] and enabled by the [middleman-syntax][mms] extension.
 
-Since [Middleman][mm] is written in [Ruby][ruby], it makes sense to try to stick with [Ruby][ruby] for [extensions][mme] whenever possible. That's why I like [kramdown][kd] with [Rouge][rg] for [Markdown][md] and [syntax highlighting][sh].
+Since [Middleman][mm] is written in [Ruby][ruby], it makes sense to try to stick with [Ruby][ruby] for [Middleman extensions][mme] whenever possible. That's why I like [kramdown][kd] with [Rouge][rg] for [Markdown][md] and [syntax highlighting][sh].
 
-To see all the available options and features, run Middleman with the preview web server:
+To see all the available options and features, run [Middleman][mm] with the preview web server:
 
 ```bash
 cd my_project
