@@ -1,7 +1,7 @@
 middleman-html5-foundation
 ==========================
 
-A base for a [Middleman][mm] site starting with the [HTML5 boilerplate][html5bp], adding in the [middleman-blog][mmb] extension and the [Sass version][zfsass] of [Zurb's Foundation 5][zf] all from a bash script that you can run in less than 5 minutes.
+A base for a [Middleman][mm] site starting with the [HTML5 boilerplate][html5bp], adding in the [middleman-blog][mmb] extension and the [Sass/Compass version][zfsass] of [Zurb's Foundation 5][zf] all from a bash script that you can run in less than 5 minutes.
 
 - Based on [middleman-foundation][mmf] and [middleman-zurb-foundation][mzf] projects.
 - Created with the [middleman.sh][mmsh] script from my [linux-deploy-scripts][lds] project.
@@ -49,7 +49,7 @@ Then go to `http://localhost:4567/__middleman/config/` in your browser.
 
 ## reasoning
 
-I made this project to gain a better understanding of [Middleman][mm], [HTML5][html5], [HAML][haml] and [Sass][sass] using the [Sass version][zfsass] of [Foundation 5][zf].
+I made this project to gain a better understanding of [Middleman][mm], [HTML5][html5], [HAML][haml] and [Sass][sass] using the [Sass/Compass version][zfsass] of [Foundation 5][zf].
 
 My goal has been to create a script that I can run whenever I need to start a new static website. I want it to quickly and accurately create the structure of the house so I can jump right into designing the interior.
 
