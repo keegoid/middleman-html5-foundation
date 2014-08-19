@@ -80,7 +80,7 @@ Optionally, run the local middleman server at [http://localhost:4567/](http://lo
 Commit your changes with git:  
 `git commit -am 'first commit'`
 
-Push commits to your remote repository on GitHub:  
+Push commits to your remote repository (GitHub):  
 `git push origin master`
 
 Go to the [BitBalloon][bb] site and:
@@ -90,7 +90,7 @@ Go to the [BitBalloon][bb] site and:
    1. click "Link site to a Github repo" at the bottom right  
      (currently a beta feature so you may need to request access)
    1. choose which branch you want to deploy (typically master)
-   1. set the dir to "Other ..." and enter "/build"
+   1. set the dir to "Other ..." enter "/build"
    1. for the build command, set: "bundle exec middleman build"
 
 Now whenever you push changes to [Github][gh], [BitBalloon][bb] will run middleman and deploy the /build folder to your site automatically. Easy!
@@ -110,16 +110,16 @@ A good [step-by-step guide][fork] about how to contribute to a GitHub project li
 
 #### steps
 
-1. Fork it http://github.com/keegoid/middleman-html5-foundation/fork
-1. Clone your own fork using HTTPS or SSH (recommended)
+1. fork it http://github.com/keegoid/middleman-html5-foundation/fork
+1. clone your own fork using HTTPS or SSH (recommended)
    - HTTPS: `git clone https://github.com/yourusername/middleman-html5-foundation.git`
    -   SSH: `git clone git@github.com:yourusername/middleman-html5-foundation.git`
-1. Optionally create your own feature branch `git checkout -b my-new-feature`
-1. Commit your changes `git commit -am 'made some changes'`
-1. Push your master or branch commits to GitHub
+1. optionally create your own feature branch `git checkout -b my-new-feature`
+1. commit your changes `git commit -am 'made some changes'`
+1. push your master or branch commits to GitHub
    - `git push origin master`
    - `git push origin my-new-feature`
-1. Create a new [Pull request][pull]
+1. create a new [Pull request][pull]
 
 ## workflow
 
@@ -130,16 +130,19 @@ If you didn't start by cloning an existing repository on GitHub, you'll need to 
 
 #### git push
 
-From my Linux workstation:  
-`git commit -am 'updated README'`
+Commit changes:  
+`git commit -am 'update README'`
 
-and push my changes to GitHub:  
+Push changes to origin (GitHub):  
 `git push origin master` or `git push origin branch-name`
 
 If you set the default push method for git to **matching** with:  
 `git config --global push.default matching`
 
-Then you can simply use `git push` from your current branch whether master or some other branch.
+Then you can simply use `git push` from your current branch.
+
+For `git push` to work from your new branch, set the upstream with:  
+`git branch --set-upstream-to=origin/<branch> <branch>`
 
 #### git pull
 
@@ -151,9 +154,10 @@ The long version:
 After creating a new branch, you can shorten pull (and push) commands by setting the upstream branch in git config:  
 `git branch --set-upstream-to=origin/<branch> <branch>`
 
-Now you can simply use `git pull` when you want to pull in changes from your GitHub repository for a specific branch.
+Now you can simply use `git pull` when you want to pull in changes from your remote repository for the branch currently checked out.
 
-Note, use `git config --list` to view all configured options.  
+Note, use `git config --list` to view all configured options.
+
 I hope you find this workflow as easy and efficient as I do.
 
 ## license
