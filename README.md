@@ -201,6 +201,7 @@ MIT: http://kma.mit-license.org
 [rg]:       https://github.com/jneen/rouge
 [gfm]:      https://help.github.com/articles/github-flavored-markdown
 [md]:       http://daringfireball.net/projects/markdown/
+[draftin]:  https://draftin.com/
 [ge]:       https://wiki.gnome.org/Apps/Gedit
 [fcb]:      http://kramdown.gettalong.org/syntax.html#fenced-code-blocks
 [mmpurl]:   http://middlemanapp.com/basics/pretty-urls/
