@@ -116,7 +116,7 @@ A good [step-by-step guide][fork] about how to contribute to a GitHub project li
    - HTTPS: `git clone https://github.com/yourusername/middleman-html5-foundation.git`
    -   SSH: `git clone git@github.com:yourusername/middleman-html5-foundation.git`
 1. optionally create your own feature branch `git checkout -b my-new-feature`
-1. commit your changes `git commit -am 'made some changes'`
+1. commit your changes `git commit -am 'made some cool changes'`
 1. push your master or branch commits to GitHub
    - `git push origin master`
    - `git push origin my-new-feature`
@@ -159,18 +159,18 @@ set the default push and pull methods for [git][git] to **matching** with:
 `git config --global push.default matching` and `git config --global pull.default matching`
 
 create a new branch and check it out:  
-`git checkout -b 'my-new-feature'`
+`git checkout -b 'branch-name'`
 
-link the origin/branch with your local one:  
-`git branch --set-upstream-to=origin/my-new-feature my-new-feature`
+link the origin/<branch> with your local <branch>:  
+`git branch --set-upstream-to=origin/branch-name branch-name`
 
 Now you can simply use `git push` or `git pull` from your current branch, inluding master. It's nice to be able to reduce the length of these commands so you don't have to think about what you're pushing or pulling each time. Just make sure you've got the right branch checked out!
 
 **long versions**
 
-push or pull changes to origin (GitHub):  
-`git push origin master` or for a branch `git push origin my-new-feature`  
-`git pull origin master` or for a branch `git pull origin my-new-feature`
+push or pull changes to/from origin (GitHub):  
+`git push origin master` or `git push origin branch-name`  
+`git pull origin master` or `git pull origin branch-name`
 
 Note, use `git config --list` to view all configured options.
 
