@@ -3,7 +3,7 @@ middleman-html5-foundation
 
 A base for a [Middleman][mm] site starting with the [HTML5 Boilerplate][html5bp], adding in the [middleman-blog extension][mmb] and the [Sass/Compass version][zfsass] of [Zurb's Foundation 5][zf].
 
-I like [BitBalloon][bb] for static websites because whenever you push to [GitHub][gh], [BitBalloon][bb] will run middleman and deploy the /build folder to your site automatically. It's a nice convenience for [Middleman][mm] sites. Instructions for the [BitBalloon setup](#bitballoon) are below.
+I like [BitBalloon][bb] for static websites because whenever you push to [GitHub][gh], [BitBalloon][bb] will run middleman and deploy the /build folder to your site automatically. It's a nice convenience for [Middleman][mm] sites. Instructions for the [BitBalloon setup](#bitballoon-setup) are below.
 
 - Based on the [middleman-foundation][mmf] and [middleman-zurb-foundation][mzf] projects.
 - Created with the [middleman.sh][mmsh] script from my [linux-deploy-scripts][lds] project.
@@ -20,7 +20,7 @@ Create a script to convert HTML to [HAML][haml]. I still have a bit to learn abo
 - [reasoning](#reasoning)
 - [usage](#usage)
    - [fork and clone](#fork-and-clone)
-   - [BitBalloon setup](#bitballoon)
+   - [BitBalloon setup](#bitballoon-setup)
 - [configuration](#configuration)
 - [contributing](#contributing)
    - [getting started](#getting-started)
@@ -68,7 +68,7 @@ Using [shell scripts][ss] with [Middleman][mm] and [Foundation][zf] fits well wi
 
 Or you can get it by running the [linux-deploy-scripts][lds] project for setup of a fresh [CentOS 7.0 x64][centos] workstation or server. If you choose the workstation option, you'll get a new build of this [Middleman project][mmhtml5f] in your [GitHub][gh] account. FYI, the server option installs [WordPress][wp] at [DigitalOcean][do].
 
-#### BitBalloon
+#### BitBalloon setup
 
 To set up the automatic [BitBalloon][bb] deploys, log in as a non-root user.  
 From your [Middleman][mm] project directory, install [Middleman extensions][mme] in the Gemfile:  
