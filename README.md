@@ -26,8 +26,9 @@ Create a script to convert HTML to [HAML][haml]. I still have a bit to learn abo
    - [getting started](#getting-started)
    - [steps](#steps)
 - [workflow](#workflow)
-   - [git push](#git-push)
-   - [git pull](#git-pull)
+   - [Markdown](#markdown)
+   - [git remote](#git-remote)
+   - [git push and pull](#git-push-and-pull)
 - [license](#license)
 
 ## features
@@ -71,19 +72,19 @@ Or you can get it by running the [linux-deploy-scripts][lds] project for setup o
 #### BitBalloon setup
 
 To set up the automatic [BitBalloon][bb] deploys, log in as a non-root user.  
-From your [Middleman][mm] project directory, install [Middleman extensions][mme] in the Gemfile:  
+cd to your [Middleman][mm] project directory and install run:  
 `sudo bundle install`
 
-Optionally, run the local middleman server at [http://localhost:4567/](http://localhost:4567/) to confirm that your new site is functional:  
+optionally, run the local middleman server at [http://localhost:4567/](http://localhost:4567/) to confirm that your new site is functional:  
 `bundle exec middleman`
 
-Commit your changes with [git][git]:  
+commit your changes with [git][git]:  
 `git commit -am 'first commit'`
 
-Push commits to your remote repository (GitHub):  
+push commits to your remote repository (GitHub):  
 `git push origin master`
 
-Go to the [BitBalloon][bb] site and:
+go to the [BitBalloon][bb] site and:
 
    1. do an initial manual drag and drop deploy of your new site
    1. go to your site in the BitBalloon UI
@@ -123,12 +124,25 @@ A good [step-by-step guide][fork] about how to contribute to a GitHub project li
 
 ## workflow
 
+#### Markdown
+
+After much tribulation with [Markdown][md] editors and various workflows, I've found what I think is a great way to create/maintain my [Markdown][md] docs.
+
+For blog posts or any long-form writing, [Draft][draftin] is wonderful, especially the `F11` mode. It mostly works with [GitHub Flavored Markdown][gfm] except for strikethrough and alignment of table columns.  
+I then *Export* my document to the appropriate [git][git] repository in [Dropbox][db] (which then syncs with my various devices).  
+Finally, I commit the new document with [git][git] and push it to the remote repository (which then gets automatically built and deployed on [BitBalloon][bb]).
+
+For other [Markdown][md] docs like *README.md* or *LICENSE.md* I find [gEdit][ge] to be easy and efficient. I can make some quick edits, commit changes in [git][git] and push them to [GitHub][gh] with just a few commands. It's also easy to repeat commits and pushes with the keyboard up arrow from the Terminal.  
+to commit again: `up up enter`, to push again: `up up enter`
+
+#### git remote
+
 If you didn't start by cloning an existing repository on GitHub, you'll need to add your remote origin URL:
 
    - HTTPS: `git remote add origin https://github.com/yourusername/middleman-html5-foundation.git`
    -   SSH: `git remote add origin git@github.com:yourusername/middleman-html5-foundation.git`
 
-You can also set the upstream repository to fetch changes from this project if you like:
+You can also set the upstream repository to fetch changes from this project:
 
    - HTTPS: `git remote add upstream https://github.com/keegoid/middleman-html5-foundation.git`
    -   SSH: `git remote add upstream git@github.com:keegoid/middleman-html5-foundation.git`
@@ -136,37 +150,29 @@ You can also set the upstream repository to fetch changes from this project if y
 Then `git fetch upstream master` and `git merge upstream/master`  
 or accomplish both with `git pull upstream master`
 
-#### git push
+#### git push and pull
 
-Commit changes with [git][git]:  
+commit changes with [git][git]:  
 `git commit -am 'update README'`
 
-Push changes to origin (GitHub):  
+push changes to origin (GitHub):  
 `git push origin master` or `git push origin branch-name`
 
-If you set the default push method for git to **matching** with:  
+set the default push method for git to **matching** with:  
 `git config --global push.default matching`
 
-Then you can simply use `git push` from your current branch.
-
-For `git push` to work from your new branch, set the upstream with:  
+for `git push` and `git pull` to work from your new branch, link the origin/branch with your local one:  
 `git branch --set-upstream-to=origin/<branch> <branch>`
 
-#### git pull
+Now you can simply use `git push` or `git pull` from your current branch.
 
-The git pull command can also be shortened by specifying some details in the git config.
-
-The long version:  
+long versions:  
+`git push origin master` or for a branch `git push origin my-new-feature`  
 `git pull origin master` or for a branch `git pull origin my-new-feature`
-
-After creating a new branch, you can shorten pull (and push) commands by setting the upstream branch in git config:  
-`git branch --set-upstream-to=origin/<branch> <branch>`
-
-Now you can simply use `git pull` when you want to pull in changes from your remote repository for the branch currently checked out.
 
 Note, use `git config --list` to view all configured options.
 
-I hope you find this workflow as easy and efficient as I do.
+I hope you find this workflow as efficient and effective as I do.
 
 ## license
 
@@ -193,7 +199,9 @@ MIT: http://kma.mit-license.org
 [nkg]:      https://github.com/sparklemotion/nokogiri
 [kd]:       https://github.com/gettalong/kramdown
 [rg]:       https://github.com/jneen/rouge
+[gfm]:      https://help.github.com/articles/github-flavored-markdown
 [md]:       http://daringfireball.net/projects/markdown/
+[ge]:       https://wiki.gnome.org/Apps/Gedit
 [fcb]:      http://kramdown.gettalong.org/syntax.html#fenced-code-blocks
 [mmpurl]:   http://middlemanapp.com/basics/pretty-urls/
 [mme]:      http://directory.middlemanapp.com/#/extensions/all
