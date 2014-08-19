@@ -13,9 +13,6 @@
 # ignore the build directory
 /build
 #
-# ignore the scripts directory
-/scripts
-#
 # ignore Sass' cache
 /.sass-cache
 /.cache
