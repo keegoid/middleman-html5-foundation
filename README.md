@@ -50,7 +50,7 @@ cd my_project
 bundle exec middleman
 ```
 
-Then go to `http://localhost:4567/__middleman/config/` in your browser.
+Then go to http://localhost:4567/__middleman/config/ in your browser.
 
 ## reasoning
 
