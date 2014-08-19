@@ -88,9 +88,9 @@ Go to the [BitBalloon][bb] site and:
    1. do an initial manual drag and drop deploy of your new site
    1. go to your site in the BitBalloon UI
    1. click *"Link site to a GitHub repo"* at the bottom right  
-     (currently a beta feature so you may need to request access)
+      (currently a beta feature so you may need to request access)
    1. choose which branch you want to deploy (typically master)
-   1. set the dir to `Other ...` enter `/build`
+   1. set the directory to `Other ...` enter `/build`
    1. for the build command, set: `bundle exec middleman build`
 
 Now whenever you push changes to [Github][gh], [BitBalloon][bb] will run middleman and deploy the /build folder to your site automatically. Easy!
