@@ -88,18 +88,6 @@ git commit -am 'first commit'
 git push origin master
 ```
 
-cd to your [Middleman][mm] project directory and install run:  
-`sudo bundle install`
-
-optionally, run the local middleman server at [http://localhost:4567/](http://localhost:4567/) to confirm that your new site is functional:  
-`bundle exec middleman`
-
-commit your changes with [git][git]:  
-`git commit -am 'first commit'`
-
-push commits to your remote repository (GitHub):  
-`git push origin master`
-
 go to the [BitBalloon][bb] site and:
 
    1. do an initial manual drag and drop deploy of your new site
@@ -168,17 +156,20 @@ or accomplish both with `git pull upstream master`
 
 #### git push and pull
 
-commit changes with [git][git]:  
-`git commit -am 'update README'`
+```bash
+# commit changes with git:
+git commit -am 'update README'
 
-set the default push and pull methods for [git][git] to **matching** with:  
-`git config --global push.default matching` and `git config --global pull.default matching`
+# set the default push and pull methods for git to "matching" with:
+git config --global push.default matching
+git config --global pull.default matching
 
-create a new branch and check it out:  
-`git checkout -b 'branch-name'`
+# create a new branch and check it out:
+git checkout -b 'branch-name'
 
-link the origin/\<branch\> with your local \<branch\>:  
-`git branch --set-upstream-to=origin/branch-name branch-name`
+# link the origin/<branch> with your local <branch>:
+git branch --set-upstream-to=origin/branch-name branch-name
+```
 
 Now you can simply use `git push` or `git pull` from your current branch, inluding master. It's nice to be able to reduce the length of these commands so you don't have to think about what you're pushing or pulling each time. Just make sure you've got the right branch checked out!
 
