@@ -3,7 +3,7 @@ middleman-html5-foundation
 
 A base for a [Middleman][mm] site starting with the [HTML5 Boilerplate][html5bp], adding in the [middleman-blog extension][mmb] and the [Sass/Compass version][zfsass] of [Zurb's Foundation 5][zf].
 
-I like [BitBalloon][bb] for static websites because whenever you push to [Github][gh], [BitBalloon][bb] will run middleman and deploy the /build folder to your site automatically. It's a nice convenience for [Middleman][mm] sites. Instructions for the [BitBalloon setup](#bitballoon) are below.
+I like [BitBalloon][bb] for static websites because whenever you push to [GitHub][gh], [BitBalloon][bb] will run middleman and deploy the /build folder to your site automatically. It's a nice convenience for [Middleman][mm] sites. Instructions for the [BitBalloon setup](#bitballoon) are below.
 
 - Based on the [middleman-foundation][mmf] and [middleman-zurb-foundation][mzf] projects.
 - Created with the [middleman.sh][mmsh] script from my [linux-deploy-scripts][lds] project.
@@ -70,7 +70,7 @@ Or you can get it by running the [linux-deploy-scripts][lds] project for setup o
 
 #### BitBalloon
 
-To set up the automatic [BitBalloon][bb] deploys, login as a non-root user.  
+To set up the automatic [BitBalloon][bb] deploys, log in as a non-root user.  
 From your Middleman project directory, install Middleman extensions in the Gemfile:  
 `sudo bundle install`
 
