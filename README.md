@@ -126,8 +126,6 @@ A good [step-by-step guide][fork] about how to contribute to a GitHub project li
    - `git push origin my-new-feature`
 1. create a new [Pull request][pull]
 
-<script src="https://gist.github.com/keegoid/a1766a151beedf83bfb7.js"></script>
-
 ## workflow
 
 #### Markdown
