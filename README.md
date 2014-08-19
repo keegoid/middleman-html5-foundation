@@ -133,7 +133,8 @@ You can also set the upstream repository to fetch changes from this project if y
    - HTTPS: `git remote add upstream https://github.com/keegoid/middleman-html5-foundation.git`
    -   SSH: `git remote add upstream git@github.com:keegoid/middleman-html5-foundation.git`
 
-Then `git fetch upstream` and `git merge upstream/master` or accomplish both with `git pull upstream`.
+Then `git fetch upstream master` and `git merge upstream/master`  
+or accomplish both with `git pull upstream master`
 
 #### git push
 
