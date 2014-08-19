@@ -155,20 +155,20 @@ or accomplish both with `git pull upstream master`
 commit changes with [git][git]:  
 `git commit -am 'update README'`
 
-push changes to origin (GitHub):  
-`git push origin master` or `git push origin branch-name`
-
 set the default push and pull methods for [git][git] to **matching** with:  
 `git config --global push.default matching` and `git config --global pull.default matching`
 
-for `git push` and `git pull` to work from your new branch, link the origin/branch with your local one:  
-`git branch --set-upstream-to=origin/<branch> <branch>`
+create a new branch and check it out:  
+`git checkout -b \'my-new-feature\'`
 
-Now you can simply use `git push` or `git pull` from your current branch. It's nice to be able to reduce the length of these commands so you don't have to think about what you're pushing or pulling each time. Just make sure you've got the right branch checked out!
+link the origin/branch with your local one:  
+`git branch --set-upstream-to=origin/my-new-feature my-new-feature`
+
+Now you can simply use `git push` or `git pull` from your current branch, inluding master. It's nice to be able to reduce the length of these commands so you don't have to think about what you're pushing or pulling each time. Just make sure you've got the right branch checked out!
 
 long versions:  
-`git push origin master` or for a branch `git push origin my-new-feature`  
-`git pull origin master` or for a branch `git pull origin my-new-feature`
+push changes to origin (GitHub): `git push origin master` or for a branch `git push origin my-new-feature`  
+pull changes from origin (GitHub): `git pull origin master` or for a branch `git pull origin my-new-feature`
 
 Note, use `git config --list` to view all configured options.
 
