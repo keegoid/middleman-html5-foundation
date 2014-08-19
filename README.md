@@ -158,13 +158,13 @@ commit changes with [git][git]:
 push changes to origin (GitHub):  
 `git push origin master` or `git push origin branch-name`
 
-set the default push method for git to **matching** with:  
-`git config --global push.default matching`
+set the default push and pull methods for [git][git] to **matching** with:  
+`git config --global push.default matching` and `git config --global pull.default matching`
 
 for `git push` and `git pull` to work from your new branch, link the origin/branch with your local one:  
 `git branch --set-upstream-to=origin/<branch> <branch>`
 
-Now you can simply use `git push` or `git pull` from your current branch.
+Now you can simply use `git push` or `git pull` from your current branch. It's nice to be able to reduce the length of these commands so you don't have to think about what you're pushing or pulling each time. Just make sure you've got the right branch checked out!
 
 long versions:  
 `git push origin master` or for a branch `git push origin my-new-feature`  
