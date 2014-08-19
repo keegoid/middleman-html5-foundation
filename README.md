@@ -71,13 +71,13 @@ Or you can get it by running the [linux-deploy-scripts][lds] project for setup o
 #### BitBalloon
 
 To set up the automatic [BitBalloon][bb] deploys, log in as a non-root user.  
-From your Middleman project directory, install Middleman extensions in the Gemfile:  
+From your [Middleman][mm] project directory, install [Middleman extensions][mme] in the Gemfile:  
 `sudo bundle install`
 
 Optionally, run the local middleman server at [http://localhost:4567/](http://localhost:4567/) to confirm that your new site is functional:  
 `bundle exec middleman`
 
-Commit your changes with git:  
+Commit your changes with [git][git]:  
 `git commit -am 'first commit'`
 
 Push commits to your remote repository (GitHub):  
@@ -87,7 +87,7 @@ Go to the [BitBalloon][bb] site and:
 
    1. do an initial manual drag and drop deploy of your new site
    1. go to your site in the BitBalloon UI
-   1. click *"Link site to a Github repo"* at the bottom right  
+   1. click *"Link site to a GitHub repo"* at the bottom right  
      (currently a beta feature so you may need to request access)
    1. choose which branch you want to deploy (typically master)
    1. set the dir to `Other ...` enter `/build`
@@ -130,7 +130,7 @@ If you didn't start by cloning an existing repository on GitHub, you'll need to 
 
 #### git push
 
-Commit changes:  
+Commit changes with [git][git]:  
 `git commit -am 'update README'`
 
 Push changes to origin (GitHub):  
@@ -196,6 +196,7 @@ MIT: http://kma.mit-license.org
 [ss]:       http://en.wikipedia.org/wiki/Shell_script
 [do]:       https://www.digitalocean.com/?refcode=251afd960495 "clicking this affiliate link benefits me at no cost to you"
 [bb]:       https://www.bitballoon.com/
+[git]:      http://git-scm.com/
 [gh]:       https://github.com/
 [wp]:       http://wordpress.org/
 [ld]:       http://en.wikipedia.org/wiki/Linux_distribution
