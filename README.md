@@ -200,6 +200,7 @@ MIT: http://kma.mit-license.org
 [ss]:       http://en.wikipedia.org/wiki/Shell_script
 [do]:       https://www.digitalocean.com/?refcode=251afd960495 "clicking this affiliate link benefits me at no cost to you"
 [bb]:       https://www.bitballoon.com/
+[gh]:       https://github.com/
 [ld]:       http://en.wikipedia.org/wiki/Linux_distribution
 [sh]:       http://en.wikipedia.org/wiki/Syntax_highlighting
 [learngit]: https://www.atlassian.com/git/tutorial/git-basics#!overview
