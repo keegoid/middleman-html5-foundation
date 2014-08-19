@@ -128,6 +128,13 @@ If you didn't start by cloning an existing repository on GitHub, you'll need to 
    - HTTPS: `git remote add origin https://github.com/yourusername/middleman-html5-foundation.git`
    -   SSH: `git remote add origin git@github.com:yourusername/middleman-html5-foundation.git`
 
+You can also set the upstream repository to fetch changes from this project if you like:
+
+   - HTTPS: `git remote add upstream https://github.com/keegoid/middleman-html5-foundation.git`
+   -   SSH: `git remote add upstream git@github.com:keegoid/middleman-html5-foundation.git`
+
+Then `git fetch upstream` and `git merge upstream/master` or accomplish both with `git pull upstream`.
+
 #### git push
 
 Commit changes with [git][git]:  
