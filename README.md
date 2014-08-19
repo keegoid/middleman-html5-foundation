@@ -19,6 +19,7 @@ Create a script to convert HTML to [HAML][haml]. I still have a bit to learn abo
 - [features](#features)
 - [reasoning](#reasoning)
 - [usage](#usage)
+   - [fork and clone](#fork-and-clone)
    - [BitBalloon setup](#bitballoon)
 - [configuration](#configuration)
 - [contributing](#contributing)
@@ -58,43 +59,29 @@ Using [shell scripts][ss] with [Middleman][mm] and [Foundation][zf] fits well wi
 
 ## usage
 
-Clone this project using HTTPS or SSH (recommended)
+#### fork and clone
 
-   - HTTPS: `git clone https://github.com/keegoid/middleman-html5-foundation.git`
-   -   SSH: `git clone git@github.com:keegoid/middleman-html5-foundation.git`
+1. Fork it http://github.com/keegoid/middleman-html5-foundation/fork
+1. Clone your own fork using HTTPS or SSH (recommended)
+   - HTTPS: `git clone https://github.com/yourusername/middleman-html5-foundation.git`
+   -   SSH: `git clone git@github.com:yourusername/middleman-html5-foundation.git`
 
-Or you can get it by running the [linux-deploy-scripts][lds] project for setup of a fresh [CentOS 7.0 x64][centos] workstation or server. If you choose the workstation option, you'll get a new build of this [Middleman project][mmhtml5f] in your [GitHub][gh] account. The server option installs [WordPress][wp] at [DigitalOcean][do] instead.
+Or you can get it by running the [linux-deploy-scripts][lds] project for setup of a fresh [CentOS 7.0 x64][centos] workstation or server. If you choose the workstation option, you'll get a new build of this [Middleman project][mmhtml5f] in your [GitHub][gh] account. FYI, the server option installs [WordPress][wp] at [DigitalOcean][do].
 
 #### BitBalloon
 
-To set up the automatic [BitBalloon][bb] deploys:
-
-Login as a non-root user to install with bundler.
-From your Middleman project directory:
-
-`sudo bundle install`
-
-To run the local middleman server at http://localhost:4567/
-
-`bundle exec middleman`
-
-Commit your changes with git:
-
-`git commit -am 'first commit'`
-
-Push commits to your remote repository stored on GitHub:
-
-`git push origin master`
-
+To set up the automatic [BitBalloon][bb] deploys, login as a non-root user.
+From your Middleman project directory, install Middleman extenstions in the Gemfile: `sudo bundle install`
+Optionally, run the local middleman server at [http://localhost:4567/](http://localhost:4567/) to confirm that your new site is functional: `bundle exec middleman`
+Commit your changes with git: `git commit -am 'first commit'`
+Push commits to your remote repository on GitHub: `git push origin master`
 Go to the [BitBalloon][bb] site and:
-
    - do an initial manual drag and drop deploy of your new site
    - go to your site in the BitBalloon UI
    - click "Link site to a Github repo" at the bottom right (currently a beta feature so you may need to request access)
    - choose which branch you want to deploy (typically master)
    - set the dir to "Other ..." and enter "/build"
    - for the build command, set: "bundle exec middleman build"
-
 Now whenever you push changes to [Github][gh], [BitBalloon][bb] will run middleman and deploy the /build folder to your site automatically. Easy!
 
 ## configuration
@@ -201,6 +188,7 @@ MIT: http://kma.mit-license.org
 [do]:       https://www.digitalocean.com/?refcode=251afd960495 "clicking this affiliate link benefits me at no cost to you"
 [bb]:       https://www.bitballoon.com/
 [gh]:       https://github.com/
+[wp]:       http://wordpress.org/
 [ld]:       http://en.wikipedia.org/wiki/Linux_distribution
 [sh]:       http://en.wikipedia.org/wiki/Syntax_highlighting
 [learngit]: https://www.atlassian.com/git/tutorial/git-basics#!overview
