@@ -85,12 +85,13 @@ Push commits to your remote repository on GitHub:
 
 Go to the [BitBalloon][bb] site and:
 
-   - do an initial manual drag and drop deploy of your new site
-   - go to your site in the BitBalloon UI
-   - click "Link site to a Github repo" at the bottom right (currently a beta feature so you may need to request access)
-   - choose which branch you want to deploy (typically master)
-   - set the dir to "Other ..." and enter "/build"
-   - for the build command, set: "bundle exec middleman build"
+   1. do an initial manual drag and drop deploy of your new site
+   1. go to your site in the BitBalloon UI
+   1. click "Link site to a Github repo" at the bottom right  
+     (currently a beta feature so you may need to request access)
+   1. choose which branch you want to deploy (typically master)
+   1. set the dir to "Other ..." and enter "/build"
+   1. for the build command, set: "bundle exec middleman build"
 
 Now whenever you push changes to [Github][gh], [BitBalloon][bb] will run middleman and deploy the /build folder to your site automatically. Easy!
 
