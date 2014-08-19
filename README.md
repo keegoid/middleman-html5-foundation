@@ -72,6 +72,22 @@ Or you can get it by running the [linux-deploy-scripts][lds] project for setup o
 #### BitBalloon setup
 
 To set up the automatic [BitBalloon][bb] deploys, log in as a non-root user.  
+
+```bash
+# cd to your [Middleman][mm] project directory and install run:
+sudo bundle install
+
+# optionally, run the local middleman server at http://localhost:4567/
+# to confirm that your new site is functional:
+bundle exec middleman
+
+# commit your changes with git:
+git commit -am 'first commit'
+
+# push commits to your remote repository (GitHub):
+git push origin master
+```
+
 cd to your [Middleman][mm] project directory and install run:  
 `sudo bundle install`
 
