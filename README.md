@@ -61,8 +61,8 @@ Using [shell scripts][ss] with [Middleman][mm] and [Foundation][zf] fits well wi
 
 #### fork and clone
 
-1. Fork it http://github.com/keegoid/middleman-html5-foundation/fork
-1. Clone your own fork using HTTPS or SSH (recommended)
+1. fork http://github.com/keegoid/middleman-html5-foundation/fork
+1. clone your own fork using HTTPS or SSH (recommended)
    - HTTPS: `git clone https://github.com/yourusername/middleman-html5-foundation.git`
    -   SSH: `git clone git@github.com:yourusername/middleman-html5-foundation.git`
 
@@ -87,11 +87,11 @@ Go to the [BitBalloon][bb] site and:
 
    1. do an initial manual drag and drop deploy of your new site
    1. go to your site in the BitBalloon UI
-   1. click "Link site to a Github repo" at the bottom right  
+   1. click *"Link site to a Github repo"* at the bottom right  
      (currently a beta feature so you may need to request access)
    1. choose which branch you want to deploy (typically master)
-   1. set the dir to "Other ..." enter "/build"
-   1. for the build command, set: "bundle exec middleman build"
+   1. set the dir to `Other ...` enter `/build`
+   1. for the build command, set: `bundle exec middleman build`
 
 Now whenever you push changes to [Github][gh], [BitBalloon][bb] will run middleman and deploy the /build folder to your site automatically. Easy!
 
@@ -110,7 +110,7 @@ A good [step-by-step guide][fork] about how to contribute to a GitHub project li
 
 #### steps
 
-1. fork it http://github.com/keegoid/middleman-html5-foundation/fork
+1. fork http://github.com/keegoid/middleman-html5-foundation/fork
 1. clone your own fork using HTTPS or SSH (recommended)
    - HTTPS: `git clone https://github.com/yourusername/middleman-html5-foundation.git`
    -   SSH: `git clone git@github.com:yourusername/middleman-html5-foundation.git`
