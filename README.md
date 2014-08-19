@@ -143,13 +143,23 @@ to commit again: `up up enter`, to push again: `up up enter`
 
 If you didn't start by cloning an existing repository on GitHub, you'll need to add your remote origin URL:
 
-   - HTTPS: `git remote add origin https://github.com/yourusername/middleman-html5-foundation.git`
-   -   SSH: `git remote add origin git@github.com:yourusername/middleman-html5-foundation.git`
+```bash
+# HTTPS:
+git remote add origin https://github.com/yourusername/middleman-html5-foundation.git
+
+# SSH:
+git remote add origin git@github.com:yourusername/middleman-html5-foundation.git
+```
 
 You can also set the upstream repository to fetch changes from this project:
 
-   - HTTPS: `git remote add upstream https://github.com/keegoid/middleman-html5-foundation.git`
-   -   SSH: `git remote add upstream git@github.com:keegoid/middleman-html5-foundation.git`
+```bash
+# HTTPS:
+git remote add upstream https://github.com/keegoid/middleman-html5-foundation.git
+
+# SSH:
+git remote add upstream git@github.com:keegoid/middleman-html5-foundation.git
+```
 
 Then `git fetch upstream master` and `git merge upstream/master`  
 or accomplish both with `git pull upstream master`
