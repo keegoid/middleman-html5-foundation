@@ -73,10 +73,15 @@ Or you can get it by running the [linux-deploy-scripts][lds] project for setup o
 To set up the automatic [BitBalloon][bb] deploys, login as a non-root user.  
 From your Middleman project directory, install Middleman extensions in the Gemfile:  
 `sudo bundle install`  
-Optionally, run the local middleman server at [http://localhost:4567/](http://localhost:4567/) to confirm that your new site is functional: `bundle exec middleman`  
-Commit your changes with git: `git commit -am 'first commit'`  
-Push commits to your remote repository on GitHub: `git push origin master`  
-Go to the [BitBalloon][bb] site and:  
+Optionally, run the local middleman server at [http://localhost:4567/](http://localhost:4567/) to confirm that your new site is functional:  
+`bundle exec middleman`  
+Commit your changes with git:  
+`git commit -am 'first commit'`  
+Push commits to your remote repository on GitHub:  
+`git push origin master`
+
+Go to the [BitBalloon][bb] site and:
+
    - do an initial manual drag and drop deploy of your new site
    - go to your site in the BitBalloon UI
    - click "Link site to a Github repo" at the bottom right (currently a beta feature so you may need to request access)
@@ -121,36 +126,25 @@ If you didn't start by cloning an existing repository on GitHub, you'll need to 
 
 #### git push
 
-From my Linux workstation:
-
-`git commit -am 'updated README'`
-
-and push my changes to GitHub:
-
-`git push origin master` or `git push origin branch-name`
-
-If you set the default push method for git to **matching** with:
-
-`git config --global push.default matching`
-
+From my Linux workstation:  
+`git commit -am 'updated README'`  
+and push my changes to GitHub:  
+`git push origin master` or `git push origin branch-name`  
+If you set the default push method for git to **matching** with:  
+`git config --global push.default matching`  
 Then you can simply use `git push` from your current branch whether master or some other branch.
 
 #### git pull
 
 The git pull command can also be shortened by specifying some details in the git config.
 
-The long version:
-
-`git pull origin master` or for a branch `git pull origin my-new-feature`
-
-After creating a new branch, you can shorten pull (and push) commands by setting the upstream branch in git config:
-
+The long version:  
+`git pull origin master` or for a branch `git pull origin my-new-feature`  
+After creating a new branch, you can shorten pull (and push) commands by setting the upstream branch in git config:  
 `git branch --set-upstream-to=origin/<branch> <branch>`
 
-Now you can simply use `git pull` when you want to pull in changes from your GitHub repository for a specific branch.
-
-Note, use `git config --list` to view all configured options.
-
+Now you can simply use `git pull` when you want to pull in changes from your GitHub repository for a specific branch.  
+Note, use `git config --list` to view all configured options.  
 I hope you find this workflow as easy and efficient as I do.
 
 ## license
