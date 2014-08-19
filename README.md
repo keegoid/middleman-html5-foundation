@@ -72,11 +72,14 @@ Or you can get it by running the [linux-deploy-scripts][lds] project for setup o
 
 To set up the automatic [BitBalloon][bb] deploys, login as a non-root user.  
 From your Middleman project directory, install Middleman extensions in the Gemfile:  
-`sudo bundle install`  
+`sudo bundle install`
+
 Optionally, run the local middleman server at [http://localhost:4567/](http://localhost:4567/) to confirm that your new site is functional:  
-`bundle exec middleman`  
+`bundle exec middleman`
+
 Commit your changes with git:  
-`git commit -am 'first commit'`  
+`git commit -am 'first commit'`
+
 Push commits to your remote repository on GitHub:  
 `git push origin master`
 
@@ -127,11 +130,14 @@ If you didn't start by cloning an existing repository on GitHub, you'll need to 
 #### git push
 
 From my Linux workstation:  
-`git commit -am 'updated README'`  
+`git commit -am 'updated README'`
+
 and push my changes to GitHub:  
-`git push origin master` or `git push origin branch-name`  
+`git push origin master` or `git push origin branch-name`
+
 If you set the default push method for git to **matching** with:  
-`git config --global push.default matching`  
+`git config --global push.default matching`
+
 Then you can simply use `git push` from your current branch whether master or some other branch.
 
 #### git pull
@@ -139,11 +145,13 @@ Then you can simply use `git push` from your current branch whether master or so
 The git pull command can also be shortened by specifying some details in the git config.
 
 The long version:  
-`git pull origin master` or for a branch `git pull origin my-new-feature`  
+`git pull origin master` or for a branch `git pull origin my-new-feature`
+
 After creating a new branch, you can shorten pull (and push) commands by setting the upstream branch in git config:  
 `git branch --set-upstream-to=origin/<branch> <branch>`
 
-Now you can simply use `git pull` when you want to pull in changes from your GitHub repository for a specific branch.  
+Now you can simply use `git pull` when you want to pull in changes from your GitHub repository for a specific branch.
+
 Note, use `git config --list` to view all configured options.  
 I hope you find this workflow as easy and efficient as I do.
 
