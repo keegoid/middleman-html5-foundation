@@ -252,7 +252,7 @@ MIT: http://kma.mit-license.org
 [ss]:       http://en.wikipedia.org/wiki/Shell_script
 [do]:       https://www.digitalocean.com/?refcode=251afd960495 "clicking this affiliate link benefits me at no cost to you"
 [db]:       https://db.tt/T7Pstjg "clicking this affiliate link benefits me at no cost to you"
-[twitter]:  https://twitter.com/intent/tweet?screen_name=keegoid&text=Your%20%40middlemanapp%20init%20script%20with%20%40h5bp%20and%40ZURBfoundation%20is%20really%20great%20https%3A%2F%2Fgithub.com%2Fkeegoid%2Fmiddleman-html5-foundation
+[twitter]:  https://twitter.com/intent/tweet?screen_name=keegoid&text=your%20%40middlemanapp%20init%20script%20with%20%40h5bp%20and%40ZURBfoundation%20works%20well%20https%3A%2F%2Fgithub.com%2Fkeegoid%2Fmiddleman-html5-foundation
 [bb]:       https://www.bitballoon.com/
 [git]:      http://git-scm.com/
 [gh]:       https://github.com/
