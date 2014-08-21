@@ -58,7 +58,7 @@ I made this project to gain a better understanding of [Middleman][mm], [HTML5][h
 
 Using [shell scripts][ss] with [Middleman][mm] and [Foundation][zf] fits well with my workflow since I use [CentOS][centos] for my programming work. It's a pretty stable [Linux distribution][ld]. I like it a lot and use it on my laptop and servers at [DigitalOcean][do].
 
-If this script helps you to better understand [CentOS][centos], [shell scripting][ss] or Linux in general, or if they help you to setup your own [Middleman][mm] site, please do let me know: [@keegoid][twitter]
+If this script helps you to better understand [CentOS][centos], [shell scripting][ss], Linux in general or if they help you to setup your own [Middleman][mm] site, please do let me know: [@keegoid][twitter]
 
 ## usage
 
