@@ -1,14 +1,14 @@
 middleman-html5-foundation
 ==========================
 
-A base for a [Middleman][mm] site starting with the [HTML5 Boilerplate][html5bp], adding in the [middleman-blog extension][mmb] and the [Sass/Compass version][zfsass] of [Zurb's Foundation 5][zf].
+A template for a [Middleman][mm] site with the [HTML5 Boilerplate][html5bp], the [middleman-blog extension][mmb] and the [Sass/Compass version][zfsass] of [Zurb's Foundation 5][zf].
 
 I like [BitBalloon][bb] for static websites because whenever you push to [GitHub][gh], [BitBalloon][bb] will run middleman and deploy the /build folder to your site automatically. It's a nice convenience for [Middleman][mm] sites. Instructions for the [BitBalloon setup](#bitballoon-setup) are below.
 
 - Based on the [middleman-foundation][mmf] and [middleman-zurb-foundation][mzf] projects.
-- Created with the [middleman.sh][mmsh] script from my [linux-deploy-scripts][lds] project.
+- Created with the [mm-init.sh][mmi] script.
 
-I prefer doing things with [shell scripts][ss] in Linux rather than creating a template that you just copy. Each step is clearly represented in the [middleman.sh][mmsh] script. I hope you like it!
+I prefer doing things with [shell scripts][ss] rather than starting from a template without knowing how it was created. If you're interested to see how this repository was created, you can see each step in the [mm-init.sh][mmi] script. You can also use that script to create your own version from scratch. I hope you like it!
 
 TODO:
 
@@ -58,6 +58,8 @@ I made this project to gain a better understanding of [Middleman][mm], [HTML5][h
 
 Using [shell scripts][ss] with [Middleman][mm] and [Foundation][zf] fits well with my workflow since I use [CentOS][centos] for my programming work. It's a pretty stable [Linux distribution][ld]. I like it a lot and use it on my laptop and servers at [DigitalOcean][do].
 
+If this script helps you to better understand [CentOS][centos], [shell scripting][ss] or Linux in general, or if they help you to setup your own [Middleman][mm] site, please do let me know: [@keegoid][twitter]
+
 ## usage
 
 #### fork and clone
@@ -67,7 +69,13 @@ Using [shell scripts][ss] with [Middleman][mm] and [Foundation][zf] fits well wi
    - HTTPS: `git clone https://github.com/yourusername/middleman-html5-foundation.git`
    -   SSH: `git clone git@github.com:yourusername/middleman-html5-foundation.git`
 
-Or you can get it by running the [linux-deploy-scripts][lds] project for setup of a fresh [CentOS 7.0 x64][centos] workstation or server. If you choose the workstation option, you'll get a new build of this [Middleman project][mmhtml5f] in your [GitHub][gh] account. FYI, the server option installs [WordPress][wp] at [DigitalOcean][do].
+Or you can get it by downloading and running the [mm-init.sh][mmi] script:
+
+```bash
+cd my_project
+chmod u+x mm-init.sh
+./mm-init.sh
+```
 
 #### BitBalloon setup
 
@@ -132,11 +140,11 @@ A good [step-by-step guide][fork] about how to contribute to a GitHub project li
 
 After much tribulation with [Markdown][md] editors and various workflows, I've found what I think is a great way to create/maintain my [Markdown][md] docs.
 
-For blog posts or any long-form writing, [Draft][draftin] is wonderful, especially the `F11` mode. It mostly works with [GitHub Flavored Markdown][gfm] except for strikethrough and alignment of table columns.
+For blog posts or any long-form writing [Draft][draftin] is wonderful, especially the `F11` mode. It mostly works with [GitHub Flavored Markdown][gfm] except for strikethrough and alignment of table columns.
 I then *Export* my document to the appropriate [git][git] repository in [Dropbox][db] (which then syncs with my various devices).
 Finally, I commit the new document with [git][git] and push it to the remote repository (which then gets automatically built and deployed on [BitBalloon][bb]).
 
-For other [Markdown][md] docs like *README.md* or *LICENSE.md* I find [gEdit][ge] to be easy and efficient. I can make some quick edits, commit changes in [git][git] and push them to [GitHub][gh] with just a few commands. It's also easy to repeat commits and pushes with the keyboard up arrow from the Terminal.  
+For other [Markdown][md] docs like *README.md* or *LICENSE.md* I find [gEdit][ge] to be easy and efficient. I can make some quick edits, commit changes in [git][git] and push them to [GitHub][gh] with just a few commands. It's also easy to repeat commits and pushes with the keyboard up arrow from the [Linux console][lc].  
 to commit again: `up up enter`, to push again: `up up enter`
 
 #### git remote
@@ -167,17 +175,29 @@ or accomplish both with `git pull upstream master`
 #### git push and pull
 
 ```bash
-# commit changes with git:
-git commit -am 'update README'
-
-# set the default push and pull methods for git to "matching" with:
+# git config
+# author
+git config --global user.name 'Keegan Mullaney'
+git config --global user.email 'keegan@kmauthorized.com'
+# select a text editor, I prefer vi, you can also use vim or something else
+git config --global core.editor vi
+# add some SVN-like aliases
+git config --global alias.st status
+git config --global alias.co checkout
+git config --global alias.br branch
+git config --global alias.up rebase
+git config --global alias.ci commit
+# set the default push and pull methods for git to "matching"
 git config --global push.default matching
 git config --global pull.default matching
 
-# create a new branch and check it out:
+# commit changes with git
+git commit -am 'update README'
+
+# create a new branch and check it out
 git checkout -b 'branch-name'
 
-# link the origin/<branch> with your local <branch>:
+# link the origin/<branch> with your local <branch>
 git branch --set-upstream-to=origin/branch-name branch-name
 ```
 
@@ -202,8 +222,7 @@ Website: http://kmauthorized.com
 MIT: http://kma.mit-license.org
 
 
-[lds]:      https://github.com/keegoid/linux-deploy-scripts
-[mmsh]:     https://github.com/keegoid/linux-deploy-scripts/blob/master/scripts/middleman.sh
+[mmi]:      
 [mmhtml5f]: https://github.com/keegoid/middleman-html5-foundation
 [mm]:       https://github.com/middleman/middleman
 [mmb]:      https://github.com/middleman/middleman-blog
@@ -229,9 +248,11 @@ MIT: http://kma.mit-license.org
 [html5]:    http://en.wikipedia.org/wiki/Html5
 [zfsass]:   http://foundation.zurb.com/docs/sass.html
 [centos]:   http://centos.org/
+[lc]:       http://en.wikipedia.org/wiki/Linux_console
 [ss]:       http://en.wikipedia.org/wiki/Shell_script
 [do]:       https://www.digitalocean.com/?refcode=251afd960495 "clicking this affiliate link benefits me at no cost to you"
 [db]:       https://db.tt/T7Pstjg "clicking this affiliate link benefits me at no cost to you"
+[twitter]:  https://twitter.com/intent/tweet?screen_name=keegoid&text=Your%20%40middlemanapp%20init%20script%20with%20%40h5bp%20and%40ZURBfoundation%20is%20really%20great!
 [bb]:       https://www.bitballoon.com/
 [git]:      http://git-scm.com/
 [gh]:       https://github.com/
