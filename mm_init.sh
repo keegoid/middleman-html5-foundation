@@ -12,9 +12,16 @@ echo "*                                            "
 echo "* MIT: http://kma.mit-license.org            "
 echo "*********************************************"
 
+# check to make sure script is being run as root
+if [ "$(id -u)" != "0" ]; then
+   printf "\033[40m\033[1;31mERROR: Root check FAILED (you MUST be root to use this script)! Quitting...\033[0m\n" >&2
+   exit 1
+fi
+
 ####################################################
 # EDIT THESE VARIABLES WITH YOUR INFO
 REAL_NAME='Keegan Mullaney'
+USER_NAME='kmullaney' #your Linux non-root user
 EMAIL_ADDRESS='keegan@kmauthorized.com'
 SSH_KEY_COMMENT='my workstation'
 MIDDLEMAN_DOMAIN='keeganmullaney.com'
@@ -26,40 +33,58 @@ UPSTREAM_PROJECT='middleman-html5-foundation'
 UPSTREAM_REPO="keegoid/$UPSTREAM_PROJECT.git"
 
 # set software version here
+EPEL_VERSION='7-0.2'
 RUBY_VERSION='2.1.2'       # to check version - https://www.ruby-lang.org/en/downloads/
 
 # software download URL
+EPEL_URL="http://dl.fedoraproject.org/pub/epel/beta/7/x86_64/epel-release-${EPEL_VERSION}.noarch.rpm"
 RUBY_URL="https://get.rvm.io"
 
-# local repository location
-REPOS="$HOME/repos"
-if [ -d $HOME/Dropbox ]; then
-   REPOS=$HOME/Dropbox/Repos
-fi
-PROJECT_DIRECTORY="$REPOS/$MIDDLEMAN_DOMAIN"
+# GPG public keys
+EPEL_KEY="http://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-$EPEL_VERSION"
 
-# make repos directory if it doesn't exist
-mkdir -pv $REPOS
-
-# files
-SSH_KEY="$HOME/.ssh/id_rsa"
-GIT_IGNORE="$HOME/.gitignore"
-
-# init option variables
-HTTPS=false
-SSH=false
-
+########## YUM ##########
+# EPEL
 echo
-echo "Do you wish to use HTTPS or SSH for git operations?"
-select yn in "HTTPS" "SSH"; do
-   case $yn in
-      "HTTPS") HTTPS=true;;
-        "SSH") SSH=true;;
-            *) echo "case not found..."
-   esac
-   break
-done
+read -p "Press enter to test the EPEL install..."
+if rpm -qa | grep -q epel
+then
+   echo "EPEL was already configured"
+else
+   read -p "Press enter to import the EPEL gpg key..."
+   # import rpm key
+   ImportPublicKey $EPEL_KEY
+   # list imported gpg keys
+   rpm -qa gpg*
+   # run the install
+   echo
+   read -p "Press enter to continue with EPEL install..."
+   rpm -ivh $EPEL_URL
+   # test new repo
+   echo
+   read -p "Press enter to test the new repo..."
+   yum check-update
+fi
 
+# install Node.js for running the local web server and npm for the CLI
+if rpm -qa | grep -q nodejs; then
+   echo "nodejs was already installed"
+else
+   echo
+   read -p "Press enter to install nodejs and npm..."
+   yum --enablerepo=epel -y install nodejs npm
+fi
+
+# install git
+if rpm -q git; then
+   echo "git was already installed"
+else
+   echo
+   read -p "Press enter to install git..."
+   yum -y install git
+fi
+
+########## GEM ##########
 # install Ruby and RubyGems
 read -p "Press enter to install ruby and rubygems..."
 if ruby -v | grep -q "ruby $RUBY_VERSION"; then
@@ -78,40 +103,89 @@ else
    source /usr/local/rvm/scripts/rvm && echo "rvm sourced and added to .bashrc"
 fi
 
-# update gems
-echo
-read -p "Press enter to update gems..."
-gem update
-
+# update gem package manager
 echo
 read -p "Press enter to update the gem package manager..."
 gem update --system
 
-# install Node.js for running the local web server and npm for the CLI
-if rpm -qa | grep -q nodejs; then
-   echo "nodejs was already installed"
-else
-   echo
-   read -p "Press enter to install nodejs and npm..."
-   yum --enablerepo=epel -y install nodejs npm
-fi
-
-# install Middleman
+# install necessary gems
 if $(gem list middleman -i); then
-   echo "middleman gem already installed"
+   echo "gem middleman is already installed"
 else
    echo
    read -p "Press enter to install middleman..."
    gem install middleman
 fi
 
-# install git
-if rpm -q git; then
-   echo "git was already installed"
+if $(gem list middleman-syntax -i); then
+   echo "gem middleman-syntax is already installed"
 else
    echo
-   read -p "Press enter to install git..."
-   yum -y install git
+   read -p "Press enter to install middleman-syntax..."
+   gem install middleman-syntax
+fi
+
+if $(gem list foundation -i); then
+   echo "gem foundation is already installed"
+else
+   echo
+   read -p "Press enter to install foundation..."
+   gem install foundation
+fi
+
+# update gems
+echo
+read -p "Press enter to update gems..."
+gem update
+
+########## NPM ##########
+
+# install bower and grunt-cli
+npm install -g bower grunt-cli
+
+########## NON-ROOT USER ##########
+echo "switching to non-root user..."
+su $USER_NAME
+
+PROJECT_DIRECTORY="$REPOS/$UPSTREAM_PROJECT"
+# local repository location
+REPOS="$HOME/repos"
+if [ -d $HOME/Dropbox ]; then
+   REPOS="$HOME/Dropbox/Repos"
+fi
+PROJECT_DIRECTORY="$REPOS/$MIDDLEMAN_DOMAIN"
+
+# make repos directory if it doesn't exist
+mkdir -pv $REPOS
+
+# files
+SSH_KEY="$HOME/.ssh/id_rsa"
+GIT_IGNORE="$HOME/.gitignore"
+
+# init option variables
+HTTPS=false
+SSH=false
+
+# HTTPS or SSH
+echo
+echo "Do you wish to use HTTPS or SSH for git operations?"
+select yn in "HTTPS" "SSH"; do
+   case $yn in
+      "HTTPS") HTTPS=true;;
+        "SSH") SSH=true;;
+            *) echo "case not found..."
+   esac
+   break
+done
+
+# start using rvm
+echo
+read -p "Press enter to start using rvm..."
+if cat $HOME/.bashrc | grep -q "/usr/local/rvm/scripts/rvm"; then
+   echo "already added rvm to .bashrc"
+else
+   echo "source /usr/local/rvm/scripts/rvm" >> $HOME/.bashrc
+   source /usr/local/rvm/scripts/rvm && echo "rvm sourced and added to .bashrc"
 fi
 
 # configure git
@@ -179,10 +253,12 @@ read -p "Press enter when ready..."
 cd $REPOS
 echo "changing directory to $_"
 
-# generate a blog template for Middleman
+# middleman init html5 files
 if [ -d "$PROJECT_DIRECTORY" ]; then
    echo "$MIDDLEMAN_DOMAIN directory already exists, skipping middleman init..."
    read -p "Press enter to update your Middleman site instead..."
+   cd $MIDDLEMAN_DOMAIN
+   echo "changing directory to $_"
    bower update
 else
    # view templates ready to install
@@ -190,41 +266,52 @@ else
    read -p "Press enter to view available Middleman templates..."
    middleman init --help
 
-   # generate the site from the html5 and blog templates
-   read -p "Press enter to initialize a Middleman site for $MIDDLEMAN_DOMAIN..."
+   # view installed middleman gems
+   read -p "Press enter to view installed middleman gems..."
+   gem list middleman
+
+   # generate the site from the html5 boilerplate template
+   read -p "Press enter to init the html5 template files..."
    middleman init $MIDDLEMAN_DOMAIN --template=html5
+   read -p "Press enter to init the blog template files..."
    middleman init $MIDDLEMAN_DOMAIN --template=blog
+   read -p "Press enter to init the foundation-tmp files..."
+   foundation new foundation-tmp
+   # config.rb
+   read -p "Press enter to configure middleman-syntax..."
+#   activate :syntax
+#   set :markdown_engine, :kramdown
+
+   read -p "Press enter to activate the blog extension..."
+#   activate :blog do |blog|
+#       set options on blog
+#   end
+
+   read -p "Press enter to activate livereload..."
+#   activate :livereload
+
+   # build it
+   bundle exec middleman build
+
+   # directory indexes must be activated after middleman-blog
+   read -p "Press enter to activate Pretty URLs (directory indexes)..."
+#   activate :directory_indexes
+
+   # build it again
+   bundle exec middleman build
+
+   # print git status
+   read -p "Press enter to view git status..."
+   git status
+
+   # commit changes with git
+   read -p "Press enter to commit changes..."
+   git commit -am "first commit by $GITHUB_USER"
+
+   # push commits to your remote repository (GitHub)
+   read -p "Press enter to push changes to your remote repository (GitHub)..."
+   git push
 fi
-
-# change to newly cloned directory
-cd $MIDDLEMAN_DOMAIN
-echo "changing directory to $_"
-
-# configure the Gemfile with necessary Middleman extensions
-# middleman-syntax (Rouge)
-if cat Gemfile | grep -q "middleman-syntax"; then
-   echo "middleman-syntax extension already added"
-else
-   echo
-   read -p "Press enter to configure the Gemfile..."
-   echo '# Ruby based syntax highlighting utilizing Rouge' >> Gemfile
-   echo 'gem "middleman-syntax"' >> Gemfile
-   echo "middleman-syntax added to Gemfile"
-fi
-
-# middleman-blog
-if cat Gemfile | grep -q "middleman-blog"; then
-   echo "middleman-blog extension already added"
-else
-   echo
-   read -p "Press enter to configure the Gemfile..."
-   echo '# The Middleman blog extension' >> Gemfile
-   echo 'gem "middleman-blog"' >> Gemfile
-   echo "middleman-blog added to Gemfile"
-fi
-
-# config.rb
-
 
 # check if an upstream repo exists
 if echo $UPSTREAM_REPO | grep -q $GITHUB_USER; then
@@ -255,6 +342,9 @@ else
    git merge upstream/master
 fi
 
+# switch back to root user
+exit
+
 # update gems
 echo
 read -p "Press enter to update gems..."
@@ -264,19 +354,10 @@ echo
 echo "**********************************************************************"
 echo "* manual steps:                                                       "
 echo "*                                                                     "
-echo "* login as a non-root user, cd to $MIDDLEMAN_DOMAIN and run:          "
-echo "*    sudo bundle install                                              "
-echo "*                                                                     "
 echo "* to run the local middleman server at http://localhost:4567/         "
 echo "*    bundle exec middleman                                            "
 echo "*                                                                     "
-echo "* commit changes with git:                                            "
-echo "*    git commit -am \'first commit by $GITHUB_USER\'                  "
-echo "*                                                                     "
-echo "* push commits to your remote repository stored on GitHub:            "
-echo "*    git push origin master                                           "
-echo "*                                                                     "
-echo "* go to the BitBalloon site and:                                      "
+echo "* to setup automatic the BitBalloon build:                            "
 echo "*    - do an initial manual drag and drop deploy of your new site     "
 echo "*    - go to your site in the BitBalloon UI                           "
 echo "*    - click \"Link site to a Github repo\" at the bottom right       "
@@ -287,6 +368,31 @@ echo "*    - for the build command, set: \"bundle exec middleman build\"    "
 echo "*                                                                     "
 echo "* Now whenever you push to Github, BitBalloon will run middleman      "
 echo "* and deploy the /build folder to your site.                          "
+echo "**********************************************************************"
+
+echo
+echo "**********************************************************************"
+echo '* middleman-syntax helper code example:                               '
+echo '* <% code("ruby") do %>                                               '
+echo '* def my_cool_method(message)                                         '
+echo '*   puts message                                                      '
+echo '* end                                                                 '
+echo '* <% end %>                                                           '
+echo '*                                                                     '
+echo '* HAML helper code example                                            '
+echo '* :code                                                               '
+echo '*   # lang: ruby                                                      '
+echo '*                                                                     '
+echo '*   def my_cool_method(message)                                       '
+echo '*     puts message                                                    '
+echo '*   end                                                               '
+echo '*                                                                     '
+echo '* fenced code block example:                                          '
+echo '* ~~~ ruby                                                            '
+echo '* def my_cool_method(message)                                         '
+echo '*   puts message                                                      '
+echo '* end                                                                 '
+echo '* ~~~                                                                 '
 echo "**********************************************************************"
 
 echo "done with mm_init.sh"
