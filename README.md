@@ -6,7 +6,7 @@ A template for a [Middleman][mm] site with the [HTML5 Boilerplate][html5bp], the
 I like [BitBalloon][bb] for static websites because whenever you push to [GitHub][gh], [BitBalloon][bb] will run middleman and deploy the /build folder to your site automatically. It's a nice convenience for [Middleman][mm] sites. Instructions for the [BitBalloon setup](#bitballoon-setup) are below.
 
 - Based on the [middleman-foundation][mmf] and [middleman-zurb-foundation][mzf] projects.
-- Created with the [mm-init.sh][mmi] script.
+- Created with the [setup_part1_root.sh][mms1] and [setup_part2_nonroot.sh][mms2] scripts.
 
 I prefer doing things with [shell scripts][ss] rather than starting from a template without knowing how it was created. If you're interested to see how this repository was created, you can see each step in the [mm-init.sh][mmi] script. You can run that script to get your own site in under 5 minutes! I hope you like it!
 
@@ -226,7 +226,8 @@ Website: http://kmauthorized.com
 MIT: http://kma.mit-license.org
 
 
-[mmi]:      https://github.com/keegoid/middleman-html5-foundation/blob/master/mm_init.sh
+[mms1]:     https://github.com/keegoid/middleman-html5-foundation/blob/master/setup_part1_root.sh
+[mms2]:     https://github.com/keegoid/middleman-html5-foundation/blob/master/setup_part2_nonroot.sh
 [mmhtml5f]: https://github.com/keegoid/middleman-html5-foundation
 [mm]:       https://github.com/middleman/middleman
 [mmb]:      https://github.com/middleman/middleman-blog
