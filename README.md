@@ -14,24 +14,28 @@ TODO:
 
 Create a script to convert HTML to [HAML][haml]. I still have a bit to learn about that.
 
-## table of contents
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
-- [features](#features)
-- [reasoning](#reasoning)
-- [usage](#usage)
-   - [fork and clone](#fork-and-clone)
-   - [BitBalloon setup](#bitballoon-setup)
-- [configuration](#configuration)
-- [contributing](#contributing)
-   - [getting started](#getting-started)
-   - [steps](#steps)
-- [workflow](#workflow)
-   - [Markdown](#markdown)
-   - [git remote](#git-remote)
-   - [git push and pull](#git-push-and-pull)
-- [license](#license)
+- [Features](#features)
+- [Reasoning](#reasoning)
+- [Usage](#usage)
+    - [Fork and clone](#fork-and-clone)
+    - [BitBalloon setup](#bitballoon-setup)
+- [Configuration](#configuration)
+- [Contributing](#contributing)
+    - [Getting started](#getting-started)
+    - [Steps](#steps)
+- [Workflow](#workflow)
+    - [Markdown](#markdown)
+    - [Git remote](#git-remote)
+    - [Git push and pull](#git-push-and-pull)
+- [License](#license)
 
-## features
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+## Features
 
 - [Middleman][mm] built from the [HTML5 boilerplate][html5bp]. Written in [Ruby][ruby].
 - [Blogging][mmb] with support for articles, categories and tags.
@@ -52,7 +56,7 @@ bundle exec middleman
 
 Then go to [http://localhost:4567/__middleman/config/](http://localhost:4567/__middleman/config/) in your browser.
 
-## reasoning
+## Reasoning
 
 I made this project to gain a better understanding of [Middleman][mm], [HTML5][html5], [HAML][haml] and [Sass][sass] using the [Sass/Compass version][zfsass] of [Foundation 5][zf].
 
@@ -60,9 +64,9 @@ Using [shell scripts][ss] with [Middleman][mm] and [Foundation][zf] fits well wi
 
 If this script helps you to better understand [CentOS][centos], [shell scripting][ss], Linux in general or if they help you to setup your own [Middleman][mm] site, please do let me know: [@keegoid][twitter]
 
-## usage
+## Usage
 
-#### fork and clone
+#### Fork and clone
 
 1. fork http://github.com/keegoid/middleman-html5-foundation/fork
 1. clone your own fork using HTTPS or SSH (recommended)
@@ -108,20 +112,20 @@ go to the [BitBalloon][bb] site and:
 
 Now whenever you push changes to [Github][gh], [BitBalloon][bb] will run middleman and deploy the /build folder to your site automatically. Easy!
 
-## configuration
+## Configuration
 
 
 
-## contributing
+## Contributing
 
 Contributions are totally welcome.
 
-#### getting started
+#### Getting started
 
 A clear intro to [using git][learngit].  
 A good [step-by-step guide][fork] about how to contribute to a GitHub project like this one.
 
-#### steps
+#### Steps
 
 1. fork http://github.com/keegoid/middleman-html5-foundation/fork
 1. clone your own fork using HTTPS or SSH (recommended)
@@ -134,7 +138,7 @@ A good [step-by-step guide][fork] about how to contribute to a GitHub project li
    - `git push origin my-new-feature`
 1. create a new [Pull request][pull]
 
-## workflow
+## Workflow
 
 #### Markdown
 
@@ -147,7 +151,7 @@ Finally, I commit the new document with [git][git] and push it to the remote rep
 For other [Markdown][md] docs like *README.md* or *LICENSE.md* I find [gEdit][ge] to be easy and efficient. I can make some quick edits, commit changes in [git][git] and push them to [GitHub][gh] with just a few commands. It's also easy to repeat commits and pushes with the keyboard up arrow from the [Linux console][lc].  
 to commit again: `up up enter`, to push again: `up up enter`
 
-#### git remote
+#### Git remote
 
 If you didn't start by cloning an existing repository on GitHub, you'll need to add your remote origin URL:
 
@@ -172,7 +176,7 @@ git remote add upstream git@github.com:keegoid/middleman-html5-foundation.git
 Then `git fetch upstream master` and `git merge upstream/master`  
 or accomplish both with `git pull upstream master`
 
-#### git push and pull
+#### Git push and pull
 
 ```bash
 # git config
@@ -213,7 +217,7 @@ Note, use `git config --list` to view all configured options.
 
 I hope you find this workflow as efficient and effective as I do.
 
-## license
+## License
 
 Author : Keegan Mullaney  
 Company: KM Authorized LLC  
