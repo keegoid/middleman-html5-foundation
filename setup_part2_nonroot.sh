@@ -65,16 +65,6 @@ select hs in "HTTPS" "SSH"; do
    break
 done
 
-# start using rvm
-echo
-read -p "Press enter to start using rvm..."
-if cat $HOME/.bashrc | grep -q "/usr/local/rvm/scripts/rvm"; then
-   echo "already added rvm to .bashrc"
-else
-   echo "source /usr/local/rvm/scripts/rvm" >> $HOME/.bashrc
-   source /usr/local/rvm/scripts/rvm && echo "rvm sourced and added to .bashrc"
-fi
-
 # configure git
 if git config --list | grep -q $GIT_IGNORE; then
    echo "git was already configured."
@@ -152,10 +142,6 @@ else
    echo
    read -p "Press enter to view available Middleman templates..."
    middleman init --help
-
-   # view installed middleman gems
-   read -p "Press enter to view installed middleman gems..."
-   gem list middleman
 
    # generate the site from the html5 boilerplate template
    read -p "Press enter to init the html5 template files..."

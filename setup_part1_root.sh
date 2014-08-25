@@ -144,6 +144,10 @@ echo
 read -p "Press enter to update gems..."
 gem update
 
+# view installed middleman gems
+read -p "Press enter to view installed middleman gems..."
+gem list middleman
+
 ########## NPM ##########
 
 npm install -g bower grunt-cli
