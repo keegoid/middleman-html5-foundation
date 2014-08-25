@@ -27,7 +27,7 @@ fi
 # EDIT THESE VARIABLES WITH YOUR INFO
 REAL_NAME='Keegan Mullaney'
 EMAIL_ADDRESS='keegan@kmauthorized.com'
-SSH_KEY_COMMENT='my workstation'
+SSH_KEY_COMMENT='CentOS workstation'
 MIDDLEMAN_DOMAIN='keeganmullaney.com'
 GITHUB_USER='keegoid' #your GitHub username
 ####################################################
@@ -52,15 +52,14 @@ GIT_IGNORE="$HOME/.gitignore"
 
 # init option variables
 HTTPS=false
-SSH=false
 
 # HTTPS or SSH
 echo
 echo "Do you wish to use HTTPS or SSH for git operations?"
-select yn in "HTTPS" "SSH"; do
-   case $yn in
+select hs in "HTTPS" "SSH"; do
+   case $hs in
       "HTTPS") HTTPS=true;;
-        "SSH") SSH=true;;
+        "SSH") break;;
             *) echo "case not found..."
    esac
    break
@@ -165,6 +164,12 @@ else
    middleman init $MIDDLEMAN_DOMAIN --template=blog
    read -p "Press enter to init the foundation-tmp files..."
    foundation new foundation-tmp
+
+   # delete default css
+   #rm -rf 
+   
+   # copy foundation files to Middleman project
+   #cp -rf 
 
    # config.rb
    read -p "Press enter to configure middleman-syntax..."
