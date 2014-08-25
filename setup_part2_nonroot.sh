@@ -149,7 +149,7 @@ else
    read -p "Press enter to init the blog template files..."
    middleman init $MIDDLEMAN_DOMAIN --template=blog
    read -p "Press enter to init the foundation-tmp files..."
-   foundation new foundation-tmp
+   foundation new temp-foundation
 
    # delete default css
    #rm -rf 

@@ -150,7 +150,7 @@ gem list middleman
 
 ########## NPM ##########
 
-npm install -g bower grunt-cli
+npm install -g bower grunt-cli --save
 
 ME="$(basename "$(test -L "$0" && readlink "$0" || echo "$0")")"
 echo "done with $ME"
