@@ -8,7 +8,7 @@ I like [BitBalloon][bb] for static websites because whenever you push to [GitHub
 - Based on the [middleman-foundation][mmf] and [middleman-zurb-foundation][mzf] projects.
 - Created with the [setup_part1_root.sh][mms1] and [setup_part2_nonroot.sh][mms2] scripts.
 
-I prefer doing things with [shell scripts][ss] rather than starting from a template without knowing how it was created. If you're interested to see how this repository was created, you can see each step in the [mm-init.sh][mmi] script. You can run that script to get your own site in under 5 minutes! I hope you like it!
+I prefer doing things with [shell scripts][ss] rather than starting from a template without knowing how it was created. If you're interested to see how this repository was created, you can see each step in the setup scripts. You can run those scripts to get your own site in under 5 minutes! I hope you like it!
 
 TODO:
 
