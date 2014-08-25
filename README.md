@@ -3,12 +3,22 @@ middleman-html5-foundation
 
 A template for a [Middleman][mm] site with the [HTML5 Boilerplate][html5bp], the [middleman-blog extension][mmb] and the [Sass/Compass version][zfsass] of [Zurb's Foundation 5][zf].
 
-I like [BitBalloon][bb] for static websites because whenever you push to [GitHub][gh], [BitBalloon][bb] will run middleman and deploy the /build folder to your site automatically. It's a nice convenience for [Middleman][mm] sites. Instructions for the [BitBalloon setup](#bitballoon-setup) are below.
+Overview:
+
+I like [BitBalloon][bb] for static websites because whenever I push to [GitHub][gh], [BitBalloon][bb] will automatically run Middleman and deploy the /build folder to my site. It's a nice convenience for [Middleman][mm] sites. Instructions for the [BitBalloon setup][#bitballoon-setup] ar below.
 
 - Based on the [middleman-foundation][mmf] and [middleman-zurb-foundation][mzf] projects.
 - Created with the [setup_part1_root.sh][mms1] and [setup_part2_nonroot.sh][mms2] scripts.
 
 I prefer doing things with [shell scripts][ss] rather than starting from a template without knowing how it was created. If you're interested to see how this repository was created, you can see each step in the setup scripts. You can run those scripts to get your own site in under 5 minutes! I hope you like it!
+
+Reasoning:
+
+I made this project to gain a better understanding of [Middleman][mm], [HTML5][html5], [HAML][haml] and [Sass][sass] using the [Sass/Compass version][zfsass] of [Foundation 5][zf].
+
+Using [shell scripts][ss] with [Middleman][mm] and [Foundation][zf] fits well with my workflow since I use [CentOS][centos] for my programming work. It's a pretty stable [Linux distribution][ld]. I like it a lot and use it on my laptop and servers at [DigitalOcean][do].
+
+If this script helps you to better understand [CentOS][centos], [shell scripting][ss], Linux in general or if they help you to setup your own [Middleman][mm] site, please do let me know: [@keegoid][twitter]
 
 TODO:
 
@@ -19,18 +29,17 @@ Create a script to convert HTML to [HAML][haml]. I still have a bit to learn abo
 **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
 - [Features](#features)
-- [Reasoning](#reasoning)
 - [Usage](#usage)
-    - [Fork and clone](#fork-and-clone)
-    - [BitBalloon setup](#bitballoon-setup)
+      - [Fork and clone](#fork-and-clone)
+      - [BitBalloon setup](#bitballoon-setup)
 - [Configuration](#configuration)
 - [Contributing](#contributing)
-    - [Getting started](#getting-started)
-    - [Steps](#steps)
+      - [Getting started](#getting-started)
+      - [Steps](#steps)
 - [Workflow](#workflow)
-    - [Markdown](#markdown)
-    - [Git remote](#git-remote)
-    - [Git push and pull](#git-push-and-pull)
+      - [Markdown](#markdown)
+      - [Git remote](#git-remote)
+      - [Git push and pull](#git-push-and-pull)
 - [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -56,38 +65,34 @@ bundle exec middleman
 
 Then go to [http://localhost:4567/__middleman/config/](http://localhost:4567/__middleman/config/) in your browser.
 
-## Reasoning
-
-I made this project to gain a better understanding of [Middleman][mm], [HTML5][html5], [HAML][haml] and [Sass][sass] using the [Sass/Compass version][zfsass] of [Foundation 5][zf].
-
-Using [shell scripts][ss] with [Middleman][mm] and [Foundation][zf] fits well with my workflow since I use [CentOS][centos] for my programming work. It's a pretty stable [Linux distribution][ld]. I like it a lot and use it on my laptop and servers at [DigitalOcean][do].
-
-If this script helps you to better understand [CentOS][centos], [shell scripting][ss], Linux in general or if they help you to setup your own [Middleman][mm] site, please do let me know: [@keegoid][twitter]
-
 ## Usage
 
-#### Fork and clone
+##### Fork and clone
 
 1. fork http://github.com/keegoid/middleman-html5-foundation/fork
 1. clone your own fork using HTTPS or SSH (recommended)
    - HTTPS: `git clone https://github.com/yourusername/middleman-html5-foundation.git`
    -   SSH: `git clone git@github.com:yourusername/middleman-html5-foundation.git`
 
-Or you can get it by downloading and running the [mm-init.sh][mmi] script:
+Or you can get it by downloading and running the setup scripts:
 
 ```bash
 cd my_project
-chmod u+x mm-init.sh
-./mm-init.sh
+chmod u+x setup_part1_root.sh
+chmod u+x setup_part2_nonroot.sh
+./setup_part1_root.sh
+./setup_part2_nonroot.sh
 ```
 
-#### BitBalloon setup
+As the script names imply, run the first script as root user and the second one as the non-root user you plan to use regularly.
+
+##### BitBalloon setup
 
 To set up the automatic [BitBalloon][bb] deploys, log in as a non-root user.  
 
 ```bash
-# cd to your [Middleman][mm] project directory and install run:
-sudo bundle install
+# cd to your Middleman project directory and install run:
+bundle install
 
 # optionally, run the local middleman server at http://localhost:4567/
 # to confirm that your new site is functional:
@@ -120,12 +125,12 @@ Now whenever you push changes to [Github][gh], [BitBalloon][bb] will run middlem
 
 Contributions are totally welcome.
 
-#### Getting started
+##### Getting started
 
 A clear intro to [using git][learngit].  
 A good [step-by-step guide][fork] about how to contribute to a GitHub project like this one.
 
-#### Steps
+##### Steps
 
 1. fork http://github.com/keegoid/middleman-html5-foundation/fork
 1. clone your own fork using HTTPS or SSH (recommended)
@@ -140,7 +145,7 @@ A good [step-by-step guide][fork] about how to contribute to a GitHub project li
 
 ## Workflow
 
-#### Markdown
+##### Markdown
 
 After much tribulation with [Markdown][md] editors and various workflows, I've found what I think is a great way to create/maintain my [Markdown][md] docs.
 
@@ -151,9 +156,9 @@ Finally, I commit the new document with [git][git] and push it to the remote rep
 For other [Markdown][md] docs like *README.md* or *LICENSE.md* I find [gEdit][ge] to be easy and efficient. I can make some quick edits, commit changes in [git][git] and push them to [GitHub][gh] with just a few commands. It's also easy to repeat commits and pushes with the keyboard up arrow from the [Linux console][lc].  
 to commit again: `up up enter`, to push again: `up up enter`
 
-#### Git remote
+##### Git remote
 
-If you didn't start by cloning an existing repository on GitHub, you'll need to add your remote origin URL:
+If you didn't start by cloning your repository on [GitHub][gh], for example if you used `git init` on your workstation, you'll need to add your remote origin URL:
 
 ```bash
 # HTTPS:
@@ -176,7 +181,7 @@ git remote add upstream git@github.com:keegoid/middleman-html5-foundation.git
 Then `git fetch upstream master` and `git merge upstream/master`  
 or accomplish both with `git pull upstream master`
 
-#### Git push and pull
+##### Git push and pull
 
 ```bash
 # git config
@@ -205,7 +210,7 @@ git checkout -b 'branch-name'
 git branch -u origin/branch-name branch-name
 ```
 
-Now you can simply use `git push` or `git pull` from your current branch, inluding master. It's nice to be able to reduce the length of these commands so you don't have to think about what you're pushing or pulling each time. Just make sure you've got the right branch checked out!
+Now you can simply use `git push` or `git pull` from your current branch, including master. It's nice to be able to reduce the length of these commands so you don't have to think about what you're pushing or pulling each time. Just make sure you've got the right branch checked out!
 
 **long versions**
 
