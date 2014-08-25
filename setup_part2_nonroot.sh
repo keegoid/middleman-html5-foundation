@@ -41,7 +41,7 @@ REPOS="$HOME/repos"
 if [ -d $HOME/Dropbox ]; then
    REPOS="$HOME/Dropbox/Repos"
 fi
-PROJECT_DIRECTORY="$REPOS/$MIDDLEMAN_DOMAIN"
+PROJECT_DIRECTORY="$REPOS/$UPSTREAM_PROJECT"
 
 # make repos directory if it doesn't exist
 mkdir -pv $REPOS
@@ -133,11 +133,7 @@ echo "changing directory to $_"
 
 # middleman init html5 files
 if [ -d "$PROJECT_DIRECTORY" ]; then
-   echo "$MIDDLEMAN_DOMAIN directory already exists, skipping middleman init..."
-   read -p "Press enter to update your Middleman site instead..."
-   cd $MIDDLEMAN_DOMAIN
-   echo "changing directory to $_"
-   bower update
+   echo "$UPSTREAM_PROJECT directory already exists, skipping middleman init..."
 else
    # view templates ready to install
    echo
@@ -146,11 +142,15 @@ else
 
    # generate the site from the html5 boilerplate template
    read -p "Press enter to init the html5 template files..."
-   middleman init $MIDDLEMAN_DOMAIN --template=html5
+   middleman init $UPSTREAM_PROJECT --template=html5
    read -p "Press enter to init the blog template files..."
-   middleman init $MIDDLEMAN_DOMAIN --template=blog
+   middleman init $UPSTREAM_PROJECT --template=blog
    read -p "Press enter to init the foundation-tmp files..."
    foundation new temp-foundation
+
+   # change to project directory
+   cd $UPSTREAM_PROJECT
+   echo "changing directory to $_"
 
    # delete default css
    #rm -rf 
@@ -194,6 +194,24 @@ else
    git push
 fi
 
+# change to project directory
+cd $REPOS/$UPSTREAM_PROJECT
+echo "changing directory to $_"
+
+# create a new branch for changes (keeping master for upstream changes)
+echo
+read -p "Press enter to create a git branch for your site at $MIDDLEMAN_DOMAIN..."
+git branch $MIDDLEMAN_DOMAIN
+
+echo
+read -p "Press enter to set upstream for new branch..."
+git branch -u origin/$MIDDLEMAN_DOMAIN $MIDDLEMAN_DOMAIN
+
+echo
+echo "use this $MIDDLEMAN_DOMAIN branch to make your own site"
+echo "use the master branch to fetch and merge changes from the remote upstream repo:"
+echo "$UPSTREAM_REPO"
+
 # check if an upstream repo exists
 if echo $UPSTREAM_REPO | grep -q $GITHUB_USER; then
    echo "no upstream repository exists"
@@ -221,6 +239,41 @@ else
    echo
    read -p "Press enter to merge changes..."
    git merge upstream/master
+fi
+
+# git status, commit and push for master
+read -p "Press enter to view git status..."
+STATUS=git status
+
+if cat $STATUS | grep -q 'nothing to commit, working directory clean'; then
+   echo "skipping commit..."
+else
+   # commit changes with git
+   read -p "Press enter to commit changes..."
+   git commit -am "first commit by $GITHUB_USER"
+
+   # push commits to your remote repository (GitHub)
+   read -p "Press enter to push changes to your remote repository (GitHub)..."
+   git push
+fi
+
+# git status, commit and push for branch
+read -p "Press enter to switch to the $MIDDLEMAN_DOMAIN branch..."
+git checkout $MIDDLEMAN_DOMAIN
+
+read -p "Press enter to view git status..."
+STATUS=git status
+
+if cat $STATUS | grep -q 'nothing to commit, working directory clean'; then
+   echo "skipping commit..."
+else
+   # commit changes with git
+   read -p "Press enter to commit changes..."
+   git commit -am "first commit by $GITHUB_USER"
+
+   # push commits to your remote repository (GitHub)
+   read -p "Press enter to push changes to your remote repository (GitHub)..."
+   git push
 fi
 
 echo
