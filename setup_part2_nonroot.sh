@@ -52,6 +52,7 @@ GIT_IGNORE="$HOME/.gitignore"
 
 # init option variables
 HTTPS=false
+SSH=false
 
 # HTTPS or SSH
 echo
@@ -59,7 +60,7 @@ echo "Do you wish to use HTTPS or SSH for git operations?"
 select hs in "HTTPS" "SSH"; do
    case $hs in
       "HTTPS") HTTPS=true;;
-        "SSH") break;;
+        "SSH") SSH=true;;
             *) echo "case not found..."
    esac
    break
