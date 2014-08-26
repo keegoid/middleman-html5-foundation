@@ -140,7 +140,7 @@ A good [step-by-step guide][fork] about how to contribute to a GitHub project li
 1. commit your changes `git commit -am 'made some cool changes'`
 1. push your master or branch commits to GitHub
    - `git push origin master`
-   - `git push origin my-new-feature`
+   - `git push -u origin my-new-feature`
 1. create a new [Pull request][pull]
 
 ## Workflow
