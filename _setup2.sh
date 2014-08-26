@@ -109,7 +109,7 @@ if $SSH; then
       echo
       echo "***IMPORTANT***"
       echo "copy contents of id_rsa.pub (printed below) to the SSH keys section"
-      echo " of your GitHub account."
+      echo "of your GitHub account or authorized_keys section of your remote server."
       echo "highlight the text with your mouse and press ctrl+shift+c to copy"
       echo
       cat $SSH_KEY.pub
@@ -195,54 +195,64 @@ else
 fi
 
 # change to project directory
-cd $REPOS/$UPSTREAM_PROJECT
+cd $UPSTREAM_PROJECT
 echo "changing directory to $_"
 
 # create a new branch for changes (keeping master for upstream changes)
 echo
 read -p "Press enter to create a git branch for your site at $MIDDLEMAN_DOMAIN..."
-git branch $MIDDLEMAN_DOMAIN
+git checkout -b $MIDDLEMAN_DOMAIN
+
+# some work and some commits happen
+# some time passes
+#git fetch upstream
+#git rebase upstream/master or git rebase interactive upstream/master
+
+read -p "Press enter to push changes and set branch upstream in config..."
+git push -u origin $MIDDLEMAN_DOMAIN
+
+read -p "Press enter to checkout the master branch again..."
+git checkout master
 
 echo
-read -p "Press enter to set upstream for new branch..."
-git branch -u origin/$MIDDLEMAN_DOMAIN $MIDDLEMAN_DOMAIN
+echo "above could also be done with:"
+echo "git branch $MIDDLEMAN_DOMAIN"
+echo "git push origin $MIDDLEMAN_DOMAIN"
+echo "git branch -u origin/$MIDDLEMAN_DOMAIN $MIDDLEMAN_DOMAIN"
 
 echo
-echo "use this $MIDDLEMAN_DOMAIN branch to make your own site"
-echo "use the master branch to fetch and merge changes from the remote upstream repo:"
-echo "$UPSTREAM_REPO"
+echo "*************************************************************************"
+echo "* - use the $MIDDLEMAN_DOMAIN branch to make your own site               "
+echo "* - use the master branch to fetch and merge changes from the remote     "
+echo "* upstream repo: $UPSTREAM_REPO                                          "
+echo "*************************************************************************"
 
-# check if an upstream repo exists
-if echo $UPSTREAM_REPO | grep -q $GITHUB_USER; then
-   echo "no upstream repository exists"
+# assign the original repository to a remote called "upstream"
+if git config --list | grep -q $UPSTREAM_REPO; then
+   echo "upstream repo already configured: https://github.com/$UPSTREAM_REPO"
 else
-   # assign the original repository to a remote called "upstream"
-   if git config --list | grep -q $UPSTREAM_REPO; then
-      echo "upstream repo already configured: https://github.com/$UPSTREAM_REPO"
+   echo
+   read -p "Press enter to assign upstream repository..."
+   if $HTTPS; then
+      git remote add upstream https://github.com/$UPSTREAM_REPO && echo "remote upstream added for https://github.com/$UPSTREAM_REPO"
    else
-      echo
-      read -p "Press enter to assign upstream repository..."
-      if $HTTPS; then
-         git remote add upstream https://github.com/$UPSTREAM_REPO && echo "remote upstream added for https://github.com/$UPSTREAM_REPO"
-      else
-         git remote add upstream git@github.com:$UPSTREAM_REPO && echo "remote upstream added for git@github.com:$UPSTREAM_REPO"
-      fi
+      git remote add upstream git@github.com:$UPSTREAM_REPO && echo "remote upstream added for git@github.com:$UPSTREAM_REPO"
    fi
-
-   # pull in changes not present in local repository, without modifying local files
-   echo
-   read -p "Press enter to fetch changes from upstream repository..."
-   git fetch upstream master
-   echo "upstream fetch done"
-
-   # merge any changes fetched into local working files
-   echo
-   read -p "Press enter to merge changes..."
-   git merge master
-
-   # or combine fetch and merge with:
-   #git pull upstream master
 fi
+
+# pull in changes not present in local repository, without modifying local files
+echo
+read -p "Press enter to fetch changes from upstream repository..."
+git fetch upstream
+echo "upstream fetch done"
+
+# merge any changes fetched into local working files
+echo
+read -p "Press enter to merge changes..."
+git merge upstream/master
+
+# or combine fetch and merge with:
+#git pull upstream master
 
 # git status, commit and push for master
 read -p "Press enter to view git status..."
@@ -257,26 +267,7 @@ else
 
    # push commits to your remote repository (GitHub)
    read -p "Press enter to push changes to your remote repository (GitHub)..."
-   git push
-fi
-
-# git status, commit and push for branch
-read -p "Press enter to switch to the $MIDDLEMAN_DOMAIN branch..."
-git checkout $MIDDLEMAN_DOMAIN
-
-read -p "Press enter to view git status..."
-STATUS=git status
-
-if cat $STATUS | grep -q 'nothing to commit, working directory clean'; then
-   echo "skipping commit..."
-else
-   # commit changes with git
-   read -p "Press enter to commit changes..."
-   git commit -am "first commit by $GITHUB_USER"
-
-   # push commits to your remote repository (GitHub)
-   read -p "Press enter to push changes to your remote repository (GitHub)..."
-   git push
+   git push origin master
 fi
 
 echo
