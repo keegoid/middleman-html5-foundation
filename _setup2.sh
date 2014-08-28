@@ -15,13 +15,11 @@ echo "* Instructions:                              "
 echo "* - run as non-root user                     "
 echo "*********************************************"
 
-# check to make sure script is being run as root
-if [ "$(id -u)" != "0" ]; then
-   echo "non-root user detected, continuing..."
-else
-   printf "\033[40m\033[1;31mERROR: non-root check FAILED (you MUST NOT be root to use this script)! Quitting...\033[0m\n" >&2
-   exit 1
-fi
+# include functions library
+source includes/_km.lib
+
+# check to make sure script is NOT being run as root
+is_root && die "\033[40m\033[1;31mERROR: root check FAILED (you must NOT be root to use this script). Quitting...\033[0m\n" || echo "non-root user detected, proceeding..."
 
 ####################################################
 # EDIT THESE VARIABLES WITH YOUR INFO
@@ -41,14 +39,9 @@ REPOS="$HOME/repos"
 if [ -d $HOME/Dropbox ]; then
    REPOS="$HOME/Dropbox/Repos"
 fi
-PROJECT_DIRECTORY="$REPOS/$UPSTREAM_PROJECT"
 
 # make repos directory if it doesn't exist
 mkdir -pv $REPOS
-
-# files
-SSH_KEY="$HOME/.ssh/id_rsa"
-GIT_IGNORE="$HOME/.gitignore"
 
 # init option variables
 HTTPS=false
@@ -67,72 +60,24 @@ select hs in "HTTPS" "SSH"; do
 done
 
 # configure git
-if git config --list | grep -q $GIT_IGNORE; then
-   echo "git was already configured."
-else
-   echo
-   read -p "Press enter to configure git..."
-   # specify a user
-   git config --global user.name "$REAL_NAME"
-   git config --global user.email "$EMAIL_ADDRESS"
-   # select a text editor
-   git config --global core.editor vi
-   # add some SVN-like aliases
-   git config --global alias.st status
-   git config --global alias.co checkout
-   git config --global alias.br branch
-   git config --global alias.up rebase
-   git config --global alias.ci commit
-   # set default push and pull behavior to the old method
-   git config --global push.default matching
-   git config --global pull.default matching
-   # create a global .gitignore file
-   echo -e "# global list of file types to ignore \
-\n \
-\n# gedit temp files \
-\n*~" > $GIT_IGNORE
-   git config --global core.excludesfile $GIT_IGNORE
-   echo "git was configured"
-fi
+configure_git
 
+# generate an RSA SSH keypair if none exists
 if $SSH; then
-   echo
-   read -p "Press enter to check if id_rsa exists"
-   if [ -e $SSH_KEY ]; then
-      echo "$SSH_KEY already exists"
-   else
-      # create a new ssh key with provided ssh key comment
-      echo "create new key: $SSH_KEY"
-      read -p "Press enter to generate a new SSH key"
-      ssh-keygen -b 4096 -t rsa -C "$SSH_KEY_COMMENT"
-      echo "SSH key generated"
-      echo
-      echo "***IMPORTANT***"
-      echo "copy contents of id_rsa.pub (printed below) to the SSH keys section"
-      echo "of your GitHub account or authorized_keys section of your remote server."
-      echo "highlight the text with your mouse and press ctrl+shift+c to copy"
-      echo
-      cat $SSH_KEY.pub
-      echo
-      read -p "Press enter to continue..."
-   fi
-fi
-
-# linux-deploy-scripts repository
-if $SSH; then
+   gen_ssh_keys $SSH_KEY_COMMENT
    echo
    echo "Have you copied id_rsa.pub (above) to the SSH keys section"
    echo "of your GitHub account?"
+   echo
+   read -p "Press enter when ready..."
 fi
-echo
-read -p "Press enter when ready..."
 
 # change to repos directory
 cd $REPOS
 echo "changing directory to $_"
 
 # middleman init html5 files
-if [ -d "$PROJECT_DIRECTORY" ]; then
+if [ -d "$REPOS/$UPSTREAM_PROJECT" ]; then
    echo "$UPSTREAM_PROJECT directory already exists, skipping middleman init..."
 else
    # view templates ready to install

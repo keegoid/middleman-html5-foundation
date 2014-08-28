@@ -78,8 +78,8 @@ Or you can get it by downloading and running the setup scripts:
 
 ```bash
 cd my_project
-chmod u+x setup_part1_root.sh
-chmod u+x setup_part2_nonroot.sh
+chmod +x setup_part1_root.sh
+chmod +x setup_part2_nonroot.sh
 ./setup_part1_root.sh
 ./setup_part2_nonroot.sh
 ```
