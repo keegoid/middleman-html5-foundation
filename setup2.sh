@@ -16,7 +16,7 @@ echo "* - run as non-root user                     "
 echo "*********************************************"
 
 # include functions library
-source includes/km.lib
+[ -d includes ] && source includes/km.lib || source km.lib
 
 # check to make sure script is NOT being run as root
 is_root && die "\033[40m\033[1;31mERROR: root check FAILED (you must NOT be root to use this script). Quitting...\033[0m\n" || echo "non-root user detected, proceeding..."
@@ -30,31 +30,22 @@ MIDDLEMAN_DOMAIN='keeganmullaney.com'
 GITHUB_USER='keegoid' #your GitHub username
 ####################################################
 
-# upstream project info
+# upstream project name
 UPSTREAM_PROJECT='middleman-html5-foundation'
-UPSTREAM_REPO="keegoid/$UPSTREAM_PROJECT.git"
 
 # local repository location
-REPOS="$HOME/Repos"
-if [ -d $HOME/Dropbox ]; then
-   REPOS="$HOME/Dropbox/Repos"
-fi
+REPOS=$(locate_repos)
 
-# make repos directory if it doesn't exist
-mkdir -pv $REPOS
-
-# init option variables
-HTTPS=false
+# init
 SSH=false
 
-# HTTPS or SSH
 echo
-echo "Do you wish to use HTTPS or SSH for git operations?"
-select hs in "HTTPS" "SSH"; do
-   case $hs in
-      "HTTPS") HTTPS=true;;
-        "SSH") SSH=true;;
-            *) echo "case not found..."
+echo "Do you wish to use SSH for git operations (no uses HTTPS)?"
+select yn in "Yes" "No"; do
+   case $yn in
+      "Yes") SSH=true;;
+       "No") break;;
+          *) echo "case not found..."
    esac
    break
 done
@@ -148,76 +139,13 @@ cd $UPSTREAM_PROJECT
 echo "changing directory to $_"
 
 # create a new branch for changes (keeping master for upstream changes)
-echo
-read -p "Press enter to create a git branch for your site at $MIDDLEMAN_DOMAIN..."
-git checkout -b $MIDDLEMAN_DOMAIN
-
-# some work and some commits happen
-# some time passes
-#git fetch upstream
-#git rebase upstream/master or git rebase interactive upstream/master
-
-read -p "Press enter to push changes and set branch upstream in config..."
-git push -u origin $MIDDLEMAN_DOMAIN
-
-read -p "Press enter to checkout the master branch again..."
-git checkout master
-
-echo
-echo "above could also be done with:"
-echo "git branch $MIDDLEMAN_DOMAIN"
-echo "git push origin $MIDDLEMAN_DOMAIN"
-echo "git branch -u origin/$MIDDLEMAN_DOMAIN $MIDDLEMAN_DOMAIN"
-
-echo
-echo "*************************************************************************"
-echo "* - use the $MIDDLEMAN_DOMAIN branch to make your own site               "
-echo "* - use the master branch to fetch and merge changes from the remote     "
-echo "* upstream repo: $UPSTREAM_REPO                                          "
-echo "*************************************************************************"
+create_branch $MIDDLEMAN_DOMAIN
 
 # assign the original repository to a remote called "upstream"
-if git config --list | grep -q $UPSTREAM_REPO; then
-   echo "upstream repo already configured: https://github.com/$UPSTREAM_REPO"
-else
-   echo
-   read -p "Press enter to assign upstream repository..."
-   if $HTTPS; then
-      git remote add upstream https://github.com/$UPSTREAM_REPO && echo "remote upstream added for https://github.com/$UPSTREAM_REPO"
-   else
-      git remote add upstream git@github.com:$UPSTREAM_REPO && echo "remote upstream added for git@github.com:$UPSTREAM_REPO"
-   fi
-fi
+merge_upstream_repo $UPSTREAM_PROJECT $SSH
 
-# pull in changes not present in local repository, without modifying local files
-echo
-read -p "Press enter to fetch changes from upstream repository..."
-git fetch upstream
-echo "upstream fetch done"
-
-# merge any changes fetched into local working files
-echo
-read -p "Press enter to merge changes..."
-git merge upstream/master
-
-# or combine fetch and merge with:
-#git pull upstream master
-
-# git status, commit and push for master
-read -p "Press enter to view git status..."
-STATUS=git status
-
-if cat $STATUS | grep -q 'nothing to commit, working directory clean'; then
-   echo "skipping commit..."
-else
-   # commit changes with git
-   read -p "Press enter to commit changes..."
-   git commit -am "first commit by $GITHUB_USER"
-
-   # push commits to your remote repository (GitHub)
-   read -p "Press enter to push changes to your remote repository (GitHub)..."
-   git push origin master
-fi
+# git commit and push if necessary
+commit_and_push $GITHUB_USER
 
 echo
 echo "**********************************************************************"
