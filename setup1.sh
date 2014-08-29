@@ -15,7 +15,7 @@ echo "* - run as root user                         "
 echo "*********************************************"
 
 # include functions library
-source includes/_km.lib
+source includes/km.lib
 
 # check to make sure script is being run as root
 is_root && echo "root user detected, proceeding..." ||
@@ -93,5 +93,4 @@ gem list middleman
 
 npm install -g bower grunt-cli
 
-ME="$(basename "$(test -L "$0" && readlink "$0" || echo "$0")")"
-echo "done with $ME"
+script_name "done with "

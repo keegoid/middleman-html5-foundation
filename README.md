@@ -69,22 +69,30 @@ Then go to [http://localhost:4567/__middleman/config/](http://localhost:4567/__m
 
 ##### Fork and clone
 
+In this way you'll be able to receive upstream changes in the master branch, and merge them into your own branch as you see fit.
+
 1. fork http://github.com/keegoid/middleman-html5-foundation/fork
 1. clone your own fork using HTTPS or SSH (recommended)
    - HTTPS: `git clone https://github.com/yourusername/middleman-html5-foundation.git`
    -   SSH: `git clone git@github.com:yourusername/middleman-html5-foundation.git`
 
-Or you can get it by downloading and running the setup scripts:
+Or you can get it by downloading and running the setup scripts plus library file:
 
 ```bash
-cd my_project
-chmod +x setup_part1_root.sh
-chmod +x setup_part2_nonroot.sh
-./setup_part1_root.sh
-./setup_part2_nonroot.sh
-```
+# download the scripts
+curl -kfsSLO https://github.com/keegoid/middleman-html5-foundation/blob/master/setup1.sh
+curl -kfsSLO https://github.com/keegoid/middleman-html5-foundation/blob/master/setup2.sh
 
-As the script names imply, run the first script as root user and the second one as the non-root user you plan to use regularly.
+# make the includes directory and download the library file to it
+mkdir -pv includes
+cd includes
+curl -kfsSLO https://github.com/keegoid/middleman-html5-foundation/blob/master/includes/km.lib
+
+# run the scripts
+cd ..
+./setup1.sh #run as root user
+./setup2.sh #run as non-root user
+```
 
 ##### BitBalloon setup
 

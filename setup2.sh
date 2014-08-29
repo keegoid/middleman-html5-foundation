@@ -16,7 +16,7 @@ echo "* - run as non-root user                     "
 echo "*********************************************"
 
 # include functions library
-source includes/_km.lib
+source includes/km.lib
 
 # check to make sure script is NOT being run as root
 is_root && die "\033[40m\033[1;31mERROR: root check FAILED (you must NOT be root to use this script). Quitting...\033[0m\n" || echo "non-root user detected, proceeding..."
@@ -35,7 +35,7 @@ UPSTREAM_PROJECT='middleman-html5-foundation'
 UPSTREAM_REPO="keegoid/$UPSTREAM_PROJECT.git"
 
 # local repository location
-REPOS="$HOME/repos"
+REPOS="$HOME/Repos"
 if [ -d $HOME/Dropbox ]; then
    REPOS="$HOME/Dropbox/Repos"
 fi
@@ -115,6 +115,10 @@ else
 
    read -p "Press enter to activate livereload..."
 #   activate :livereload
+
+   read -p "Press enter to add ignored directories..."
+#   ignore 'setup/*'
+#   ignore 'includes/*'
 
    # build it
    bundle exec middleman build
@@ -260,5 +264,4 @@ echo '* end                                                                 '
 echo '* ~~~                                                                 '
 echo "**********************************************************************"
 
-ME="$(basename "$(test -L "$0" && readlink "$0" || echo "$0")")"
-echo "done with $ME"
+script_name "done with "
