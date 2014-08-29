@@ -15,7 +15,8 @@ echo "* - run as root user                         "
 echo "*********************************************"
 
 # include functions library
-source includes/km.lib
+[ -d includes ] && source includes/linuxkm.lib || source linuxkm.lib
+[ -d includes ] && source includes/gitkm.lib || source gitkm.lib
 
 # check to make sure script is being run as root
 is_root && echo "root user detected, proceeding..." ||

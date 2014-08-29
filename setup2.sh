@@ -16,7 +16,8 @@ echo "* - run as non-root user                     "
 echo "*********************************************"
 
 # include functions library
-[ -d includes ] && source includes/km.lib || source km.lib
+[ -d includes ] && source includes/linuxkm.lib || source linuxkm.lib
+[ -d includes ] && source includes/gitkm.lib || source gitkm.lib
 
 # check to make sure script is NOT being run as root
 is_root && die "\033[40m\033[1;31mERROR: root check FAILED (you must NOT be root to use this script). Quitting...\033[0m\n" || echo "non-root user detected, proceeding..."
