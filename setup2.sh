@@ -15,10 +15,6 @@ echo "* Instructions:                              "
 echo "* - run as non-root user                     "
 echo "*********************************************"
 
-# include functions library
-[ -d includes ] && source includes/linuxkm.lib || source linuxkm.lib
-[ -d includes ] && source includes/gitkm.lib || source gitkm.lib
-
 # check to make sure script is NOT being run as root
 is_root && die "\033[40m\033[1;31mERROR: root check FAILED (you must NOT be root to use this script). Quitting...\033[0m\n" || echo "non-root user detected, proceeding..."
 
@@ -30,6 +26,16 @@ SSH_KEY_COMMENT='CentOS workstation'
 MIDDLEMAN_DOMAIN='keeganmullaney.com'
 GITHUB_USER='keegoid' #your GitHub username
 ####################################################
+
+# library files
+LIBS='linuxkm.lib gitkm.lib'
+LIBS_DIR='includes' #where you put library files
+
+# source function libraries
+for lib in $LIBS; do
+   [ -d $LIBS_DIR ] && { source $LIBS_DIR/$lib > /dev/null 2>&1 && echo "sourced: $LIBS_DIR/$lib" || echo "can't find: $LIBS_DIR/$lib"; } ||
+                       { source $lib > /dev/null 2>&1 && echo "sourced: $lib" || echo "can't find: $lib"; }
+done
 
 # upstream project name
 UPSTREAM_PROJECT='middleman-html5-foundation'

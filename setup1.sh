@@ -14,15 +14,20 @@ echo "* Instructions:                              "
 echo "* - run as root user                         "
 echo "*********************************************"
 
-# include functions library
-[ -d includes ] && source includes/linuxkm.lib || source linuxkm.lib
-[ -d includes ] && source includes/gitkm.lib || source gitkm.lib
-
 # check to make sure script is being run as root
-is_root && echo "root user detected, proceeding..." ||
-die "\033[40m\033[1;31mERROR: root check FAILED (you must be root to use this script). Quitting...\033[0m\n"
+is_root && echo "root user detected, proceeding..." || die "\033[40m\033[1;31mERROR: root check FAILED (you must be root to use this script). Quitting...\033[0m\n"
 
-# list of gems to install
+# library files
+LIBS='linuxkm.lib gitkm.lib'
+LIBS_DIR='includes' #where you put library files
+
+# source function libraries
+for lib in $LIBS; do
+   [ -d $LIBS_DIR ] && { source $LIBS_DIR/$lib > /dev/null 2>&1 && echo "sourced: $LIBS_DIR/$lib" || echo "can't find: $LIBS_DIR/$lib"; } ||
+                       { source $lib > /dev/null 2>&1 && echo "sourced: $lib" || echo "can't find: $lib"; }
+done
+
+# gems to install
 GEMS="middleman middleman-blog middleman-syntax middleman-livereload foundation"
 
 # set software version here
