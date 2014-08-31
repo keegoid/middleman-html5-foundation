@@ -41,6 +41,8 @@ done
 UPSTREAM_PROJECT='middleman-html5-foundation'
 
 # local repository location
+echo
+echo "Select a user account for this project: "
 REPOS=$(locate_repos)
 echo "repository location will be: $REPOS"
 
