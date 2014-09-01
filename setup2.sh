@@ -15,43 +15,22 @@ echo "* Instructions:                              "
 echo "* - run as non-root user                     "
 echo "*********************************************"
 
-source setup1.sh
+source config.sh
 
 # check to make sure script is NOT being run as root
 is_root && die "\033[40m\033[1;31mERROR: root check FAILED (you must NOT be root to use this script). Quitting...\033[0m\n" || echo "non-root user detected, proceeding..."
 
-# init
-DROPBOX=false
-SSH=false
+# upstream project name
+UPSTREAM_PROJECT='middleman-html5-foundation'
 
-# use Dropbox?
-echo
-echo "Do you wish to use Dropbox for your repositories?"
-select yn in "Yes" "No"; do
-   case $yn in
-      "Yes") DROPBOX=true;;
-       "No") break;;
-          *) echo "case not found..."
-   esac
-   break
-done
-
-# use SSH?
-echo
-echo "Do you wish to use SSH for git operations (no uses HTTPS)?"
-select yn in "Yes" "No"; do
-   case $yn in
-      "Yes") SSH=true;;
-       "No") break;;
-          *) echo "case not found..."
-   esac
-   break
-done
+# current directory
+WORKING_DIR="$PWD"
 
 # local repository location
 echo
 REPOS=$(locate_repos $(logname) $DROPBOX)
 echo "repository location: $REPOS"
+
 
 # configure git
 configure_git "$REAL_NAME" "$EMAIL_ADDRESS"
@@ -140,6 +119,10 @@ fi
 # change to project directory
 cd $UPSTREAM_PROJECT
 echo "changing directory to $_"
+
+# copy config.sh to repository location
+echo
+cp -rf "$WORKING_DIR/config.sh" . && echo "copied config.sh to $PWD"
 
 # create a new branch for changes (keeping master for upstream changes)
 create_branch $MIDDLEMAN_DOMAIN
