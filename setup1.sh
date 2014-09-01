@@ -14,25 +14,26 @@ echo "* Instructions:                              "
 echo "* - run as root user                         "
 echo "*********************************************"
 
-# check to make sure script is being run as root
-is_root && echo "root user detected, proceeding..." || die "\033[40m\033[1;31mERROR: root check FAILED (you must be root to use this script). Quitting...\033[0m\n"
+####################################################
+# EDIT THESE VARIABLES WITH YOUR INFO
+REAL_NAME='Keegan Mullaney'
+EMAIL_ADDRESS='keegan@kmauthorized.com'
+SSH_KEY_COMMENT='CentOS workstation'
+MIDDLEMAN_DOMAIN='keeganmullaney.com'
+GITHUB_USER='keegoid' #your GitHub username
+LIBS_DIR='includes' #where you put extra stuff
 
-# library files
-LIBS='linuxkm.lib gitkm.lib'
-LIBS_DIR='includes' #where you put library files
-
-# source function libraries
-for lib in $LIBS; do
-   [ -d $LIBS_DIR ] && { source $LIBS_DIR/$lib > /dev/null 2>&1 && echo "sourced: $LIBS_DIR/$lib" || echo "can't find: $LIBS_DIR/$lib"; } ||
-                       { source $lib > /dev/null 2>&1 && echo "sourced: $lib" || echo "can't find: $lib"; }
-done
+# OPTIONALLY, UPDATE THESE VARIABLES
+# set software version here if newer versions exist
+EPEL_VERSION='7-1'   # http://dl.fedoraproject.org/pub/epel/beta/7/x86_64/
+RUBY_VERSION='2.1.2' # https://www.ruby-lang.org/en/downloads/
 
 # gems to install
 GEMS="middleman middleman-blog middleman-syntax middleman-livereload foundation"
+####################################################
 
-# set software version here
-EPEL_VERSION='7-0.2'
-RUBY_VERSION='2.1.2'       # to check version - https://www.ruby-lang.org/en/downloads/
+# upstream project name
+UPSTREAM_PROJECT='middleman-html5-foundation'
 
 # software download URL
 EPEL_URL="http://dl.fedoraproject.org/pub/epel/beta/7/x86_64/epel-release-${EPEL_VERSION}.noarch.rpm"
@@ -40,6 +41,18 @@ RUBY_URL="https://get.rvm.io"
 
 # GPG public keys
 EPEL_KEY="http://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-$EPEL_VERSION"
+
+# library files
+LIBS='linuxkm.lib gitkm.lib'
+
+# source function libraries
+for lib in $LIBS; do
+   [ -d $LIBS_DIR ] && { source $LIBS_DIR/$lib > /dev/null 2>&1 && echo "sourced: $LIBS_DIR/$lib" || echo "can't find: $LIBS_DIR/$lib"; } ||
+                       { source $lib > /dev/null 2>&1 && echo "sourced: $lib" || echo "can't find: $lib"; }
+done
+
+# check to make sure script is being run as root
+is_root && echo "root user detected, proceeding..." || die "\033[40m\033[1;31mERROR: root check FAILED (you must be root to use this script). Quitting...\033[0m\n"
 
 ########## YUM ##########
 

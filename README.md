@@ -30,16 +30,18 @@ Create a script to convert HTML to [HAML][haml]. I still have a bit to learn abo
 
 - [Features](#features)
 - [Usage](#usage)
-      - [Fork and clone](#fork-and-clone)
-      - [BitBalloon setup](#bitballoon-setup)
-- [Configuration](#configuration)
+      - [Fork and Clone](#fork-and-clone)
+      - [Download](#download)
+      - [Configure](#configure)
+      - [Run](#run)
+      - [BitBalloon Setup](#bitballoon-setup)
 - [Contributing](#contributing)
       - [Getting started](#getting-started)
       - [Steps](#steps)
 - [Workflow](#workflow)
       - [Markdown](#markdown)
-      - [Git remote](#git-remote)
-      - [Git push and pull](#git-push-and-pull)
+      - [Git Remote](#git-remote)
+      - [Git Push and Pull](#git-push-and-pull)
 - [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -67,34 +69,59 @@ Then go to [http://localhost:4567/__middleman/config/](http://localhost:4567/__m
 
 ## Usage
 
-##### Fork and clone
+##### Fork and Clone
 
-In this way you'll be able to receive upstream changes in the master branch, and merge them into your own branch as you see fit.
+In this way, you'll be able to receive upstream changes in the master branch and merge them into your own branch as you see fit.
 
 1. fork http://github.com/keegoid/middleman-html5-foundation/fork
 1. clone your own fork using HTTPS or SSH (recommended)
    - HTTPS: `git clone https://github.com/yourusername/middleman-html5-foundation.git`
    -   SSH: `git clone git@github.com:yourusername/middleman-html5-foundation.git`
 
-Or you can get it by downloading and running the setup scripts plus library file:
+##### Download
+
+Optionally, you can get it by downloading and running the setup scripts plus library files. This option will build everything step-by-step so you can see exactly what happens.
 
 ```bash
-# download the scripts
-curl -kfsSLO https://github.com/keegoid/middleman-html5-foundation/blob/master/setup1.sh
-curl -kfsSLO https://github.com/keegoid/middleman-html5-foundation/blob/master/setup2.sh
+# download the scripts and library files to the same directory
+curl -kfsSLO https://raw.githubusercontent.com/keegoid/middleman-html5-foundation/master/setup1.sh
+curl -kfsSLO https://raw.githubusercontent.com/keegoid/middleman-html5-foundation/master/setup2.sh
+curl -kfsSLO https://raw.githubusercontent.com/keegoid/middleman-html5-foundation/master/includes/linuxkm.lib
+curl -kfsSLO https://raw.githubusercontent.com/keegoid/middleman-html5-foundation/master/includes/gitkm.lib
+```
 
-# make the includes directory and download the library file to it
-mkdir -pv includes
-cd includes
-curl -kfsSLO https://github.com/keegoid/middleman-html5-foundation/blob/master/includes/km.lib
+##### Configure
 
-# run the scripts
-cd ..
+Configure **setup1.sh** before running.
+
+```bash
+####################################################
+# EDIT THESE VARIABLES WITH YOUR INFO
+REAL_NAME='Keegan Mullaney'
+EMAIL_ADDRESS='keegan@kmauthorized.com'
+SSH_KEY_COMMENT='CentOS workstation'
+MIDDLEMAN_DOMAIN='keeganmullaney.com'
+GITHUB_USER='keegoid' #your GitHub username
+LIBS_DIR='includes' #where you put extra stuff
+
+# OPTIONALLY, UPDATE THESE VARIABLES
+# set software version here if newer versions exist
+EPEL_VERSION='7-1'   # http://dl.fedoraproject.org/pub/epel/beta/7/x86_64/
+RUBY_VERSION='2.1.2' # https://www.ruby-lang.org/en/downloads/
+
+# gems to install
+GEMS="middleman middleman-blog middleman-syntax middleman-livereload foundation"
+####################################################
+```
+
+##### Run
+
+```bash
 ./setup1.sh #run as root user
 ./setup2.sh #run as non-root user
 ```
 
-##### BitBalloon setup
+##### BitBalloon Setup
 
 To set up the automatic [BitBalloon][bb] deploys, log in as a non-root user.  
 
@@ -124,10 +151,6 @@ go to the [BitBalloon][bb] site and:
    1. for the build command, set: `bundle exec middleman build`
 
 Now whenever you push changes to [Github][gh], [BitBalloon][bb] will run middleman and deploy the /build folder to your site automatically. Easy!
-
-## Configuration
-
-
 
 ## Contributing
 
@@ -164,7 +187,7 @@ Finally, I commit the new document with [git][git] and push it to the remote rep
 For other [Markdown][md] docs like *README.md* or *LICENSE.md* I find [gEdit][ge] to be easy and efficient. I can make some quick edits, commit changes in [git][git] and push them to [GitHub][gh] with just a few commands. It's also easy to repeat commits and pushes with the keyboard up arrow from the [Linux console][lc].  
 to commit again: `up up enter`, to push again: `up up enter`
 
-##### Git remote
+##### Git Remote
 
 If you didn't start by cloning your repository on [GitHub][gh], for example if you used `git init` on your workstation, you'll need to add your remote origin URL:
 
@@ -189,7 +212,7 @@ git remote add upstream git@github.com:keegoid/middleman-html5-foundation.git
 Then `git fetch upstream master` and `git merge upstream/master`  
 or accomplish both with `git pull upstream master`
 
-##### Git push and pull
+##### Git Push and Pull
 
 ```bash
 # git config
