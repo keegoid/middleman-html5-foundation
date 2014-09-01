@@ -80,20 +80,17 @@ In this way, you'll be able to receive upstream changes in the master branch and
 
 ##### Download
 
-Optionally, you can get it by downloading the setup scripts and library files. This option will build everything step-by-step so you can see exactly what happens.
+Optionally, you can get it by downloading the **config.sh** and **setup1.sh** scripts. This option will build everything step-by-step so you can see exactly what happens.
 
 ```bash
-# download the scripts and library files to the same directory
+# download the scripts
 curl -kfsSLO https://raw.githubusercontent.com/keegoid/middleman-html5-foundation/master/config.sh
 curl -kfsSLO https://raw.githubusercontent.com/keegoid/middleman-html5-foundation/master/setup1.sh
-curl -kfsSLO https://raw.githubusercontent.com/keegoid/middleman-html5-foundation/master/setup2.sh
-curl -kfsSLO https://raw.githubusercontent.com/keegoid/middleman-html5-foundation/master/includes/linuxkm.lib
-curl -kfsSLO https://raw.githubusercontent.com/keegoid/middleman-html5-foundation/master/includes/gitkm.lib
 ```
 
 ##### Configure
 
-Configure **config.sh** before running.
+Configure **config.sh** before running **setup1.sh**.
 
 ```bash
 ####################################################
