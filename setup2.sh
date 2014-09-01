@@ -41,6 +41,18 @@ if $SSH; then
    echo
    echo "Have you copied id_rsa.pub (above) to the SSH keys section"
    echo "of your GitHub account?"
+   select yn in "Yes" "No"; do
+      case $yn in
+         "Yes") break;;
+          "No") echo "Copy the contents of id_rsa.pub (printed below) to the SSH keys section"
+                echo "of your GitHub account."
+                echo "Highlight the text with your mouse and press ctrl+shift+c to copy."
+                echo
+                cat "$HOME/.ssh/id_rsa.pub";;
+             *) echo "case not found..."
+      esac
+      break
+   done
    echo
    read -p "Press enter when ready..."
 fi
@@ -53,11 +65,6 @@ echo "changing directory to $_"
 if [ -d "$REPOS/$UPSTREAM_PROJECT" ]; then
    echo "$UPSTREAM_PROJECT directory already exists, skipping middleman init..."
 else
-   # view templates ready to install
-   echo
-   read -p "Press enter to view available Middleman templates..."
-   middleman init --help
-
    # generate the site from the html5 boilerplate template
    read -p "Press enter to init the html5 template files..."
    middleman init $UPSTREAM_PROJECT --template=html5

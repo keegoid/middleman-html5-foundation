@@ -14,6 +14,28 @@ echo "* Instructions:                              "
 echo "* - run as root user                         "
 echo "*********************************************"
 
+# make sure curl is installed
+hash curl 2>/dev/null || { echo >&2 "curl will be installed."; yum -y install curl; }
+
+# download necessary files
+read -p "Press enter to download setup2.sh and library files to this directory..."
+curl -kfsSLO https://raw.githubusercontent.com/keegoid/middleman-html5-foundation/master/setup2.sh
+curl -kfsSLO https://raw.githubusercontent.com/keegoid/middleman-html5-foundation/master/includes/linuxkm.lib
+curl -kfsSLO https://raw.githubusercontent.com/keegoid/middleman-html5-foundation/master/includes/gitkm.lib && echo "done with downloads"
+
+# set permissions
+echo
+chmod +x "config.sh"
+echo "set execute permissions on $_"
+chown $(logname):$(logname) "config.sh"
+echo "gave ownership of $_ to "$(logname)
+
+chmod +x "setup2.sh"
+echo "set execute permissions on $_"
+chown $(logname):$(logname) "setup2.sh"
+echo "gave ownership of $_ to "$(logname)
+
+read -p "Press enter to continue..."
 source config.sh
 
 # check to make sure script is being run as root
@@ -31,21 +53,14 @@ EPEL_KEY="http://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-$EPEL_VERSION"
 # EPEL
 install_repo "epel-release" $EPEL_KEY $EPEL_URL
 
-# install Node.js for running the local web server and npm for the CLI
-if rpm -qa | grep -q nodejs; then
-   echo "nodejs was already installed"
-else
-   echo
-   read -p "Press enter to install nodejs and npm..."
-   yum --enablerepo=epel -y install nodejs npm
-fi
-
-# install git
-install_app "git"
+# install git, Node.js for running the local web server and npm for the CLI
+install_app 'git'
+install_app 'nodejs npm' 'epel'
 
 ########## GEM ##########
 
 # install Ruby and RubyGems
+echo
 read -p "Press enter to install ruby and rubygems..."
 if ruby -v | grep -q "ruby $RUBY_VERSION"; then
    echo "ruby is already installed"
