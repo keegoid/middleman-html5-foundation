@@ -125,8 +125,9 @@ function get_software()
 function run_script()
 {
    local script="$1"
+   local project_dir="$PWD"
    # reset back to root poject directory to run scripts
-   cd "${PWD}/scripts"
+   cd "$project_dir/scripts"
    echo "changing directory to $_"
    # make sure dos2unix is installed
    hash dos2unix 2>/dev/null || { echo >&2 "dos2unix will be installed."; yum -y install dos2unix; }
@@ -138,60 +139,28 @@ function run_script()
    echo
    echo "          done with ${script}"
    echo "*********************************************"
+   cd "$project_dir"
 }
 
 # purpose: set Repos directory location
-# arguments: none
+# arguments:
+#   $1 -> non-root Linux username
+#   $2 -> use Dropbox?
 function locate_repos()
 {
-   local users=$(cat /etc/passwd | grep "/bin/bash" | cut -d : -f 1)
-   local account
+   local u="$1"
+   local db=$2
    local repos
 
-   select u in $users; do
-      case $u in
-         *) account="${u}"
-            echo "you selected: ${account}"
-            break;;
-      esac
-   done
-   
-   if [ "${account}" != "root" ]; then
-      [ -d "/home/${account}/Dropbox" ] && repos="/home/${account}/Dropbox/Repos" || repos="/home/${account}/Repos"
+   if $db; then
+      repos="/home/${u}/Dropbox/Repos"
    else
-      [ -d "/root/Dropbox" ] && repos="/root/Dropbox/Repos" || repos="/root/Repos"
+      repos="/home/${u}/Repos"
    fi
 
    # make repos directory if it doesn't exist
-   mkdir -pv $repos
+   mkdir -p $repos
    echo -n $repos
-}
-
-# purpose: import public GPG key if it doesn't already exist in list of RPM keys
-#          although rpm --import won't import duplicate keys, this is a proof of concept
-# arguments:
-#   $1 -> URL of the public key file
-function get_public_key()
-{
-   local url="$1"
-   local rpm_keys="$HOME/rpm_keys"
-   mkdir -pv $rpm_keys
-   echo "Press enter to download and import the RPM GPG Key from:"
-   read -p "$1..."
-   cd $rpm_keys
-   echo "changing directory to $_"
-   # download keyfile
-   wget -nc $url
-   local key_file=$(trim_longest_left_pattern ${url} /)
-   # get key id
-   local key_id=$(echo $(gpg --throw-keyids < $key_file) | cut --characters=11-18 | tr [A-Z] [a-z])
-   # import key if it doesn't exist
-   if ! rpm -q gpg-pubkey-$key_id > /dev/null 2>&1; then
-      echo "Installing GPG public key with ID $key_id from $key_file..."
-      rpm --import $key_file
-   fi
-   # change directory back to previous one
-   cd -
 }
 
 # purpose: generate an RSA SSH keypair if none exists or copy from root
@@ -206,6 +175,8 @@ function gen_ssh_keys()
    local u="$3"
 
    # move id_rsa to new user account or create new SSH keypair if none exists
+   echo
+   read -p "Press enter to continue to SSH keys..."
    echo
    echo "Note: ${ssh_dir}/id_rsa is for public/private key pairs to establish"
    echo "outgoing SSH connections to remote systems"
@@ -232,9 +203,9 @@ function gen_ssh_keys()
       echo "SSH key generated"
       echo
       echo "***IMPORTANT***"
-      echo "copy contents of id_rsa.pub (printed below) to the SSH keys section"
+      echo "Copy the contents of id_rsa.pub (printed below) to the SSH keys section"
       echo "of your GitHub account or authorized_keys section of your remote server."
-      echo "highlight the text with your mouse and press ctrl+shift+c to copy"
+      echo "Highlight the text with your mouse and press ctrl+shift+c to copy."
       echo
       cat "${ssh_dir}/id_rsa.pub"
       echo
@@ -280,16 +251,48 @@ function authorized_ssh_keys()
    fi
 }
 
+# purpose: import public GPG key if it doesn't already exist in list of RPM keys
+#          although rpm --import won't import duplicate keys, this is a proof of concept
+# arguments:
+#   $1 -> URL of the public key file
+# return: false if URL is empty, else true
+function get_public_key()
+{
+   local url="$1"
+   [ -n "${url}" ] && return $FALSE
+   local rpm_keys="$HOME/rpm_keys"
+   mkdir -pv $rpm_keys
+   echo "Press enter to download and import the RPM GPG Key from:"
+   read -p "$1..."
+   cd $rpm_keys
+   echo "changing directory to $_"
+   # download keyfile
+   wget -nc $url
+   local key_file=$(trim_longest_left_pattern ${url} /)
+   # get key id
+   local key_id=$(echo $(gpg --throw-keyids < $key_file) | cut --characters=11-18 | tr [A-Z] [a-z])
+   # import key if it doesn't exist
+   if ! rpm -q gpg-pubkey-$key_id > /dev/null 2>&1; then
+      echo "Installing GPG public key with ID $key_id from $key_file..."
+      rpm --import $key_file
+   fi
+   # change directory back to previous one
+   cd -
+   return $TRUE
+}
+
 # purpose: to install a CentOS repository like EPEL, REMI, RPMforge
 # arguments:
 #   $1 -> repository name
-#   $2 -> URL for the RPM GPG key
-#   $3 -> URL for the RPM
+#   $2 -> URL for the RPM
+#   $3 -> URL for the RPM GPG key (optional)
 function install_repo()
 {
    local repo_name="$1"
-   local gpg_key="$2"
-   local rpm_url="$3"
+   local rpm_url="$2"
+   local gpg_key="$3"
+   local use_gpg=false
+
    echo
    read -p "Press enter to check if ${repo_name} is installed..."
    if rpm -qa | grep -qw "${repo_name}"
@@ -297,13 +300,15 @@ function install_repo()
       echo "${repo_name} was already installed"
    else
       # import rpm key
-      get_public_key "${gpg_key}"
-      # list imported gpg keys
-      rpm -qa gpg*
+      use_gpg=$(get_public_key "${gpg_key}")
+      if $use_gpg; then
+         # list imported gpg keys
+         rpm -qa gpg*
+      fi
       # test the rpm install
       #echo
       #read -p "Press enter to test install the repository..."
-      #rpm -ivh --test $3
+      #rpm -Uvh --test "${rpm_url}"
       # run the install
       echo
       read -p "Press enter to continue with ${repo_name} install..."
@@ -322,6 +327,7 @@ function install_app()
 {
    local list="$1"
    # install applications in the list
+   echo
    for app in "${list}"; do
       if rpm -qa | grep -qw "$app"; then
          echo "$app was already installed"
@@ -340,6 +346,7 @@ function install_gem()
 {
    local list="$1"
    # install gems in the list
+   echo
    for app in "${list}"; do
       if $(gem list "$app" -i); then
          echo "gem $app is already installed"

@@ -15,9 +15,6 @@ echo "* Instructions:                              "
 echo "* - run as non-root user                     "
 echo "*********************************************"
 
-# check to make sure script is NOT being run as root
-is_root && die "\033[40m\033[1;31mERROR: root check FAILED (you must NOT be root to use this script). Quitting...\033[0m\n" || echo "non-root user detected, proceeding..."
-
 ####################################################
 # EDIT THESE VARIABLES WITH YOUR INFO
 REAL_NAME='Keegan Mullaney'
@@ -25,11 +22,18 @@ EMAIL_ADDRESS='keegan@kmauthorized.com'
 SSH_KEY_COMMENT='CentOS workstation'
 MIDDLEMAN_DOMAIN='keeganmullaney.com'
 GITHUB_USER='keegoid' #your GitHub username
+LIBS_DIR='includes' #where you put extra stuff
 ####################################################
+
+# upstream project name
+UPSTREAM_PROJECT='middleman-html5-foundation'
+
+# init
+DROPBOX=false
+SSH=false
 
 # library files
 LIBS='linuxkm.lib gitkm.lib'
-LIBS_DIR='includes' #where you put library files
 
 # source function libraries
 for lib in $LIBS; do
@@ -37,18 +41,22 @@ for lib in $LIBS; do
                          { source "$lib" > /dev/null 2>&1 && echo "sourced: $lib" || echo "can't find: $lib"; }
 done
 
-# upstream project name
-UPSTREAM_PROJECT='middleman-html5-foundation'
+# check to make sure script is NOT being run as root
+is_root && die "\033[40m\033[1;31mERROR: root check FAILED (you must NOT be root to use this script). Quitting...\033[0m\n" || echo "non-root user detected, proceeding..."
 
-# local repository location
+# use Dropbox?
 echo
-echo "Select a user account for this project: "
-REPOS=$(locate_repos)
-echo "repository location will be: $REPOS"
+echo "Do you wish to use Dropbox for your repositories?"
+select yn in "Yes" "No"; do
+   case $yn in
+      "Yes") DROPBOX=true;;
+       "No") break;;
+          *) echo "case not found..."
+   esac
+   break
+done
 
-# init
-SSH=false
-
+# use SSH?
 echo
 echo "Do you wish to use SSH for git operations (no uses HTTPS)?"
 select yn in "Yes" "No"; do
@@ -60,8 +68,13 @@ select yn in "Yes" "No"; do
    break
 done
 
+# local repository location
+echo
+REPOS=$(locate_repos $(logname) $DROPBOX)
+echo "repository location: $REPOS"
+
 # configure git
-configure_git
+configure_git "$REAL_NAME" "$EMAIL_ADDRESS"
 
 # generate an RSA SSH keypair if none exists
 if $SSH; then
@@ -152,7 +165,7 @@ echo "changing directory to $_"
 create_branch $MIDDLEMAN_DOMAIN
 
 # assign the original repository to a remote called "upstream"
-merge_upstream_repo $UPSTREAM_PROJECT $SSH
+merge_upstream_repo $UPSTREAM_PROJECT $SSH $GITHUB_USER
 
 # git commit and push if necessary
 commit_and_push $GITHUB_USER
@@ -202,4 +215,6 @@ echo '* end                                                                 '
 echo '* ~~~                                                                 '
 echo "**********************************************************************"
 
-script_name "done with "
+echo
+script_name "          done with "
+echo "*********************************************"

@@ -92,4 +92,6 @@ gem list middleman
 
 npm install -g bower grunt-cli
 
-script_name "done with "
+echo
+script_name "          done with "
+echo "*********************************************"
