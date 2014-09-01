@@ -80,10 +80,11 @@ In this way, you'll be able to receive upstream changes in the master branch and
 
 ##### Download
 
-Optionally, you can get it by downloading and running the setup scripts plus library files. This option will build everything step-by-step so you can see exactly what happens.
+Optionally, you can get it by downloading the setup scripts and library files. This option will build everything step-by-step so you can see exactly what happens.
 
 ```bash
 # download the scripts and library files to the same directory
+curl -kfsSLO https://raw.githubusercontent.com/keegoid/middleman-html5-foundation/master/config.sh
 curl -kfsSLO https://raw.githubusercontent.com/keegoid/middleman-html5-foundation/master/setup1.sh
 curl -kfsSLO https://raw.githubusercontent.com/keegoid/middleman-html5-foundation/master/setup2.sh
 curl -kfsSLO https://raw.githubusercontent.com/keegoid/middleman-html5-foundation/master/includes/linuxkm.lib
@@ -92,7 +93,7 @@ curl -kfsSLO https://raw.githubusercontent.com/keegoid/middleman-html5-foundatio
 
 ##### Configure
 
-Configure **setup1.sh** before running.
+Configure **config.sh** before running.
 
 ```bash
 ####################################################
@@ -156,7 +157,7 @@ Now whenever you push changes to [Github][gh], [BitBalloon][bb] will run middlem
 
 Contributions are totally welcome.
 
-##### Getting started
+##### Getting Started
 
 A clear intro to [using git][learngit].  
 A good [step-by-step guide][fork] about how to contribute to a GitHub project like this one.
