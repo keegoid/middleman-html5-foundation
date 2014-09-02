@@ -61,7 +61,7 @@ function clone_repo()
       echo "${upstream_repo} directory already exists, skipping clone operation..."
    else
       echo
-      echo "***IMPORTANT***"
+      echo "*** NOTE ***"
       echo "Before proceeding, make sure to fork keegoid/${upstream_repo}.git"
       echo
       read -p "Press enter to clone ${github_user}/${upstream_repo} at GitHub..."
@@ -114,6 +114,8 @@ function merge_upstream_repo()
 
       # merge any changes fetched into local working files
       echo
+      echo "*** NOTE ***"
+      echo "If merging changes, press \":wq enter\" to accept the merge message in vi."
       read -p "Press enter to merge changes..."
       git merge upstream/master
 
@@ -147,15 +149,14 @@ function create_branch()
    read -p "Press enter to checkout the master branch again..."
    git checkout master
 
-   echo
-   echo "above could also be done with:"
-   echo "git branch ${branch_name}"
-   echo "git push origin ${branch_name}"
-   echo "git branch -u origin/${branch_name} ${branch_name}"
+   # above could also be done with:
+   # git branch "${branch_name}"
+   # git push origin "${branch_name}"
+   # git branch -u "origin/${branch_name}" "${branch_name}"
 
    echo
    echo "*************************************************************************"
-   echo "* - use ${branch_name} branch to make your own site                                  "
+   echo "* - use ${branch_name} branch to make your own site                      "
    echo "* - use master branch to keep up with changes from the upstream repo     "
    echo "*************************************************************************"
 }
