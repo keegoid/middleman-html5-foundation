@@ -49,7 +49,8 @@ if $SSH; then
                 echo "Highlight the text with your mouse and press ctrl+shift+c to copy."
                 echo
                 cat "$HOME/.ssh/id_rsa.pub";;
-             *) echo "case not found..."
+             *) echo "case not found, try again..."
+                continue;;
       esac
       break
    done
@@ -139,6 +140,10 @@ merge_upstream_repo $UPSTREAM_PROJECT $SSH $GITHUB_USER
 
 # git commit and push if necessary
 commit_and_push $GITHUB_USER
+
+# remove temporary files
+rm -f "$WORKING_DIR/linuxkm.lib"
+rm -f "$WORKING_DIR/gitkm.lib"
 
 echo
 echo "**********************************************************************"

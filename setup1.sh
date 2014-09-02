@@ -24,12 +24,6 @@ curl -kfsSLO https://raw.githubusercontent.com/keegoid/middleman-html5-foundatio
 curl -kfsSLO https://raw.githubusercontent.com/keegoid/middleman-html5-foundation/master/includes/gitkm.lib && echo "done with downloads"
 
 # set permissions
-echo
-chmod +x "config.sh"
-echo "set execute permissions on $_"
-chown $(logname):$(logname) "config.sh"
-echo "gave ownership of $_ to "$(logname)
-
 chmod +x "setup2.sh"
 echo "set execute permissions on $_"
 chown $(logname):$(logname) "setup2.sh"
