@@ -20,8 +20,9 @@ hash curl 2>/dev/null || { echo >&2 "curl will be installed."; yum -y install cu
 # download necessary files
 read -p "Press enter to download setup2.sh and library files to this directory..."
 curl -kfsSLO https://raw.githubusercontent.com/keegoid/middleman-html5-foundation/master/setup2.sh
-curl -kfsSLO https://raw.githubusercontent.com/keegoid/middleman-html5-foundation/master/includes/linuxkm.lib
-curl -kfsSLO https://raw.githubusercontent.com/keegoid/middleman-html5-foundation/master/includes/gitkm.lib && echo "done with downloads"
+curl -kfsSLO https://raw.githubusercontent.com/keegoid/middleman-html5-foundation/master/includes/base.lib
+curl -kfsSLO https://raw.githubusercontent.com/keegoid/middleman-html5-foundation/master/includes/software.lib
+curl -kfsSLO https://raw.githubusercontent.com/keegoid/middleman-html5-foundation/master/includes/git.lib && echo "done with downloads"
 
 # set permissions
 chmod +x "setup2.sh"
@@ -35,17 +36,16 @@ source config.sh
 # check to make sure script is being run as root
 is_root && echo "root user detected, proceeding..." || die "\033[40m\033[1;31mERROR: root check FAILED (you must be root to use this script). Quitting...\033[0m\n"
 
-# software download URL
-EPEL_URL="http://dl.fedoraproject.org/pub/epel/beta/7/x86_64/epel-release-${EPEL_VERSION}.noarch.rpm"
-RUBY_URL="https://get.rvm.io"
-
-# GPG public keys
-EPEL_KEY="http://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-$EPEL_VERSION"
-
 ########## YUM ##########
 
+# library options
+SW_LIST='EPEL RUBY'
+
+# set versions (which also sets download URLs)
+set_software_versions "$SW_LIST"
+
 # EPEL
-install_repo "epel-release" $EPEL_KEY $EPEL_URL
+install_repo "epel-release" "$EPEL_KEY" "$EPEL_URL"
 
 # install git, Node.js for running the local web server and npm for the CLI
 install_app 'git'
@@ -53,14 +53,10 @@ install_app 'nodejs npm' 'epel'
 
 ########## GEM ##########
 
+GEM_LIST="middleman middleman-blog middleman-syntax middleman-livereload foundation"
+
 # install Ruby and RubyGems
-echo
-read -p "Press enter to install ruby and rubygems..."
-if ruby -v | grep -q "ruby $RUBY_VERSION"; then
-   echo "ruby is already installed"
-else
-   curl -L $RUBY_URL | bash -s stable --ruby=$RUBY_VERSION
-fi
+install_ruby
 
 # start using rvm
 source_rvm
@@ -71,7 +67,7 @@ read -p "Press enter to update the gem package manager..."
 gem update --system
 
 # install necessary gems
-install_gem $GEMS
+install_gem "$GEM_LIST"
 
 # update gems
 echo

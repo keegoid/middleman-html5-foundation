@@ -58,6 +58,16 @@ else
    cd $UPSTREAM_PROJECT
    echo "changing directory to $_"
 
+   # create .bowerrc to specify bower location
+   echo "{ \
+   \"directory\" : \"source/bower_components\" \
+}" > .bowerrc
+
+   # initialize bower for this project
+   bower init
+
+   # 
+
    # delete default css
    #rm -rf 
    
@@ -77,9 +87,9 @@ else
    read -p "Press enter to activate livereload..."
 #   activate :livereload
 
-   read -p "Press enter to add ignored directories..."
-#   ignore 'setup/*'
+   read -p "Press enter to add ignored files and directories..."
 #   ignore 'includes/*'
+#   ignore '*.sh'
 
    # build it
    bundle exec middleman build
@@ -90,18 +100,6 @@ else
 
    # build it again
    bundle exec middleman build
-
-   # print git status
-   read -p "Press enter to view git status..."
-   git status
-
-   # commit changes with git
-   read -p "Press enter to commit changes..."
-   git commit -am "first commit by $GITHUB_USER"
-
-   # push commits to your remote repository (GitHub)
-   read -p "Press enter to push changes to your remote repository (GitHub)..."
-   git push
 fi
 
 # change to project directory
