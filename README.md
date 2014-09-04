@@ -101,14 +101,6 @@ SSH_KEY_COMMENT='CentOS workstation'
 MIDDLEMAN_DOMAIN='keeganmullaney.com'
 GITHUB_USER='keegoid' #your GitHub username
 LIBS_DIR='includes' #where you put extra stuff
-
-# OPTIONALLY, UPDATE THESE VARIABLES
-# set software version here if newer versions exist
-EPEL_VERSION='7-1'   # http://dl.fedoraproject.org/pub/epel/beta/7/x86_64/
-RUBY_VERSION='2.1.2' # https://www.ruby-lang.org/en/downloads/
-
-# gems to install
-GEMS="middleman middleman-blog middleman-syntax middleman-livereload foundation"
 ####################################################
 ```
 
