@@ -13,26 +13,30 @@ echo "*********************************************"
 
 ####################################################
 # EDIT THESE VARIABLES WITH YOUR INFO
+USER_NAME='kmullaney' #Linux user you will/already use
 REAL_NAME='Keegan Mullaney'
 EMAIL_ADDRESS='keegan@kmauthorized.com'
 SSH_KEY_COMMENT='CentOS workstation'
 MIDDLEMAN_DOMAIN='keeganmullaney.com'
 GITHUB_USER='keegoid' #your GitHub username
-LIBS_DIR='includes' #where you put extra stuff
+LIB_DIR='includes' #where you put extra stuff
 ####################################################
 
-# init
-DROPBOX=false
-SSH=false
+# upstream project name
+UPSTREAM_PROJECT='middleman-html5-foundation'
 
 # library options
 LIBS='base.lib software.lib git.lib'
 
 # source function libraries
 for lib in $LIBS; do
-   [ -d $LIBS_DIR ] && { source $LIBS_DIR/$lib > /dev/null 2>&1 && echo "sourced: $LIBS_DIR/$lib" || echo "can't find: $LIBS_DIR/$lib"; } ||
-                       { source $lib > /dev/null 2>&1 && echo "sourced: $lib" || echo "can't find: $lib"; }
+   [ -d "$LIB_DIR" ] && { source "$LIB_DIR/$lib" > /dev/null 2>&1 && echo "sourced: $LIB_DIR/$lib" || echo "can't find: $LIB_DIR/$lib"; } ||
+                         { source "libtmp/$lib" > /dev/null 2>&1 && echo "sourced: libtmp/$lib" || echo "can't find: libtmp/$lib"; }
 done
+
+# init
+DROPBOX=false
+SSH=false
 
 # use Dropbox?
 echo
@@ -59,4 +63,9 @@ select yn in "Yes" "No"; do
    esac
    break
 done
+
+# local repository location
+echo
+REPOS=$(locate_repos $USER_NAME $DROPBOX)
+echo "repository location: $REPOS"
 
