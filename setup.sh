@@ -11,26 +11,18 @@ echo "* Website: http://kmauthorized.com           "
 echo "*                                            "
 echo "* MIT: http://kma.mit-license.org            "
 echo "*                                            "
-echo "* Instructions:                              "
-echo "* - run as non-root user                     "
+echo "* ---run instructions---                     "
+echo "* set execute permissions on this script:    "
+echo "* chmod +x setup.sh                          "
+echo "* dos2unix -k setup.sh                       "
+echo "* run after init.sh as non-root user         "
+echo "* ./setup.sh                                 "
 echo "*********************************************"
 
 source config.sh
 
 # check to make sure script is NOT being run as root
 is_root && die "\033[40m\033[1;31mERROR: root check FAILED (you must NOT be root to use this script). Quitting...\033[0m\n" || echo "non-root user detected, proceeding..."
-
-# upstream project name
-UPSTREAM_PROJECT='middleman-html5-foundation'
-
-# current directory
-WORKING_DIR="$PWD"
-
-# local repository location
-echo
-REPOS=$(locate_repos $(logname) $DROPBOX)
-echo "repository location: $REPOS"
-
 
 # configure git
 configure_git "$REAL_NAME" "$EMAIL_ADDRESS"
@@ -69,10 +61,10 @@ else
    # 
 
    # delete default css
-   #rm -rf 
+   #rm -Rfv 
    
    # copy foundation files to Middleman project
-   #cp -rf 
+   #cp -Rfv
 
    # config.rb
    read -p "Press enter to configure middleman-syntax..."
@@ -106,10 +98,6 @@ fi
 cd $UPSTREAM_PROJECT
 echo "changing directory to $_"
 
-# copy config.sh to repository location
-echo
-cp -rf "$WORKING_DIR/config.sh" . && echo "copied config.sh to $PWD"
-
 # create a new branch for changes (keeping master for upstream changes)
 create_branch $MIDDLEMAN_DOMAIN
 
@@ -118,10 +106,6 @@ merge_upstream_repo $UPSTREAM_PROJECT $SSH $GITHUB_USER
 
 # git commit and push if necessary
 commit_and_push $GITHUB_USER
-
-# remove temporary files
-rm -f "$WORKING_DIR/linuxkm.lib"
-rm -f "$WORKING_DIR/gitkm.lib"
 
 echo
 echo "**********************************************************************"
