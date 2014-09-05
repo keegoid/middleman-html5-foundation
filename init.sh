@@ -35,22 +35,16 @@ echo "changing directory to $_"
 curl -kfsSLO https://raw.githubusercontent.com/keegoid/middleman-html5-foundation/master/includes/base.lib
 curl -kfsSLO https://raw.githubusercontent.com/keegoid/middleman-html5-foundation/master/includes/software.lib
 curl -kfsSLO https://raw.githubusercontent.com/keegoid/middleman-html5-foundation/master/includes/git.lib && echo "done with downloads"
-cd -
-echo "changing directory back to $WORKING_DIR"
+echo -n "changing directory back to " && cd -
 
-# set permissions
-chmod +x "setup.sh"
-echo "set execute permissions on $_"
-chown $USER_NAME:$USER_NAME "setup.sh"
-echo "gave ownership of $_ to "$USER_NAME
-
-read -p "Press enter to continue..."
+read -p "Press enter to source config.sh..."
 source config.sh
 
 # check to make sure script is being run as root
 is_root && echo "root user detected, proceeding..." || die "\033[40m\033[1;31mERROR: root check FAILED (you must be root to use this script). Quitting...\033[0m\n"
 
 # create project directory and copy files there
+echo
 read -p "Press enter to create project directory and copy files there..."
 mkdir -pv "$REPOS/$UPSTREAM_PROJECT/$LIB_DIR"
 cd "$REPOS/$UPSTREAM_PROJECT"
@@ -58,7 +52,16 @@ echo "changing directory to $_"
 cp -fv "$WORKING_DIR/config.sh" .
 cp -fv "$WORKING_DIR/init.sh" .
 cp -fv "$WORKING_DIR/setup.sh" .
-cp -Rfv "$WORKING_DIR/libtmp" $LIB_DIR
+cp -Rfv "$WORKING_DIR/libtmp/." $LIB_DIR
+
+# set permissions
+echo
+read -p "Press enter to set permissions and ownership..."
+echo
+chmod -c +x *.sh
+chmod -c +x $LIB_DIR/*
+echo
+chown -cR $USER_NAME:$USER_NAME .
 
 ########## YUM ##########
 
@@ -102,8 +105,15 @@ gem list middleman
 npm install -g bower grunt-cli
 
 # remove temporary files
-rm -rf "$WORKING_DIR/libtmp"
+cd "$WORKING_DIR"
+echo "changing directory to $_"
+rm -fv config.sh
+rm -fv init.sh
+rm -fv setup.sh
+rm -rfv libtmp
 
 echo
 script_name "          done with "
 echo "*********************************************"
+echo "next: cd $REPOS/$UPSTREAM_PROJECT"
+echo "then: run setup.sh as non-root user"
