@@ -95,6 +95,7 @@ Configure **config.sh** before running **setup1.sh**.
 ```bash
 ####################################################
 # EDIT THESE VARIABLES WITH YOUR INFO
+USER_NAME='kmullaney' #Linux user you will/already use
 REAL_NAME='Keegan Mullaney'
 EMAIL_ADDRESS='keegan@kmauthorized.com'
 SSH_KEY_COMMENT='CentOS workstation'
