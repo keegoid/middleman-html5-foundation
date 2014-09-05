@@ -80,17 +80,17 @@ In this way, you'll be able to receive upstream changes in the master branch and
 
 ##### Download
 
-Optionally, you can get it by downloading the **config.sh** and **setup1.sh** scripts. This option will build everything step-by-step so you can see exactly what happens.
+Optionally, you can get it by downloading the **config.sh** and **init.sh** scripts. This option will build everything step-by-step so you can see exactly what happens.
 
 ```bash
 # download the scripts
 curl -kfsSLO https://raw.githubusercontent.com/keegoid/middleman-html5-foundation/master/config.sh
-curl -kfsSLO https://raw.githubusercontent.com/keegoid/middleman-html5-foundation/master/setup1.sh
+curl -kfsSLO https://raw.githubusercontent.com/keegoid/middleman-html5-foundation/master/init.sh
 ```
 
 ##### Configure
 
-Configure **config.sh** before running **setup1.sh**.
+Configure **config.sh** before running **init.sh**.
 
 ```bash
 ####################################################
@@ -108,8 +108,8 @@ LIBS_DIR='includes' #where you put extra stuff
 ##### Run
 
 ```bash
-./setup1.sh #run as root user
-./setup2.sh #run as non-root user
+./init.sh #run as root user
+./setup.sh #run as non-root user
 ```
 
 ##### BitBalloon Setup
