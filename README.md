@@ -69,14 +69,13 @@ Then go to [http://localhost:4567/__middleman/config/](http://localhost:4567/__m
 
 ## Usage
 
-##### Fork and Clone
+##### Clone
 
-In this way, you'll be able to receive upstream changes in the master branch and merge them into your own branch as you see fit.
+This method directly downloads the project to your local repository where you can start making changes.
 
-1. fork http://github.com/keegoid/middleman-html5-foundation/fork
-1. clone your own fork using HTTPS or SSH (recommended)
-   - HTTPS: `git clone https://github.com/yourusername/middleman-html5-foundation.git`
-   -   SSH: `git clone git@github.com:yourusername/middleman-html5-foundation.git`
+clone this project using HTTPS or SSH (recommended):
+   - HTTPS: `git clone https://github.com/keegoid/middleman-html5-foundation.git`
+   -   SSH: `git clone git@github.com:keegoid/middleman-html5-foundation.git`
 
 ##### Download
 
@@ -106,6 +105,8 @@ LIBS_DIR='includes' #where you put extra stuff
 ```
 
 ##### Run
+
+Run **init.sh** and it will download **setup.sh** plus a few library files. Then run **setup.sh**.
 
 ```bash
 ./init.sh #run as root user
@@ -173,14 +174,14 @@ After much tribulation with [Markdown][md] editors and various workflows, I've f
 
 For blog posts or any long-form writing [Draft][draftin] is wonderful, especially the `F11` mode. It mostly works with [GitHub Flavored Markdown][gfm] except for strikethrough and alignment of table columns.
 I then *Export* my document to the appropriate [git][git] repository in [Dropbox][db] (which then syncs with my various devices).
-Finally, I commit the new document with [git][git] and push it to the remote repository (which then gets automatically built and deployed on [BitBalloon][bb]).
+Finally, I commit the new document with [git][git] and push it to [GitHub][gh] (which then gets automatically built and deployed on [BitBalloon][bb]).
 
 For other [Markdown][md] docs like *README.md* or *LICENSE.md* I find [gEdit][ge] to be easy and efficient. I can make some quick edits, commit changes in [git][git] and push them to [GitHub][gh] with just a few commands. It's also easy to repeat commits and pushes with the keyboard up arrow from the [Linux console][lc].  
 to commit again: `up up enter`, to push again: `up up enter`
 
 ##### Git Remote
 
-If you didn't start by cloning your repository on [GitHub][gh], for example if you used `git init` on your workstation, you'll need to add your remote origin URL:
+If you didn't start by cloning this repository on [GitHub][gh], for example if you used `git init` on your workstation, you'll need to add your remote origin URL:
 
 ```bash
 # HTTPS:
