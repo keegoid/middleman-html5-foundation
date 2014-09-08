@@ -108,7 +108,7 @@ echo "changing directory to $_"
 set_remote_origin $GITHUB_USER $PROJECT $SSH
 
 # git commit and push if necessary
-commit_changes
+commit_and_push
 
 echo
 echo "**********************************************************************"
