@@ -35,19 +35,19 @@ cd $REPOS
 echo "changing directory to $_"
 
 # middleman init html5 files
-if [ -d "$REPOS/$UPSTREAM_PROJECT" ]; then
-   echo "$UPSTREAM_PROJECT directory already exists, skipping middleman init..."
+if [ -d "$REPOS/$PROJECT" ]; then
+   echo "$PROJECT directory already exists, skipping middleman init..."
 else
    # generate the site from the html5 boilerplate template
    read -p "Press enter to init the html5 template files..."
-   middleman init $UPSTREAM_PROJECT --template=html5
+   middleman init $PROJECT --template=html5
    read -p "Press enter to init the blog template files..."
-   middleman init $UPSTREAM_PROJECT --template=blog
+   middleman init $PROJECT --template=blog
    read -p "Press enter to init the foundation-tmp files..."
    foundation new temp-foundation
 
    # change to project directory
-   cd $UPSTREAM_PROJECT
+   cd $PROJECT
    echo "changing directory to $_"
 
    # create .bowerrc to specify bower location
@@ -95,17 +95,20 @@ else
 fi
 
 # change to project directory
-cd $UPSTREAM_PROJECT
+cd $PROJECT
 echo "changing directory to $_"
 
 # create a new branch for changes (keeping master for upstream changes)
-create_branch $MIDDLEMAN_DOMAIN
+#create_branch $MIDDLEMAN_DOMAIN
 
 # assign the original repository to a remote called "upstream"
-merge_upstream_repo $UPSTREAM_PROJECT $SSH $GITHUB_USER
+#merge_upstream $GITHUB_USER $PROJECT $SSH
+
+# set the remote origin URL
+set_remote_origin $GITHUB_USER $PROJECT $SSH
 
 # git commit and push if necessary
-commit_and_push $GITHUB_USER
+commit_changes
 
 echo
 echo "**********************************************************************"

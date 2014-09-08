@@ -46,8 +46,8 @@ is_root && echo "root user detected, proceeding..." || die "\033[40m\033[1;31mER
 # create project directory and copy files there
 echo
 read -p "Press enter to create project directory and copy files there..."
-mkdir -pv "$REPOS/$UPSTREAM_PROJECT/$LIB_DIR"
-cd "$REPOS/$UPSTREAM_PROJECT"
+mkdir -pv "$REPOS/$PROJECT/$LIB_DIR"
+cd "$REPOS/$PROJECT"
 echo "changing directory to $_"
 cp -fv "$WORKING_DIR/config.sh" .
 cp -fv "$WORKING_DIR/init.sh" .
@@ -115,5 +115,5 @@ rm -rfv libtmp
 echo
 script_name "          done with "
 echo "*********************************************"
-echo "next: cd $REPOS/$UPSTREAM_PROJECT"
+echo "next: cd $REPOS/$PROJECT"
 echo "then: run setup.sh as non-root user"
