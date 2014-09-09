@@ -8,7 +8,7 @@ Overview:
 I like [BitBalloon][bb] for static websites because whenever I push to [GitHub][gh], [BitBalloon][bb] will automatically run Middleman and deploy the /build folder to my site. It's a nice convenience for [Middleman][mm] sites. Instructions for the [BitBalloon setup][#bitballoon-setup] ar below.
 
 - Based on the [middleman-foundation][mmf] and [middleman-zurb-foundation][mzf] projects.
-- Created with the [setup_part1_root.sh][mms1] and [setup_part2_nonroot.sh][mms2] scripts.
+- Created with the [init.sh][mminit] and [setup.sh][mmsetup] scripts.
 
 I prefer doing things with [shell scripts][ss] rather than starting from a template without knowing how it was created. If you're interested to see how this repository was created, you can see each step in the setup scripts. You can run those scripts to get your own site in under 5 minutes! I hope you like it!
 
@@ -30,13 +30,13 @@ Create a script to convert HTML to [HAML][haml]. I still have a bit to learn abo
 
 - [Features](#features)
 - [Usage](#usage)
-      - [Fork and Clone](#fork-and-clone)
+      - [Clone](#clone)
       - [Download](#download)
       - [Configure](#configure)
       - [Run](#run)
       - [BitBalloon Setup](#bitballoon-setup)
 - [Contributing](#contributing)
-      - [Getting started](#getting-started)
+      - [Getting Started](#getting-started)
       - [Steps](#steps)
 - [Workflow](#workflow)
       - [Markdown](#markdown)
@@ -73,7 +73,7 @@ Then go to [http://localhost:4567/__middleman/config/](http://localhost:4567/__m
 
 This method directly downloads the project to your local repository where you can start making changes.
 
-clone this project using HTTPS or SSH (recommended):
+Clone this project using HTTPS or SSH (recommended):
    - HTTPS: `git clone https://github.com/keegoid/middleman-html5-foundation.git`
    -   SSH: `git clone git@github.com:keegoid/middleman-html5-foundation.git`
 
@@ -270,8 +270,8 @@ Website: http://kmauthorized.com
 MIT: http://kma.mit-license.org
 
 
-[mms1]:     https://github.com/keegoid/middleman-html5-foundation/blob/master/setup_part1_root.sh
-[mms2]:     https://github.com/keegoid/middleman-html5-foundation/blob/master/setup_part2_nonroot.sh
+[mminit]:   https://github.com/keegoid/middleman-html5-foundation/blob/master/init.sh
+[mmsetup]:  https://github.com/keegoid/middleman-html5-foundation/blob/master/setup.sh
 [mmhtml5f]: https://github.com/keegoid/middleman-html5-foundation
 [mm]:       https://github.com/middleman/middleman
 [mmb]:      https://github.com/middleman/middleman-blog
