@@ -28,7 +28,7 @@ is_root && die "\033[40m\033[1;31mERROR: root check FAILED (you must NOT be root
 configure_git "$REAL_NAME" "$EMAIL_ADDRESS"
 
 # generate an RSA SSH keypair if none exists
-gen_ssh_keys "$HOME/.ssh" $SSH_KEY_COMMENT $SSH
+gen_ssh_keys "$HOME/.ssh" "$SSH_KEY_COMMENT" $SSH
 
 # change to repos directory
 cd $REPOS
