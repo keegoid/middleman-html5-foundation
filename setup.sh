@@ -34,69 +34,62 @@ gen_ssh_keys "$HOME/.ssh" "$SSH_KEY_COMMENT" $SSH
 cd $REPOS
 echo "changing directory to $_"
 
-# middleman init html5 files
-if [ -d "$REPOS/$MIDDLEMAN_DOMAIN" ]; then
-   echo "$MIDDLEMAN_DOMAIN directory already exists, skipping middleman init..."
-else
-   # generate the site from the html5 boilerplate template
-   read -p "Press enter to init the html5 template files..."
-   middleman init $MIDDLEMAN_DOMAIN --template=html5
-   read -p "Press enter to init the blog template files..."
-   middleman init $MIDDLEMAN_DOMAIN --template=blog
-   read -p "Press enter to init the foundation-tmp files..."
-   foundation new temp-foundation
-
-   # change to project directory
-   cd $MIDDLEMAN_DOMAIN
-   echo "changing directory to $_"
-
-   # create .bowerrc to specify bower location
-   echo "{ \
-   \"directory\" : \"source/bower_components\" \
-}" > .bowerrc
-
-   # initialize bower for this project
-   bower init
-
-   # 
-
-   # delete default css
-   #rm -Rfv 
-   
-   # copy foundation files to Middleman project
-   #cp -Rfv
-
-   # config.rb
-   read -p "Press enter to configure middleman-syntax..."
-#   activate :syntax
-#   set :markdown_engine, :kramdown
-
-   read -p "Press enter to activate the blog extension..."
-#   activate :blog do |blog|
-#       set options on blog
-#   end
-
-   read -p "Press enter to activate livereload..."
-#   activate :livereload
-
-   read -p "Press enter to add ignored files and directories..."
-#   ignore 'includes/*'
-#   ignore '*.sh'
-
-   # build it
-   bundle exec middleman build
-
-   # directory indexes must be activated after middleman-blog
-   read -p "Press enter to activate Pretty URLs (directory indexes)..."
-#   activate :directory_indexes
-
-   # build it again
-   bundle exec middleman build
-fi
+# generate the site from the html5 boilerplate template
+read -p "Press enter to init the html5 template files..."
+middleman init $MIDDLEMAN_DOMAIN --template=html5
+# generate the site from the blog template
+read -p "Press enter to init the blog template files..."
+middleman init $MIDDLEMAN_DOMAIN --template=blog
+# generate the default foundation site
+read -p "Press enter to init the foundation-tmp files..."
+foundation new temp-foundation
 
 # change to project directory
 cd $MIDDLEMAN_DOMAIN
 echo "changing directory to $_"
+
+# create .bowerrc to specify bower location
+echo "{ \
+\"directory\" : \"source/bower_components\" \
+}" > .bowerrc
+
+# initialize bower for this project
+bower init
+
+# 
+
+# delete default css
+#rm -Rfv 
+
+# copy foundation files to Middleman project
+#cp -Rfv
+
+# config.rb
+read -p "Press enter to configure middleman-syntax..."
+#   activate :syntax
+#   set :markdown_engine, :kramdown
+
+read -p "Press enter to activate the blog extension..."
+#   activate :blog do |blog|
+#       set options on blog
+#   end
+
+read -p "Press enter to activate livereload..."
+#   activate :livereload
+
+read -p "Press enter to add ignored files and directories..."
+#   ignore 'includes/*'
+#   ignore '*.sh'
+
+# build it
+bundle exec middleman build
+
+# directory indexes must be activated after middleman-blog
+read -p "Press enter to activate Pretty URLs (directory indexes)..."
+#   activate :directory_indexes
+
+# build it again
+bundle exec middleman build
 
 # set the remote origin URL (no upstream repo since this project will diverge from it)
 set_remote_repo $GITHUB_USER $MIDDLEMAN_DOMAIN false $SSH
