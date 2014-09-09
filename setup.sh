@@ -98,13 +98,7 @@ fi
 cd $MIDDLEMAN_DOMAIN
 echo "changing directory to $_"
 
-# create a new branch for changes (keeping master for upstream changes)
-#create_branch $MIDDLEMAN_DOMAIN
-
-# assign the original repository to a remote called "upstream"
-#merge_upstream $GITHUB_USER $PROJECT $SSH
-
-# set the remote origin URL
+# set the remote origin URL (no upstream repo since this project will diverge from it)
 set_remote_repo $GITHUB_USER $MIDDLEMAN_DOMAIN false $SSH
 
 # git commit and push if necessary

@@ -102,7 +102,11 @@ gem list middleman
 
 ########## NPM ##########
 
-npm install -g bower grunt-cli
+read -p "Press enter to install bower and grunt-cli..."
+install_npm 'bower grunt-cli'
+
+read -p "Press enter to view installed npm packages..."
+npm ls
 
 # remove temporary files
 cd "$WORKING_DIR"
