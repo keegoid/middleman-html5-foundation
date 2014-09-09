@@ -48,6 +48,20 @@ foundation new temp-foundation
 cd $MIDDLEMAN_DOMAIN
 echo "changing directory to $_"
 
+# remove duplicate directories
+read -p "Press enter to remove duplicate directories..."
+cd "source"
+rm -rfv stylesheets javascripts images
+cd -
+
+# set default directories in config.rb
+echo
+read -p "Press enter to set directory defaults in config.rb..."
+sed -i -e "s|set :css_dir, 'stylesheets'|set :css_dir, 'css'|" \
+    -e "s|set :js_dir, 'javascripts'|set :js_dir, 'js'|" \
+    -e "s|set :images_dir, 'images'|set :images_dir, 'img'|" \
+    config.rb && echo -e "configured default directories"
+
 # create .bowerrc to specify bower location
 echo "{ \
 \"directory\" : \"source/bower_components\" \
