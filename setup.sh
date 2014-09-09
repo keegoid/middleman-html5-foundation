@@ -35,19 +35,19 @@ cd $REPOS
 echo "changing directory to $_"
 
 # middleman init html5 files
-if [ -d "$REPOS/$PROJECT" ]; then
-   echo "$PROJECT directory already exists, skipping middleman init..."
+if [ -d "$REPOS/$MIDDLEMAN_DOMAIN" ]; then
+   echo "$MIDDLEMAN_DOMAIN directory already exists, skipping middleman init..."
 else
    # generate the site from the html5 boilerplate template
    read -p "Press enter to init the html5 template files..."
-   middleman init $PROJECT --template=html5
+   middleman init $MIDDLEMAN_DOMAIN --template=html5
    read -p "Press enter to init the blog template files..."
-   middleman init $PROJECT --template=blog
+   middleman init $MIDDLEMAN_DOMAIN --template=blog
    read -p "Press enter to init the foundation-tmp files..."
    foundation new temp-foundation
 
    # change to project directory
-   cd $PROJECT
+   cd $MIDDLEMAN_DOMAIN
    echo "changing directory to $_"
 
    # create .bowerrc to specify bower location
@@ -95,7 +95,7 @@ else
 fi
 
 # change to project directory
-cd $PROJECT
+cd $MIDDLEMAN_DOMAIN
 echo "changing directory to $_"
 
 # create a new branch for changes (keeping master for upstream changes)
@@ -105,7 +105,7 @@ echo "changing directory to $_"
 #merge_upstream $GITHUB_USER $PROJECT $SSH
 
 # set the remote origin URL
-set_remote_origin $GITHUB_USER $PROJECT $SSH
+set_remote_repo $GITHUB_USER $MIDDLEMAN_DOMAIN false $SSH
 
 # git commit and push if necessary
 commit_and_push
@@ -122,7 +122,7 @@ echo "*    - do an initial manual drag and drop deploy of your new site     "
 echo "*    - go to your site in the BitBalloon UI                           "
 echo "*    - click \"Link site to a Github repo\" at the bottom right       "
 echo "*      (currently a beta feature so you may need to request access)   "
-echo "*    - choose which branch you want to deploy ($MIDDLEMAN_DOMAIN)     "
+echo "*    - choose which branch you want to deploy (usually master)        "
 echo "*    - set the dir to \"Other ...\" and enter \"/build\"              "
 echo "*    - for the build command, set: \"bundle exec middleman build\"    "
 echo "*                                                                     "

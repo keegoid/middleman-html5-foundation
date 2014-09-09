@@ -22,9 +22,6 @@ GITHUB_USER='keegoid' #your GitHub username
 LIB_DIR='includes' #where you put extra stuff
 ####################################################
 
-# origin project name
-PROJECT='middleman-html5-foundation'
-
 # library options
 LIBS='base.lib software.lib git.lib'
 
