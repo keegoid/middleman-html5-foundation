@@ -100,7 +100,7 @@ EMAIL_ADDRESS='keegan@kmauthorized.com'
 SSH_KEY_COMMENT='CentOS workstation'
 MIDDLEMAN_DOMAIN='keeganmullaney.com'
 GITHUB_USER='keegoid' #your GitHub username
-LIBS_DIR='includes' #where you put extra stuff
+LIB_DIR='includes' #where you put extra stuff
 ####################################################
 ```
 
