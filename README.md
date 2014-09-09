@@ -109,6 +109,7 @@ LIB_DIR='includes' #where you put extra stuff
 Run **init.sh** and it will download **setup.sh** plus a few library files. Then run **setup.sh**.
 
 ```bash
+chmod +x init.sh
 ./init.sh #run as root user
 ./setup.sh #run as non-root user
 ```
