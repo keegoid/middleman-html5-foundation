@@ -1,28 +1,7 @@
 middleman-html5-foundation
 ==========================
 
-A template for a [Middleman][mm] site with the [HTML5 Boilerplate][html5bp], the [middleman-blog extension][mmb] and the [Sass/Compass version][zfsass] of [Zurb's Foundation 5][zf].
-
-Overview:
-
-I like [BitBalloon][bb] for static websites because whenever I push to [GitHub][gh], [BitBalloon][bb] will automatically run Middleman and deploy the /build folder to my site. It's a nice convenience for [Middleman][mm] sites. Instructions for the [BitBalloon setup][#bitballoon-setup] ar below.
-
-- Based on the [middleman-foundation][mmf] and [middleman-zurb-foundation][mzf] projects.
-- Created with the [init.sh][mminit] and [setup.sh][mmsetup] scripts.
-
-I prefer doing things with [shell scripts][ss] rather than starting from a template without knowing how it was created. If you're interested to see how this repository was created, you can see each step in the setup scripts. You can run those scripts to get your own site in under 5 minutes! I hope you like it!
-
-Reasoning:
-
-I made this project to gain a better understanding of [Middleman][mm], [HTML5][html5], [HAML][haml] and [Sass][sass] using the [Sass/Compass version][zfsass] of [Foundation 5][zf].
-
-Using [shell scripts][ss] with [Middleman][mm] and [Foundation][zf] fits well with my workflow since I use [CentOS][centos] for my programming work. It's a pretty stable [Linux distribution][ld]. I like it a lot and use it on my laptop and servers at [DigitalOcean][do].
-
-If this script helps you to better understand [CentOS][centos], [shell scripting][ss], Linux in general or if they help you to setup your own [Middleman][mm] site, please do let me know: [@keegoid][twitter]
-
-TODO:
-
-Create a script to convert HTML to [HAML][haml]. I still have a bit to learn about that.
+The easiest way to start blogging with [Middleman][mm] + [HTML5][html5] + [foundation][zf].
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -46,6 +25,49 @@ Create a script to convert HTML to [HAML][haml]. I still have a bit to learn abo
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
+## Summary
+
+##### Includes
+
+A base [Middleman][mm] site with the [HTML5 Boilerplate][html5bp], the [middleman-blog extension][mmb] and the [Sass/Compass version][zfsass] of [Zurb's Foundation 5][zf].
+
+##### Overview
+
+I like [BitBalloon][bb] for static websites because whenever I push to [GitHub][gh], [BitBalloon][bb] will automatically run Middleman and deploy the /build folder to my site. It's a nice convenience for [Middleman][mm] sites. Instructions for the [BitBalloon setup][#bitballoon-setup] ar below.
+
+- Based on the [middleman-foundation][mmf] and [middleman-zurb-foundation][mzf] projects.
+- Created with the [init.sh][mminit] and [setup.sh][mmsetup] scripts.
+
+I prefer doing things with [shell scripts][ss] rather than starting from a template without knowing how it was created. If you're interested to see how this repository was created, you can see each step in the setup scripts. You can run those scripts to get your own site in under 5 minutes! I hope you like it!
+
+##### Steps
+
+These are the basic steps that are performed by the **setup.sh** script.
+
+  1. middleman init MY_PROJECT --template=html5
+  1. middleman init MY_PROJECT --template=blog
+  1. foundation new MY_PROJECT
+  1. some copying, deleting and editing to merge the three templates
+  
+To start working on your project and see live changes at [http://localhost:4567](http://localhost:4567), just run:
+
+```bash
+cd MY_PROJECT
+bundle exec middleman
+```
+
+##### Reasoning
+
+I made this project to gain a better understanding of [Middleman][mm], [HTML5][html5], [HAML][haml] and [Sass][sass] using the [Sass/Compass version][zfsass] of [Foundation 5][zf].
+
+Using [shell scripts][ss] with [Middleman][mm] and [Foundation][zf] fits well with my workflow since I use [CentOS][centos] for my programming work. It's a pretty stable [Linux distribution][ld]. I like it a lot and use it on my laptop and servers at [DigitalOcean][do].
+
+If this script helps you to better understand [CentOS][centos], [shell scripting][ss], Linux in general or if they help you to setup your own [Middleman][mm] site, please do let me know: [@keegoid][twitter]
+
+##### TODO
+
+Create a script to convert HTML to [HAML][haml]. I still have a bit to learn about that.
+
 ## Features
 
 - [Middleman][mm] built from the [HTML5 boilerplate][html5bp]. Written in [Ruby][ruby].
@@ -66,6 +88,14 @@ bundle exec middleman
 ```
 
 Then go to [http://localhost:4567/__middleman/config/](http://localhost:4567/__middleman/config/) in your browser.
+
+
+## Requirements
+
+  * [Ruby 1.9+][ruby] and [RubyGems][rgems]
+  * [Node.js][nodejs] and [npm][npm]: `yum install nodejs npm`
+  * [Middleman][mm] and [foundation][zf] gems: `gem install middleman foundation`
+  * [bower][bower]: `npm install -g bower`
 
 ## Usage
 
@@ -144,6 +174,13 @@ go to the [BitBalloon][bb] site and:
    1. for the build command, set: `bundle exec middleman build`
 
 Now whenever you push changes to [Github][gh], [BitBalloon][bb] will run middleman and deploy the /build folder to your site automatically. Easy!
+
+##### Upgrade Foundation
+
+If you'd like to upgrade to a newer version of [Foundation][zf] down the road:
+
+1. Specify the version you want to update to in the [bower.json]() file.
+1. Then run `bower update`
 
 ## Contributing
 
@@ -295,6 +332,10 @@ MIT: http://kma.mit-license.org
 [mmpurl]:   http://middlemanapp.com/basics/pretty-urls/
 [mme]:      http://directory.middlemanapp.com/#/extensions/all
 [ruby]:     https://www.ruby-lang.org/
+[rgems]:    https://rubygems.org/
+[nodejs]:   http://nodejs.org/
+[npm]:      https://www.npmjs.org/
+[bower]:    http://bower.io/
 [html5]:    http://en.wikipedia.org/wiki/Html5
 [zfsass]:   http://foundation.zurb.com/docs/sass.html
 [centos]:   http://centos.org/
