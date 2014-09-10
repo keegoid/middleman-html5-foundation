@@ -7,16 +7,21 @@ The easiest way to start blogging with [Middleman][mm] + [HTML5][html5] + [found
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
-- [Features](#features)
+- [Overview](#overview)
+      - [Features](#features)
+      - [Requirements](#requirements)
+      - [Steps](#steps)
+      - [Reasoning](#reasoning)
 - [Usage](#usage)
       - [Clone](#clone)
       - [Download](#download)
       - [Configure](#configure)
       - [Run](#run)
       - [BitBalloon Setup](#bitballoon-setup)
+      - [Upgrade Foundation](#upgrade-foundation)
 - [Contributing](#contributing)
       - [Getting Started](#getting-started)
-      - [Steps](#steps)
+      - [Steps](#steps-1)
 - [Workflow](#workflow)
       - [Markdown](#markdown)
       - [Git Remote](#git-remote)
@@ -25,20 +30,44 @@ The easiest way to start blogging with [Middleman][mm] + [HTML5][html5] + [found
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## Summary
-
-##### Includes
+## Overview
 
 A base [Middleman][mm] site with the [HTML5 Boilerplate][html5bp], the [middleman-blog extension][mmb] and the [Sass/Compass version][zfsass] of [Zurb's Foundation 5][zf].
 
-##### Overview
-
-I like [BitBalloon][bb] for static websites because whenever I push to [GitHub][gh], [BitBalloon][bb] will automatically run Middleman and deploy the /build folder to my site. It's a nice convenience for [Middleman][mm] sites. Instructions for the [BitBalloon setup][#bitballoon-setup] ar below.
+For static websites, I use [BitBalloon][bb] because whenever I push to [GitHub][gh], [BitBalloon][bb] will automatically run Middleman and deploy the /build folder to my site. It's a nice convenience for [Middleman][mm] sites. Instructions for the [BitBalloon setup][#bitballoon-setup] ar below.
 
 - Based on the [middleman-foundation][mmf] and [middleman-zurb-foundation][mzf] projects.
 - Created with the [init.sh][mminit] and [setup.sh][mmsetup] scripts.
 
 I prefer doing things with [shell scripts][ss] rather than starting from a template without knowing how it was created. If you're interested to see how this repository was created, you can see each step in the setup scripts. You can run those scripts to get your own site in under 5 minutes! I hope you like it!
+
+##### Features
+
+- [Middleman][mm] built from the [HTML5 boilerplate][html5bp]. Written in [Ruby][ruby].
+- [Blogging][mmb] with support for articles, categories and tags.
+- [Nokogiri][nkg] for HTML-aware article summaries.
+- [LiveReload][mmlr] to automatically refresh your page after changes.
+- [Pretty URLs][mmpurl] without .html at the end.
+- [kramdown][kd] handles [Markdown][md] with built-in support for [fenced code blocks][fcb], footnotes, tables and smart quotes. Written in [Ruby][ruby].
+- [Rouge][rg] for [syntax highlighting][sh]. Also written in [Ruby][ruby] and enabled by the [middleman-syntax][mms] extension.
+
+Since [Middleman][mm] is written in [Ruby][ruby], it makes sense to try to stick with [Ruby][ruby] for [Middleman extensions][mme] whenever possible. That's why I like [kramdown][kd] with [Rouge][rg] for [Markdown][md] and [syntax highlighting][sh].
+
+To see all the available options and features, run [Middleman][mm] with the preview web server:
+
+```bash
+cd my_project
+bundle exec middleman
+```
+
+Then go to [http://localhost:4567/__middleman/config/](http://localhost:4567/__middleman/config/) in your browser.
+
+##### Requirements
+
+  * [Ruby 1.9+][ruby] and [RubyGems][rgems]
+  * [Node.js][nodejs] and [npm][npm]: `yum install nodejs npm`
+  * [Middleman][mm] and [foundation][zf] gems: `gem install middleman foundation`
+  * [bower][bower]: `npm install -g bower`
 
 ##### Steps
 
@@ -64,38 +93,9 @@ Using [shell scripts][ss] with [Middleman][mm] and [Foundation][zf] fits well wi
 
 If this script helps you to better understand [CentOS][centos], [shell scripting][ss], Linux in general or if they help you to setup your own [Middleman][mm] site, please do let me know: [@keegoid][twitter]
 
-##### TODO
+TODO:
 
 Create a script to convert HTML to [HAML][haml]. I still have a bit to learn about that.
-
-## Features
-
-- [Middleman][mm] built from the [HTML5 boilerplate][html5bp]. Written in [Ruby][ruby].
-- [Blogging][mmb] with support for articles, categories and tags.
-- [Nokogiri][nkg] for HTML-aware article summaries.
-- [LiveReload][mmlr] to automatically refresh your page after changes.
-- [Pretty URLs][mmpurl] without .html at the end.
-- [kramdown][kd] handles [Markdown][md] with built-in support for [fenced code blocks][fcb], footnotes, tables and smart quotes. Written in [Ruby][ruby].
-- [Rouge][rg] for [syntax highlighting][sh]. Also written in [Ruby][ruby] and enabled by the [middleman-syntax][mms] extension.
-
-Since [Middleman][mm] is written in [Ruby][ruby], it makes sense to try to stick with [Ruby][ruby] for [Middleman extensions][mme] whenever possible. That's why I like [kramdown][kd] with [Rouge][rg] for [Markdown][md] and [syntax highlighting][sh].
-
-To see all the available options and features, run [Middleman][mm] with the preview web server:
-
-```bash
-cd my_project
-bundle exec middleman
-```
-
-Then go to [http://localhost:4567/__middleman/config/](http://localhost:4567/__middleman/config/) in your browser.
-
-
-## Requirements
-
-  * [Ruby 1.9+][ruby] and [RubyGems][rgems]
-  * [Node.js][nodejs] and [npm][npm]: `yum install nodejs npm`
-  * [Middleman][mm] and [foundation][zf] gems: `gem install middleman foundation`
-  * [bower][bower]: `npm install -g bower`
 
 ## Usage
 
