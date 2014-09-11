@@ -30,7 +30,7 @@ configure_git "$REAL_NAME" "$EMAIL_ADDRESS"
 # generate an RSA SSH keypair if none exists
 gen_ssh_keys "$HOME/.ssh" "$SSH_KEY_COMMENT" $SSH
 
-# change to repos directory
+# change directory
 cd $REPOS
 echo "changing directory to $_"
 
@@ -40,29 +40,56 @@ middleman init $MIDDLEMAN_DOMAIN --template=html5
 # generate the site from the blog template
 read -p "Press enter to init the blog template files..."
 middleman init $MIDDLEMAN_DOMAIN --template=blog
-# generate the default foundation site
-read -p "Press enter to init the foundation-tmp files..."
-foundation new temp-foundation
+
+# change directory
+cd $MIDDLEMAN_DOMAIN
+echo "changing directory to $_"
+
+# rename conflicting files
+mv -Tfv config.rb config2.rb
+mv -Tfv .gitignore .gitignore2
 
 # change to project directory
+cd "source"
+echo "changing directory to $_"
+
+# rename conflicting files
+mv -Tfv layout.rb blog_layout.rb
+
+# move stuff around that we want to keep
+mv -fv blog_layout.rb layouts
+cp -Rfv img/. images
+
+# delete unnecessary stuff
+rm -Rfv css stylesheets js javascripts img
+
+# change directory
+cd $REPOS
+echo "changing directory to $_"
+
+# generate the default foundation site
+read -p "Press enter to init the foundation files..."
+foundation new $MIDDLEMAN_DOMAIN
+
+# change directory
 cd $MIDDLEMAN_DOMAIN
 echo "changing directory to $_"
 
 # remove duplicate directories
-read -p "Press enter to remove duplicate directories..."
-cd "source"
-rm -rfv stylesheets javascripts images
-cd -
+read -p "Press enter to merge and remove duplicate directories..."
+mv -fv bower_components "source"
+mv -fv stylesheets "source"
+mv -fv scss "source"
+mv -fv js "source"
 
 # set default directories in config.rb
 echo
 read -p "Press enter to set directory defaults in config.rb..."
-sed -i -e "s|set :css_dir, 'stylesheets'|set :css_dir, 'css'|" \
-    -e "s|set :js_dir, 'javascripts'|set :js_dir, 'js'|" \
-    -e "s|set :images_dir, 'images'|set :images_dir, 'img'|" \
+sed -i -e "s|set :js_dir, 'javascripts'|set :js_dir, 'js'|" \
     config.rb && echo -e "configured default directories"
 
 # create .bowerrc to specify bower location
+read -p "Press enter to create the .bowerrc file..."
 echo "{ \
 \"directory\" : \"source/bower_components\" \
 }" > .bowerrc
