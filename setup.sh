@@ -45,14 +45,7 @@ read -p "Press enter to init the blog template files..."
 middleman init $MIDDLEMAN_DOMAIN --template=blog
 
 # change directory
-cd $MIDDLEMAN_DOMAIN
-echo "changing directory to $_"
-
-# rename conflicting files
-mv -Tfv config.rb config2.rb
-
-# change to project directory
-cd "source"
+cd "$MIDDLEMAN_DOMAIN/source"
 echo "changing directory to $_"
 
 # rename conflicting files
@@ -81,7 +74,7 @@ echo "changing directory to $_"
 # remove conflicting files
 echo
 read -p "Press enter to remove conflicting Foundation stuff..."
-rm -Rfv .git .gitignore .bowerrc
+rm -Rfv config.rb .git .gitignore .bowerrc
 cd -
 
 # copy foundation files to middleman
@@ -94,7 +87,7 @@ cd $REPOS
 echo "changing directory to $_"
 
 # remove temp Foundation directory
-rm -Rfv tmp-foundation
+rm -Rf tmp-foundation
 
 # change directory
 cd $MIDDLEMAN_DOMAIN
@@ -105,53 +98,146 @@ echo
 read -p "Press enter to move stuff to the source directory..."
 mv -fv bower_components .sass-cache stylesheets scss js index.html "source"
 
-# save contents of Foundation's config.rb to Middleman's compass_config
-FOUNDATION_CONFIG=$(cat config.rb)
-
 # add Foundation config to compass
 echo
 read -p "Press enter to add Foundation's config.rb to compass_config..."
-if grep -q '# compass_config do |config|' config2.rb; then
-   sed -i -e 's/# compass_config do |config|/compass_config do |config|/' \
-          -e '0,/# end/{s/# end/end/}' \
-      config2.rb && echo "activated compass_config section"
-   sed -i -e "/compass_config do |config|/a ${FOUNDATION_CONFIG}" \
-      config2.rb && echo "added Foundation's compass config to Middleman"
-   sed -i -e 's/add_import_path/config.add_import_path/' \
-          -e 's/http_path/config.http_path/' \
-          -e 's/css_dir/config.css_dir/' \
-          -e 's/sass_dir/config.sass_dir/' \
-          -e 's/images_dir/config.images_dir/' \
-          -e 's/javascripts_dir/config.javascripts_dir/' \
-      config2.rb && echo 'edited commands to start with config.[command]'
-else
-   echo "compass is already configured"
-fi
+cat << EOF > config.rb
+###
+# Blog settings
+###
 
-# remove Foundation's config.rb and change file names back
-rm -fv config.rb
-mv -Tfv config2.rb config.rb
+# Time.zone = "UTC"
 
-# configure sprockets
-echo
-read -p "Press enter to configure sprockets..."
-if grep -q "# Add bower's directory to sprockets asset path" config.rb; then
-   echo "sprockets is already configured"
-else
-   sed -i -e '/# Helpers \
-###/a \
-# Add bower directory to sprockets asset path \
-after_configuration do \
-  @bower_config = JSON.parse(IO.read("#{root}/.bowerrc")) \
-  sprockets.append_path File.join "#{root}", @bower_config["directory"] \
-end' config.rb && echo "added sprockets config"
-fi
+activate :blog do |blog|
+  # This will add a prefix to all links, template references and source paths
+  # blog.prefix = "blog"
 
-# set default directories in config.rb
-echo
-read -p "Press enter to set directory defaults in config.rb..."
-sed -i -e "s|set :js_dir, 'javascripts'|set :js_dir, 'js'|" \
-    config.rb && echo -e "configured default directories"
+  # blog.permalink = "{year}/{month}/{day}/{title}.html"
+  # Matcher for blog source files
+  # blog.sources = "{year}-{month}-{day}-{title}.html"
+  # blog.taglink = "tags/{tag}.html"
+  # blog.layout = "layout"
+  # blog.summary_separator = /(READMORE)/
+  # blog.summary_length = 250
+  # blog.year_link = "{year}.html"
+  # blog.month_link = "{year}/{month}.html"
+  # blog.day_link = "{year}/{month}/{day}.html"
+  # blog.default_extension = ".markdown"
+
+  blog.tag_template = "tag.html"
+  blog.calendar_template = "calendar.html"
+
+  # Enable pagination
+  # blog.paginate = true
+  # blog.per_page = 10
+  # blog.page_link = "page/{num}"
+end
+
+page "/feed.xml", layout: false
+
+###
+# Compass
+###
+
+# Change Compass configuration
+compass_config do |config|
+  # Require any additional compass plugins here.
+  config.add_import_path "bower_components/foundation/scss"
+
+  # Set this to the root of your project when deployed:
+  config.http_path = "/"
+  config.css_dir = "stylesheets"
+  config.sass_dir = "scss"
+  config.images_dir = "images"
+  config.javascripts_dir = "js"
+
+  # You can select your preferred output style here (can be overridden via the command line):
+  # output_style = :expanded or :nested or :compact or :compressed
+
+  # To enable relative paths to assets via compass helper functions. Uncomment:
+  # relative_assets = true
+
+  # To disable debugging comments that display the original location of your selectors. Uncomment:
+  # line_comments = false
+
+
+  # If you prefer the indented syntax, you might want to regenerate this
+  # project again passing --syntax sass, or you can uncomment this:
+  # preferred_syntax = :sass
+  # and then run:
+  # sass-convert -R --from scss --to sass sass scss && rm -rf sass && mv scss sass
+
+#  config.output_style = :compact
+end
+
+###
+# Page options, layouts, aliases and proxies
+###
+
+# Per-page layout changes:
+#
+# With no layout
+# page "/path/to/file.html", layout: false
+#
+# With alternative layout
+# page "/path/to/file.html", layout: :otherlayout
+#
+# A path which all have the same layout
+# with_layout :admin do
+#   page "/admin/*"
+# end
+
+# Proxy pages (http://middlemanapp.com/basics/dynamic-pages/)
+# proxy "/this-page-has-no-template.html", "/template-file.html", locals: {
+#  which_fake_page: "Rendering a fake page with a local variable" }
+
+###
+# Helpers
+###
+
+# Automatic image dimensions on image_tag helper
+# activate :automatic_image_sizes
+
+# Reload the browser automatically whenever files change
+# activate :livereload
+
+# Methods defined in the helpers block are available in templates
+# helpers do
+#   def some_helper
+#     "Helping"
+#   end
+# end
+
+# Add bower directory to sprockets asset path
+after_configuration do
+  @bower_config = JSON.parse(IO.read("#{root}/.bowerrc"))
+  sprockets.append_path File.join "#{root}", @bower_config["directory"]
+end
+
+set :css_dir, 'stylesheets'
+
+set :js_dir, 'js'
+
+set :images_dir, 'images'
+
+# Build-specific configuration
+configure :build do
+  # For example, change the Compass output style for deployment
+  # activate :minify_css
+
+  # Minify Javascript on build
+  # activate :minify_javascript
+
+  # Enable cache buster
+  # activate :asset_hash
+
+  # Use relative URLs
+  # activate :relative_assets
+
+  # Or use a different image path
+  # set :http_prefix, "/Content/images/"
+end
+EOF
 
 # create .bowerrc to specify bower location
 echo
