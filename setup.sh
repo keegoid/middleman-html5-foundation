@@ -86,15 +86,15 @@ cd -
 
 # copy foundation files to middleman
 echo
-read -p "Press enter to copy the Foundatino files to Middleman..."
-cp -Rf tpm-foundation/. $MIDDLEMAN_DOMAIN
+read -p "Press enter to copy the Foundation files to Middleman..."
+cp -Rf tmp-foundation/. $MIDDLEMAN_DOMAIN
 
 # change directory
 cd $REPOS
 echo "changing directory to $_"
 
 # remove temp Foundation directory
-rm -Rfv tmp-foundtaion
+rm -Rfv tmp-foundation
 
 # change directory
 cd $MIDDLEMAN_DOMAIN
