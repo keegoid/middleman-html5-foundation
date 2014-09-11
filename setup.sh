@@ -82,11 +82,12 @@ echo "changing directory to $_"
 echo
 read -p "Press enter to remove conflicting Foundation stuff..."
 rm -Rfv .git .gitignore .bowerrc
+cd -
 
 # copy foundation files to middleman
 echo
 read -p "Press enter to copy the Foundatino files to Middleman..."
-cp -Rfv . $MIDDLEMAN_DOMAIN
+cp -Rf tpm-foundation/. $MIDDLEMAN_DOMAIN
 
 # change directory
 cd $REPOS
