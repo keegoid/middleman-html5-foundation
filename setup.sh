@@ -50,7 +50,6 @@ echo "changing directory to $_"
 
 # rename conflicting files
 mv -Tfv config.rb config2.rb
-mv -Tfv .gitignore .gitignore2
 
 # change to project directory
 cd "source"
@@ -73,18 +72,79 @@ echo "changing directory to $_"
 # generate the default foundation site
 echo
 read -p "Press enter to init the foundation files..."
-foundation new $MIDDLEMAN_DOMAIN
+foundation new tmp-foundation
+
+# change directory
+cd tmp-foundation
+echo "changing directory to $_"
+
+# remove conflicting files
+echo
+read -p "Press enter to remove conflicting Foundation stuff..."
+rm -Rfv .git .gitignore .bowerrc
+
+# copy foundation files to middleman
+echo
+read -p "Press enter to copy the Foundatino files to Middleman..."
+cp -Rfv . $MIDDLEMAN_DOMAIN
+
+# change directory
+cd $REPOS
+echo "changing directory to $_"
+
+# remove temp Foundation directory
+rm -Rfv tmp-foundtaion
 
 # change directory
 cd $MIDDLEMAN_DOMAIN
 echo "changing directory to $_"
 
-# remove duplicate directories
-read -p "Press enter to merge and remove duplicate directories..."
-mv -fv bower_components "source"
-mv -fv stylesheets "source"
-mv -fv scss "source"
-mv -fv js "source"
+# move to source
+echo
+read -p "Press enter to move stuff to the source directory..."
+mv -fv bower_components .sass-cache stylesheets scss js index.html "source"
+
+# save contents of Foundation's config.rb to Middleman's compass_config
+FOUNDATION_CONFIG=$(cat config.rb)
+
+# add Foundation config to compass
+echo
+read -p "Press enter to add Foundation's config.rb to compass_config..."
+if grep -q '# compass_config do |config|' config2.rb; then
+   sed -i -e 's/# compass_config do |config|/compass_config do |config|/' \
+          -e '0,/# end/{s/# end/end/}' \
+      config2.rb && echo "activated compass_config section"
+   sed -i -e "/compass_config do |config|/a ${FOUNDATION_CONFIG}" \
+      config2.rb && echo "added Foundation's compass config to Middleman"
+   sed -i -e 's/add_import_path/config.add_import_path/' \
+          -e 's/http_path/config.http_path/' \
+          -e 's/css_dir/config.css_dir/' \
+          -e 's/sass_dir/config.sass_dir/' \
+          -e 's/images_dir/config.images_dir/' \
+          -e 's/javascripts_dir/config.javascripts_dir/' \
+      config2.rb && echo 'edited commands to start with config.[command]'
+else
+   echo "compass is already configured"
+fi
+
+# remove Foundation's config.rb and change file names back
+rm -fv config.rb
+mv -Tfv config2.rb config.rb
+
+# configure sprockets
+echo
+read -p "Press enter to configure sprockets..."
+if grep -q "# Add bower's directory to sprockets asset path" config.rb; then
+   echo "sprockets is already configured"
+else
+   sed -i -e '/# Helpers \
+###/a \
+# Add bower directory to sprockets asset path \
+after_configuration do \
+  @bower_config = JSON.parse(IO.read("#{root}/.bowerrc")) \
+  sprockets.append_path File.join "#{root}", @bower_config["directory"] \
+end' config.rb && echo "added sprockets config"
+fi
 
 # set default directories in config.rb
 echo
@@ -93,18 +153,32 @@ sed -i -e "s|set :js_dir, 'javascripts'|set :js_dir, 'js'|" \
     config.rb && echo -e "configured default directories"
 
 # create .bowerrc to specify bower location
+echo
 read -p "Press enter to create the .bowerrc file..."
 echo "{ \
 \"directory\" : \"source/bower_components\" \
 }" > .bowerrc
 
+# initialize git
+echo
+read -p "Press enter to create an empty Git repository..."
+git init
+
+# add ignored files
+echo
+read -p "Press enter to add ignored files and directories..."
+echo "\
+# Ignore shell scripts and includes
+/includes \
+.sh \
+\
+# Ignore Foundation stuff \
+/source/bower_components \
+/source/.sass-cache \
+/source/stylesheets" >> .gitignore
+
 # initialize bower for this project
 bower init
-
-# 
-
-# delete default css
-#rm -Rfv 
 
 # copy foundation files to Middleman project
 #cp -Rfv
@@ -121,10 +195,6 @@ read -p "Press enter to activate the blog extension..."
 
 read -p "Press enter to activate livereload..."
 #   activate :livereload
-
-read -p "Press enter to add ignored files and directories..."
-#   ignore 'includes/*'
-#   ignore '*.sh'
 
 # build it
 bundle exec middleman build
