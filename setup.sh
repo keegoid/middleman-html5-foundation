@@ -35,9 +35,12 @@ cd $REPOS
 echo "changing directory to $_"
 
 # generate the site from the html5 boilerplate template
+echo
 read -p "Press enter to init the html5 template files..."
 middleman init $MIDDLEMAN_DOMAIN --template=html5
+
 # generate the site from the blog template
+echo
 read -p "Press enter to init the blog template files..."
 middleman init $MIDDLEMAN_DOMAIN --template=blog
 
@@ -54,10 +57,10 @@ cd "source"
 echo "changing directory to $_"
 
 # rename conflicting files
-mv -Tfv layout.rb blog_layout.rb
+mv -Tfv layout.erb blog_layout.erb
 
 # move stuff around that we want to keep
-mv -fv blog_layout.rb layouts
+mv -fv blog_layout.erb layouts
 cp -Rfv img/. images
 
 # delete unnecessary stuff
@@ -68,6 +71,7 @@ cd $REPOS
 echo "changing directory to $_"
 
 # generate the default foundation site
+echo
 read -p "Press enter to init the foundation files..."
 foundation new $MIDDLEMAN_DOMAIN
 
