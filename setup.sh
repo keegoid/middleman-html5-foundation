@@ -269,6 +269,33 @@ echo "{
 \"directory\" : \"source/bower_components\"
 }" > .bowerrc && echo ".bowerrc created"
 
+# change directory
+cd source/js
+echo "changing directory to $_"
+
+echo "//= require modernizr/modernizr" > modernizr.js && echo "created modernizr.js"
+
+# change directory
+cd ../layouts
+echo "changing directory to $_"
+
+# modify layout.erb
+read -p "Press enter to add stylesheet to layout.erb..."
+sed -i -e 's/<link rel="stylesheet" href="css/normalize.css">/<%= stylesheet_link_tag "app" %>/' \
+       -e 's/link rel="stylesheet" href="css/main.css">//' \
+       layout.erb && echo "added Foundation's stylesheet link to layout.erb"
+sed -i -e 's/<script src="js/vendor/modernizr-2.6.1.min.js"></script>/<%= javascript_include_tag "modernizr" %>/' \
+       layout.erb && echo "added Foundation's modernizr link to layout.erb"
+sed -i -e 's/<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>//' \
+       -e "s/<script>window.jQuery || document.write('<script src=\"js/vendor/jquery-1.8.0.min.js\"><\/script>')</script>//" \
+       -e 's/<script src="js/plugins.js"></script>//' \
+       -e 's/<script src="js/main.js"></script>/<%= javascript_include_tag  "app" %>/' \
+       layout.erb && echo "added Foundation's javascript link to layout.erb"
+
+# change directory
+cd $MIDDLEMAN_DOMAIN
+echo "changing directory to $_"
+
 # initialize git
 echo
 read -p "Press enter to create an empty Git repository..."
@@ -286,22 +313,6 @@ echo "
 /source/bower_components
 /source/.sass-cache
 /source/stylesheets" >> .gitignore && echo ".gitignore done"
-
-# change directory
-cd source/layouts
-echo "changing directory to $_"
-
-# modify layout.erb
-read -p "Press enter to add stylesheet to layout.erb..."
-sed -i -e 's/<link rel="stylesheet" href="css/normalize.css">/<%= stylesheet_link_tag "app" %>/' \
-       -e 's/link rel="stylesheet" href="css/main.css">//' \
-       layout.erb && echo "added stylesheet link to layout.erb"
-
-
-
-# change directory
-cd $MIDDLEMAN_DOMAIN
-echo "changing directory to $_"
 
 # build it
 bundle exec middleman build
