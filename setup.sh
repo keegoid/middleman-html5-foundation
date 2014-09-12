@@ -74,7 +74,7 @@ echo "changing directory to $_"
 # remove conflicting files
 echo
 read -p "Press enter to remove conflicting Foundation stuff..."
-rm -Rf config.rb .git .gitignore .bowerrc
+rm -Rf config.rb .git .gitignore .bowerrc README.md
 cd -
 
 # copy foundation files to middleman
