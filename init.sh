@@ -18,18 +18,21 @@ echo "* run before setup.sh as root user: su root  "
 echo "* ./init.sh                                  "
 echo "*********************************************"
 
-# save current directory
-WORKING_DIR="$PWD"
+# make temp directories
+mkdir -pv "mmtmp/libtmp"
 
-# make temp library directory
-mkdir -pv "libtmp"
+# save current directory
+WORKING_DIR="$PWD/mmtmp"
 
 # make sure curl is installed
 hash curl 2>/dev/null || { echo >&2 "curl will be installed."; yum -y install curl; }
 
 # download necessary files
-read -p "Press enter to download setup.sh here and three library files to libtmp..."
+read -p "Press enter to download necessary files..."
+cd "mmtmp"
 curl -kfsSLO https://raw.githubusercontent.com/keegoid/middleman-html5-foundation/master/setup.sh
+curl -kfsSLO https://raw.githubusercontent.com/keegoid/middleman-html5-foundation/master/README.md
+curl -kfsSLO https://raw.githubusercontent.com/keegoid/middleman-html5-foundation/master/LICENSE.md
 cd "libtmp"
 echo "changing directory to $_"
 curl -kfsSLO https://raw.githubusercontent.com/keegoid/middleman-html5-foundation/master/includes/base.lib
@@ -52,6 +55,8 @@ echo "changing directory to $_"
 cp -fv "$WORKING_DIR/config.sh" .
 cp -fv "$WORKING_DIR/init.sh" .
 cp -fv "$WORKING_DIR/setup.sh" .
+cp -fv "$WORKING_DIR/README.md" .
+cp -fv "$WORKING_DIR/LICENSE.md" .
 cp -Rfv "$WORKING_DIR/libtmp/." $LIB_DIR
 
 # set permissions
@@ -78,7 +83,7 @@ echo "changing directory to $_"
 rm -fv config.sh
 rm -fv init.sh
 rm -fv setup.sh
-rm -rfv libtmp
+rm -Rfv libtmp
 
 echo
 script_name "          done with "
