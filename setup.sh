@@ -167,7 +167,7 @@ compass_config do |config|
   # and then run:
   # sass-convert -R --from scss --to sass sass scss && rm -rf sass && mv scss sass
 
-#  config.output_style = :compact
+  config.output_style = :compact
 end
 
 ###
