@@ -74,20 +74,20 @@ echo "changing directory to $_"
 # remove conflicting files
 echo
 read -p "Press enter to remove conflicting Foundation stuff..."
-rm -Rfv config.rb .git .gitignore .bowerrc
+rm -Rf config.rb .git .gitignore .bowerrc
 cd -
 
 # copy foundation files to middleman
 echo
 read -p "Press enter to copy the Foundation files to Middleman..."
-cp -Rf tmp-foundation/. $MIDDLEMAN_DOMAIN
+cp -Rf tmp-foundation/. $MIDDLEMAN_DOMAIN && echo "done"
 
 # change directory
 cd $REPOS
 echo "changing directory to $_"
 
 # remove temp Foundation directory
-rm -Rf tmp-foundation
+rm -Rf tmp-foundation && echo "removed tmp-foundation"
 
 # change directory
 cd $MIDDLEMAN_DOMAIN
@@ -100,7 +100,7 @@ mv -fv bower_components .sass-cache stylesheets scss js index.html "source"
 
 # add Foundation config to compass
 echo
-read -p "Press enter to add Foundation's config.rb to compass_config..."
+read -p "Press enter to set config.rb..."
 cat << EOF > config.rb
 ###
 # Blog settings
@@ -238,13 +238,14 @@ configure :build do
   # set :http_prefix, "/Content/images/"
 end
 EOF
+echo "config.rb done"
 
 # create .bowerrc to specify bower location
 echo
 read -p "Press enter to create the .bowerrc file..."
-echo "{ \
-\"directory\" : \"source/bower_components\" \
-}" > .bowerrc
+echo "{
+\"directory\" : \"source/bower_components\"
+}" > .bowerrc && echo ".bowerrc created"
 
 # initialize git
 echo
@@ -254,21 +255,20 @@ git init
 # add ignored files
 echo
 read -p "Press enter to add ignored files and directories..."
-echo "\
+echo "
 # Ignore shell scripts and includes
-/includes \
-.sh \
-\
-# Ignore Foundation stuff \
-/source/bower_components \
-/source/.sass-cache \
-/source/stylesheets" >> .gitignore
+/includes
+.sh
+
+# Ignore Foundation stuff
+/source/bower_components
+/source/.sass-cache
+/source/stylesheets" >> .gitignore && echo ".gitignore done"
 
 # initialize bower for this project
-bower init
-
-# copy foundation files to Middleman project
-#cp -Rfv
+echo
+read -p "Press enter to ..."
+#bower init
 
 # config.rb
 read -p "Press enter to configure middleman-syntax..."
