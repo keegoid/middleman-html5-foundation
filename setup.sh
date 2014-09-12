@@ -110,14 +110,16 @@ cat << EOF > config.rb
 
 activate :blog do |blog|
   # This will add a prefix to all links, template references and source paths
-  # blog.prefix = "blog"
+  blog.prefix = "blog"
 
   # blog.permalink = "{year}/{month}/{day}/{title}.html"
+  blog.permalink = ":year/:month/:day/:title.html"
   # Matcher for blog source files
   # blog.sources = "{year}-{month}-{day}-{title}.html"
   # blog.taglink = "tags/{tag}.html"
   # blog.layout = "layout"
   # blog.summary_separator = /(READMORE)/
+  blog.summary_separator = /<!-- excerpt -->/
   # blog.summary_length = 250
   # blog.year_link = "{year}.html"
   # blog.month_link = "{year}/{month}.html"
@@ -167,7 +169,7 @@ compass_config do |config|
   # and then run:
   # sass-convert -R --from scss --to sass sass scss && rm -rf sass && mv scss sass
 
-  config.output_style = :compact
+  # config.output_style = :compact
 end
 
 ###
@@ -178,9 +180,11 @@ end
 #
 # With no layout
 # page "/path/to/file.html", layout: false
+page "/blog.xml", layout: false
 #
 # With alternative layout
 # page "/path/to/file.html", layout: :otherlayout
+page "/blog/*", layout: :post
 #
 # A path which all have the same layout
 # with_layout :admin do
@@ -199,14 +203,26 @@ end
 # activate :automatic_image_sizes
 
 # Reload the browser automatically whenever files change
-# activate :livereload
+activate :livereload
+
+# Middleman-syntax for Rouge
+activate :syntax
+
+# Pretty URLs
+#  activate :directory_indexes
 
 # Methods defined in the helpers block are available in templates
-# helpers do
+helpers do
 #   def some_helper
 #     "Helping"
 #   end
-# end
+  def related(page, limit = 3)
+    all_pages = blog.tags.slice(*page.tags).values.flatten
+    return [] if all_pages.blank?
+
+    all_pages.delete_if { |p| p.url == page.url }[0..limit-1]
+  end
+end
 
 # Add bower directory to sprockets asset path
 after_configuration do
@@ -219,6 +235,8 @@ set :css_dir, 'stylesheets'
 set :js_dir, 'js'
 
 set :images_dir, 'images'
+
+set :markdown_engine, :kramdown
 
 # Build-specific configuration
 configure :build do
@@ -239,6 +257,10 @@ configure :build do
 end
 EOF
 echo "config.rb done"
+# config.rb
+read -p "Press enter to configure middleman-syntax..."
+#   activate :syntax
+#   set :markdown_engine, :kramdown
 
 # create .bowerrc to specify bower location
 echo
@@ -265,30 +287,29 @@ echo "
 /source/.sass-cache
 /source/stylesheets" >> .gitignore && echo ".gitignore done"
 
-# initialize bower for this project
-echo
-read -p "Press enter to ..."
-#bower init
+# change directory
+cd source/layouts
+echo "changing directory to $_"
 
-# config.rb
-read -p "Press enter to configure middleman-syntax..."
-#   activate :syntax
-#   set :markdown_engine, :kramdown
+# modify layout.erb
+read -p "Press enter to add stylesheet to layout.erb..."
+sed -i -e 's/<link rel="stylesheet" href="css/normalize.css">/<%= stylesheet_link_tag "app" %>/' \
+       -e 's/link rel="stylesheet" href="css/main.css">//' \
+       layout.erb && echo "added stylesheet link to layout.erb"
 
-read -p "Press enter to activate the blog extension..."
-#   activate :blog do |blog|
-#       set options on blog
-#   end
 
-read -p "Press enter to activate livereload..."
-#   activate :livereload
+
+# change directory
+cd $MIDDLEMAN_DOMAIN
+echo "changing directory to $_"
 
 # build it
 bundle exec middleman build
 
 # directory indexes must be activated after middleman-blog
 read -p "Press enter to activate Pretty URLs (directory indexes)..."
-#   activate :directory_indexes
+sed -i -e 's/#  activate :directory_indexes/activate :directory_indexes/' \
+       config.rb && echo "activated directory_indexes in config.rb"
 
 # build it again
 bundle exec middleman build
