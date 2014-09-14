@@ -269,6 +269,22 @@ echo "{
 \"directory\" : \"source/bower_components\"
 }" > .bowerrc && echo ".bowerrc created"
 
+# update Gemfile
+echo
+read -p "Press enter to update the Gemfile..."
+if grep -q 'gem "middleman-livereload"' Gemfile; then
+   echo "Gemfile is already configured"
+else
+   printf "\n# For live reloading after changes
+gem \"middleman-livereload\"\n\n\
+# For Rouge syntax highlighting\n\
+gem \"middleman-syntax\"\n\n\
+# For faster file watcher updates on Windows:\n\
+gem \"wdm\", \"~> 0.1.0\", :platforms => [:mswin, :mingw]\n\n\
+# For blog post summaries\n\
+gem \"nokogiri\"" >> Gemfile && echo -e "\nGemfile updated"
+fi
+
 # change directory
 cd source/js
 echo "changing directory to $_"
