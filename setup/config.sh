@@ -1,8 +1,8 @@
 #!/bin/bash
 echo "*********************************************"
 echo "* A CentOS 7.0 x64 config script to          "
-echo "* set global variables for setup1.sh and     "
-echo "* setup2.sh                                  "
+echo "* set global variables for init.sh and       "
+echo "* setup.sh                                   "
 echo "*                                            "
 echo "* Author : Keegan Mullaney                   "
 echo "* Company: KM Authorized LLC                 "
@@ -19,17 +19,13 @@ EMAIL_ADDRESS='keegan@kmauthorized.com'
 SSH_KEY_COMMENT='CentOS workstation'
 MIDDLEMAN_DOMAIN='keeganmullaney.com'
 GITHUB_USER='keegoid' #your GitHub username
-LIB_DIR='includes' #where you put extra stuff
 ####################################################
 
-# library options
-LIBS='base.lib software.lib git.lib'
-
-# source function libraries
-for lib in $LIBS; do
-   [ -d "$LIB_DIR" ] && { source "$LIB_DIR/$lib" > /dev/null 2>&1 && echo "sourced: $LIB_DIR/$lib" || echo "can't find: $LIB_DIR/$lib"; } ||
-                         { source "libtmp/$lib" > /dev/null 2>&1 && echo "sourced: libtmp/$lib" || echo "can't find: libtmp/$lib"; }
-done
+# library files
+SETUP_DIR='setup'
+LIB_DIR='includes'
+LIB_PATH="$SETUP_DIR/$LIB_DIR"
+LIB_FILES='base.lib software.lib git.lib'
 
 # init
 DROPBOX=false

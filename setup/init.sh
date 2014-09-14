@@ -18,11 +18,14 @@ echo "* run before setup.sh as root user: su root  "
 echo "* ./init.sh                                  "
 echo "*********************************************"
 
-# make temp directories
-mkdir -pv "mmtmp/libtmp"
-
 # save current directory
-WORKING_DIR="$PWD/mmtmp"
+WORKING_DIR="$PWD"
+
+read -p "Press enter to source config.sh..."
+source config.sh
+
+# make temp directories
+mkdir -pv "mmtmp/$LIB_PATH"
 
 # make sure curl is installed
 hash curl 2>/dev/null || { echo >&2 "curl will be installed."; yum -y install curl; }
@@ -30,18 +33,22 @@ hash curl 2>/dev/null || { echo >&2 "curl will be installed."; yum -y install cu
 # download necessary files
 read -p "Press enter to download necessary files..."
 cd "mmtmp"
-curl -kfsSLO https://raw.githubusercontent.com/keegoid/middleman-html5-foundation/master/setup.sh
+echo "changing directory to $_"
 curl -kfsSLO https://raw.githubusercontent.com/keegoid/middleman-html5-foundation/master/README.md
 curl -kfsSLO https://raw.githubusercontent.com/keegoid/middleman-html5-foundation/master/LICENSE.md
-cd "libtmp"
+cd "$SETUP_DIR"
 echo "changing directory to $_"
-curl -kfsSLO https://raw.githubusercontent.com/keegoid/middleman-html5-foundation/master/includes/base.lib
-curl -kfsSLO https://raw.githubusercontent.com/keegoid/middleman-html5-foundation/master/includes/software.lib
-curl -kfsSLO https://raw.githubusercontent.com/keegoid/middleman-html5-foundation/master/includes/git.lib && echo "done with downloads"
-echo -n "changing directory back to " && cd -
+curl -kfsSLO https://raw.githubusercontent.com/keegoid/middleman-html5-foundation/master/setup/setup.sh
+cd "$LIB_DIR"
+echo "changing directory to $_"
+curl -kfsSLO https://raw.githubusercontent.com/keegoid/middleman-html5-foundation/master/setup/lib/base.lib
+curl -kfsSLO https://raw.githubusercontent.com/keegoid/middleman-html5-foundation/master/setup/lib/software.lib
+curl -kfsSLO https://raw.githubusercontent.com/keegoid/middleman-html5-foundation/master/setup/lib/git.lib && echo "done with downloads"
 
-read -p "Press enter to source config.sh..."
-source config.sh
+# source function libraries
+for lib in $LIB_FILES; do
+   source "$lib" > /dev/null 2>&1 && echo "sourced: $lib" || echo "can't find: $lib"
+done
 
 # check to make sure script is being run as root
 is_root && echo "root user detected, proceeding..." || die "\033[40m\033[1;31mERROR: root check FAILED (you must be root to use this script). Quitting...\033[0m\n"
@@ -49,22 +56,17 @@ is_root && echo "root user detected, proceeding..." || die "\033[40m\033[1;31mER
 # create project directory and copy files there
 echo
 read -p "Press enter to create project directory and copy files there..."
-mkdir -pv "$REPOS/$MIDDLEMAN_DOMAIN/$LIB_DIR"
+mkdir -pv "$REPOS/$MIDDLEMAN_DOMAIN/$LIB_PATH"
 cd "$REPOS/$MIDDLEMAN_DOMAIN"
 echo "changing directory to $_"
-cp -fv "$WORKING_DIR/config.sh" .
-cp -fv "$WORKING_DIR/init.sh" .
-cp -fv "$WORKING_DIR/setup.sh" .
-cp -fv "$WORKING_DIR/README.md" .
-cp -fv "$WORKING_DIR/LICENSE.md" .
-cp -Rfv "$WORKING_DIR/libtmp/." $LIB_DIR
+cp -Rfv "$WORKING_DIR/mmtmp/." .
 
 # set permissions
 echo
 read -p "Press enter to set permissions and ownership..."
 echo
 chmod -c +x *.sh
-chmod -c +x $LIB_DIR/*
+chmod -c +x $LIB_PATH/*
 echo
 chown -cR $USER_NAME:$USER_NAME .
 
@@ -80,10 +82,7 @@ init_middleman
 # remove temporary files
 cd "$WORKING_DIR"
 echo "changing directory to $_"
-rm -fv config.sh
-rm -fv init.sh
-rm -fv setup.sh
-rm -Rfv libtmp
+rm -Rfv mmtmp
 
 echo
 script_name "          done with "

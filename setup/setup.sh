@@ -21,6 +21,11 @@ echo "*********************************************"
 
 source config.sh
 
+# source function libraries
+for lib in $LIBS; do
+   source "$LIB_DIR/$lib" > /dev/null 2>&1 && echo "sourced: $LIB_DIR/$lib" || echo "can't find: $LIB_DIR/$lib"
+done
+
 # check to make sure script is NOT being run as root
 is_root && die "\033[40m\033[1;31mERROR: root check FAILED (you must NOT be root to use this script). Quitting...\033[0m\n" || echo "non-root user detected, proceeding..."
 
@@ -184,12 +189,14 @@ page "/blog.xml", layout: false
 #
 # With alternative layout
 # page "/path/to/file.html", layout: :otherlayout
-page "/blog/*", layout: :post
 #
 # A path which all have the same layout
 # with_layout :admin do
 #   page "/admin/*"
 # end
+with_layout :post do
+  page "/blog/*"
+end
 
 # Proxy pages (http://middlemanapp.com/basics/dynamic-pages/)
 # proxy "/this-page-has-no-template.html", "/template-file.html", locals: {
@@ -336,7 +343,7 @@ bundle exec middleman build
 # directory indexes must be activated after middleman-blog
 read -p "Press enter to activate Pretty URLs (directory indexes)..."
 sed -i -e 's/#  activate :directory_indexes/activate :directory_indexes/' \
-       config.rb && echo "activated directory_indexes in config.rb"
+   config.rb && echo "activated directory_indexes in config.rb"
 
 # build it again
 bundle exec middleman build
