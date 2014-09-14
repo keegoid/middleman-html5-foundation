@@ -93,10 +93,6 @@ Using [shell scripts][ss] with [Middleman][mm] and [Foundation][zf] fits well wi
 
 If this script helps you to better understand [CentOS][centos], [shell scripting][ss], Linux in general or if they help you to setup your own [Middleman][mm] site, please do let me know: [@keegoid][twitter]
 
-TODO:
-
-Create a script to convert HTML to [HAML][haml]. I still have a bit to learn about that.
-
 ## Usage
 
 ##### Clone
