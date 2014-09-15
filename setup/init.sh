@@ -65,8 +65,8 @@ cp -Rfv "$WORKING_DIR/mmtmp/." .
 echo
 read -p "Press enter to set permissions and ownership..."
 echo
-chmod -c +x *.sh
-chmod -c +x $LIB_PATH/*
+chmod -c +x "$SETUP_DIR/*.sh"
+chmod -c +x "$LIB_PATH/*"
 echo
 chown -cR $USER_NAME:$USER_NAME .
 
